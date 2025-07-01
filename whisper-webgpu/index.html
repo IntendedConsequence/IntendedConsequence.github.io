@@ -57,8 +57,8 @@
                     wgpuError.style.display = "block";
                     // loadingContainer.style.display = "none";
                 }
-                net_encoder = await encoder.load(device, "./encoder.safetensors");
-                net_decoder = await decoder.load(device, "./decoder.safetensors");
+                net_encoder = await encoder.load(device, "https://huggingface.co/TheAcrobat/whisper-webgpu/resolve/main/encoder.safetensors");
+                net_decoder = await decoder.load(device, "https://huggingface.co/TheAcrobat/whisper-webgpu/resolve/main/decoder.safetensors");
                 // loadingContainer.style.display = "none";
             }
             let log_spec = await fetch('log_spec.bin')
