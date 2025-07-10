@@ -438,7 +438,7 @@ var<uniform> INFINITY : f32;
   data0[(alu17+1154)] = acc11;
 }`;
 
-const E_1792_32_3n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const E_1792_32_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0:array<f32>;
@@ -1999,18 +1999,19 @@ var<uniform> INFINITY : f32;
   data0[(lidx0+bitcast<i32>(precast1))] = acc0;
 }`;
 
-const r_2161_8_12966_3_4n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const r_2161_8_12966_3_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0:array<i32>;
 @compute @workgroup_size(8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 2161 */
   var lidx0 = i32(lindex.x); /* 8 */
-  var alu0 = ((gidx0*-24)+(lidx0*-3));
-  var alu1 = ((gidx0*24)+(lidx0*3));
-  data0[alu1] = (alu0+-1);
-  data0[(alu1+1)] = (alu0+-2);
-  data0[(alu1+2)] = (alu0+-3);
+  var alu0 = ((gidx0*24)+(lidx0*3));
+  data0[alu0] = alu0;
+  var alu2 = (alu0+1);
+  data0[alu2] = alu2;
+  var alu4 = (alu0+2);
+  data0[alu4] = alu4;
 }`;
 
 const r_24 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2072,24 +2073,18 @@ var<uniform> INFINITY : f32;
 const r_3_8_2161n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
-@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
 @group(0) @binding(2)var<storage,read_write>data1:array<f32>;
 @group(0) @binding(3)var<storage,read_write>data2:array<f32>;
-@group(0) @binding(4)var<storage,read_write>data3:array<i32>;
-@group(0) @binding(5)var<uniform>ctx:i32;
+@group(0) @binding(4)var<uniform>ctx:i32;
 @compute @workgroup_size(8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 3 */
   var lidx0 = i32(lindex.x); /* 8 */
   var val0 = data2[0];
-  var alu0 = (gidx0*17288);
-  var alu1 = (lidx0*2161);
-  var acc0 = -2147483648;
+  var acc0 = 0.0f;
   for (var ridx2 = 0; ridx2 < 2161; ridx2++) {
-    var val1 = data1[((ctx*51864)+alu0+alu1+ridx2+-51864)];
-    var val2 = data3[(alu0+alu1+ridx2)];
-    var alu2 = ((i32(((val1!=val0)!=true)))*(val2+51865));
-    var alu3 = select(acc0,alu2,(acc0<alu2));
-    acc0 = alu3;
+    var val1 = data1[((ctx*51864)+(gidx0*17288)+(lidx0*2161)+ridx2+-51864)];
+    acc0 = (acc0+exp2(((val1-val0)*1.4426950408889634f)));
   }
   var precast0 = gidx0;
   var precast1 = (bitcast<u32>(precast0)<<3u);
@@ -2099,8 +2094,8 @@ var<uniform> INFINITY : f32;
 const r_24n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
-@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
-@group(0) @binding(2)var<storage,read_write>data1:array<i32>;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
 @compute @workgroup_size(1) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var val0 = data1[0];
   var val1 = data1[1];
@@ -2126,37 +2121,1273 @@ var<uniform> INFINITY : f32;
   var val21 = data1[21];
   var val22 = data1[22];
   var val23 = data1[23];
-  var alu0 = select(val0,val1,(val0<val1));
-  var alu1 = select(val2,alu0,(val2<alu0));
-  var alu2 = select(val3,alu1,(val3<alu1));
-  var alu3 = select(val4,alu2,(val4<alu2));
-  var alu4 = select(val5,alu3,(val5<alu3));
-  var alu5 = select(val6,alu4,(val6<alu4));
-  var alu6 = select(val7,alu5,(val7<alu5));
-  var alu7 = select(val8,alu6,(val8<alu6));
-  var alu8 = select(val9,alu7,(val9<alu7));
-  var alu9 = select(val10,alu8,(val10<alu8));
-  var alu10 = select(val11,alu9,(val11<alu9));
-  var alu11 = select(val12,alu10,(val12<alu10));
-  var alu12 = select(val13,alu11,(val13<alu11));
-  var alu13 = select(val14,alu12,(val14<alu12));
-  var alu14 = select(val15,alu13,(val15<alu13));
-  var alu15 = select(val16,alu14,(val16<alu14));
-  var alu16 = select(val17,alu15,(val17<alu15));
-  var alu17 = select(val18,alu16,(val18<alu16));
-  var alu18 = select(val19,alu17,(val19<alu17));
-  var alu19 = select(val20,alu18,(val20<alu18));
-  var alu20 = select(val21,alu19,(val21<alu19));
-  var alu21 = select(val22,alu20,(val22<alu20));
-  var alu22 = select(val23,alu21,(val23<alu21));
-  data0[0] = (51864-alu22);
+  data0[0] = (1/(val0+val1+val2+val3+val4+val5+val6+val7+val8+val9+val10+val11+val12+val13+val14+val15+val16+val17+val18+val19+val20+val21+val22+val23));
+}`;
+
+const E_2161_8_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@group(0) @binding(3)var<storage,read_write>data2:array<f32>;
+@group(0) @binding(4)var<storage,read_write>data3:array<f32>;
+@group(0) @binding(5)var<uniform>ctx:i32;
+@compute @workgroup_size(8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2161 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var val0 = data2[0];
+  var val1 = data3[0];
+  var alu0 = (gidx0*24);
+  var alu1 = (lidx0*3);
+  var alu2 = ((ctx*51864)+alu0+alu1);
+  var val2 = data1[(alu2+-51864)];
+  var val3 = data1[(alu2+-51863)];
+  var val4 = data1[(alu2+-51862)];
+  var alu3 = (alu0+alu1);
+  data0[alu3] = (exp2(((val2-val0)*1.4426950408889634f))*val1);
+  data0[(alu3+1)] = (exp2(((val3-val0)*1.4426950408889634f))*val1);
+  data0[(alu3+2)] = (exp2(((val4-val0)*1.4426950408889634f))*val1);
+}`;
+
+const E_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(2,2,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 64 */
+  var gidx1 = i32(gindex.y); /* 2 */
+  var gidx2 = i32(gindex.z); /* 2 */
+  var lidx0 = i32(lindex.x); /* 2 */
+  var lidx1 = i32(lindex.y); /* 2 */
+  var lidx2 = i32(lindex.z); /* 2 */
+  var precast0 = gidx1;
+  var precast1 = gidx2;
+  var precast2 = lidx0;
+  var cast0 = bitcast<u32>(precast0);
+  var cast1 = bitcast<u32>(precast1);
+  var precast3 = (cast0<<6u);
+  var precast4 = (cast0<<9u);
+  var precast5 = (cast1<<7u);
+  var precast6 = (cast1<<10u);
+  var precast7 = (bitcast<u32>(precast2)<<2u);
+  var precast8 = (gidx0>>5u);
+  var cast2 = bitcast<u32>(precast8);
+  var precast9 = (cast2<<5u);
+  var precast10 = (cast2<<8u);
+  var alu0 = (lidx1<1);
+  var alu1 = (alu0!=true);
+  var alu2 = (gidx0&1);
+  var precast11 = alu2;
+  var precast12 = (bitcast<u32>(precast11)<<3u);
+  var precast13 = ((gidx0>>1u)&1);
+  var cast3 = bitcast<u32>(precast13);
+  var precast14 = (cast3<<1u);
+  var precast15 = (cast3<<4u);
+  var precast16 = ((gidx0>>2u)&1);
+  var cast4 = bitcast<u32>(precast16);
+  var precast17 = (cast4<<2u);
+  var precast18 = (cast4<<5u);
+  var precast19 = ((gidx0>>3u)&1);
+  var cast5 = bitcast<u32>(precast19);
+  var precast20 = (cast5<<3u);
+  var precast21 = (cast5<<6u);
+  var precast22 = ((gidx0>>4u)&1);
+  var cast6 = bitcast<u32>(precast22);
+  var precast23 = (cast6<<4u);
+  var precast24 = (cast6<<7u);
+  var alu3 = (bitcast<i32>(precast4)+bitcast<i32>(precast6)+bitcast<i32>(precast10)+bitcast<i32>(precast24)+bitcast<i32>(precast21)+bitcast<i32>(precast18)+bitcast<i32>(precast15)+bitcast<i32>(precast12)+bitcast<i32>(precast7));
+  var alu4 = (lidx2+alu3);
+  var val0 = select(0.0f, data1[alu4], alu0);
+  var val1 = select(0.0f, data1[(alu4+2048)], alu0);
+  var val2 = select(0.0f, data1[(alu4+4096)], alu0);
+  var val3 = select(0.0f, data1[(alu4+6144)], alu0);
+  var val4 = select(0.0f, data1[(alu4+8192)], alu0);
+  var val5 = select(0.0f, data1[(alu4+10240)], alu0);
+  var val6 = select(0.0f, data1[(alu4+12288)], alu0);
+  var val7 = select(0.0f, data1[(alu4+14336)], alu0);
+  var val8 = select(0.0f, data1[(alu4+16384)], alu0);
+  var val9 = select(0.0f, data1[(alu4+18432)], alu0);
+  var val10 = select(0.0f, data1[(alu4+20480)], alu0);
+  var val11 = select(0.0f, data1[(alu4+22528)], alu0);
+  var val12 = select(0.0f, data1[(alu4+24576)], alu0);
+  var val13 = select(0.0f, data1[(alu4+26624)], alu0);
+  var val14 = select(0.0f, data1[(alu4+28672)], alu0);
+  var val15 = select(0.0f, data1[(alu4+30720)], alu0);
+  var val16 = select(0.0f, data1[(alu4+32768)], alu0);
+  var val17 = select(0.0f, data1[(alu4+34816)], alu0);
+  var val18 = select(0.0f, data1[(alu4+36864)], alu0);
+  var val19 = select(0.0f, data1[(alu4+38912)], alu0);
+  var val20 = select(0.0f, data1[(alu4+40960)], alu0);
+  var val21 = select(0.0f, data1[(alu4+43008)], alu0);
+  var val22 = select(0.0f, data1[(alu4+45056)], alu0);
+  var val23 = select(0.0f, data1[(alu4+47104)], alu0);
+  var val24 = select(0.0f, data1[(alu4+49152)], alu0);
+  var alu5 = (alu0&((bitcast<i32>(precast3)+bitcast<i32>(precast5)+bitcast<i32>(precast9)+bitcast<i32>(precast23)+bitcast<i32>(precast20)+bitcast<i32>(precast17)+bitcast<i32>(precast14)+alu2)<83));
+  var val25 = select(0.0f, data1[(alu4+51200)], alu5);
+  var alu6 = (alu3-lidx2);
+  var val26 = select(0.0f, data1[(alu6+3)], alu1);
+  var val27 = select(0.0f, data1[(alu6+2051)], alu1);
+  var val28 = select(0.0f, data1[(alu6+4099)], alu1);
+  var val29 = select(0.0f, data1[(alu6+6147)], alu1);
+  var val30 = select(0.0f, data1[(alu6+8195)], alu1);
+  var val31 = select(0.0f, data1[(alu6+10243)], alu1);
+  var val32 = select(0.0f, data1[(alu6+12291)], alu1);
+  var val33 = select(0.0f, data1[(alu6+14339)], alu1);
+  var val34 = select(0.0f, data1[(alu6+16387)], alu1);
+  var val35 = select(0.0f, data1[(alu6+18435)], alu1);
+  var val36 = select(0.0f, data1[(alu6+20483)], alu1);
+  var val37 = select(0.0f, data1[(alu6+22531)], alu1);
+  var val38 = select(0.0f, data1[(alu6+24579)], alu1);
+  var val39 = select(0.0f, data1[(alu6+26627)], alu1);
+  var val40 = select(0.0f, data1[(alu6+28675)], alu1);
+  var val41 = select(0.0f, data1[(alu6+30723)], alu1);
+  var val42 = select(0.0f, data1[(alu6+32771)], alu1);
+  var val43 = select(0.0f, data1[(alu6+34819)], alu1);
+  var val44 = select(0.0f, data1[(alu6+36867)], alu1);
+  var val45 = select(0.0f, data1[(alu6+38915)], alu1);
+  var val46 = select(0.0f, data1[(alu6+40963)], alu1);
+  var val47 = select(0.0f, data1[(alu6+43011)], alu1);
+  var val48 = select(0.0f, data1[(alu6+45059)], alu1);
+  var val49 = select(0.0f, data1[(alu6+47107)], alu1);
+  var val50 = select(0.0f, data1[(alu6+49155)], alu1);
+  var alu7 = (alu1&(alu6<661));
+  var val51 = select(0.0f, data1[(alu6+51203)], alu7);
+  var precast25 = lidx1;
+  var precast26 = (bitcast<u32>(precast25)<<1u);
+  var alu8 = (lidx2+alu3+bitcast<i32>(precast26));
+  data0[(alu8+53248)] = (f32(-INFINITY));
+  data0[(alu8+55296)] = (f32(-INFINITY));
+  data0[(alu8+57344)] = (f32(-INFINITY));
+  data0[(alu8+59392)] = (f32(-INFINITY));
+  data0[(alu8+61440)] = (f32(-INFINITY));
+  data0[(alu8+63488)] = (f32(-INFINITY));
+  var alu15 = select(0.0f,(f32(-INFINITY)),alu0);
+  var alu16 = select(alu15,0.0f,alu0);
+  var alu17 = select((f32(-INFINITY)),0.0f,alu0);
+  var alu18 = select(0.0f,alu17,alu0);
+  data0[alu8] = (val0+alu16+val26+alu18);
+  data0[(alu8+2048)] = (val1+alu16+val27+alu18);
+  data0[(alu8+4096)] = (val2+alu16+val28+alu18);
+  data0[(alu8+6144)] = (val3+alu16+val29+alu18);
+  data0[(alu8+8192)] = (val4+alu16+val30+alu18);
+  data0[(alu8+10240)] = (val5+alu16+val31+alu18);
+  data0[(alu8+12288)] = (val6+alu16+val32+alu18);
+  data0[(alu8+14336)] = (val7+alu16+val33+alu18);
+  data0[(alu8+16384)] = (val8+alu16+val34+alu18);
+  data0[(alu8+18432)] = (val9+alu16+val35+alu18);
+  data0[(alu8+20480)] = (val10+alu16+val36+alu18);
+  data0[(alu8+22528)] = (val11+alu16+val37+alu18);
+  data0[(alu8+24576)] = (val12+alu16+val38+alu18);
+  data0[(alu8+26624)] = (val13+alu16+val39+alu18);
+  data0[(alu8+28672)] = (val14+alu16+val40+alu18);
+  data0[(alu8+30720)] = (val15+alu16+val41+alu18);
+  data0[(alu8+32768)] = (val16+alu16+val42+alu18);
+  data0[(alu8+34816)] = (val17+alu16+val43+alu18);
+  data0[(alu8+36864)] = (val18+alu16+val44+alu18);
+  data0[(alu8+38912)] = (val19+alu16+val45+alu18);
+  data0[(alu8+40960)] = (val20+alu16+val46+alu18);
+  data0[(alu8+43008)] = (val21+alu16+val47+alu18);
+  data0[(alu8+45056)] = (val22+alu16+val48+alu18);
+  data0[(alu8+47104)] = (val23+alu16+val49+alu18);
+  data0[(alu8+49152)] = (val24+alu16+val50+alu18);
+  var alu44 = select(alu15,0.0f,alu5);
+  var alu45 = select(alu17,0.0f,alu7);
+  data0[(alu8+51200)] = (val25+alu44+val51+alu45);
+}`;
+
+const r_2161_8_8_2161_3_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<i32>;
+@group(0) @binding(3)var<storage,read_write>data2:array<f32>;
+@compute @workgroup_size(8,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2161 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = ((gidx0*24)+(lidx0*3));
+  var val0 = data1[alu0];
+  var val1 = data2[alu0];
+  var alu1 = (alu0+1);
+  var val2 = data1[alu1];
+  var val3 = data2[alu1];
+  var alu2 = (alu0+2);
+  var val4 = data1[alu2];
+  var val5 = data2[alu2];
+  var acc0 = 0;
+  var acc1 = 0;
+  var acc2 = 0;
+  var acc3 = 0;
+  var acc4 = 0;
+  var acc5 = 0;
+  var acc6 = 0;
+  var acc7 = 0;
+  var acc8 = 0;
+  for (var ridx3 = 0; ridx3 < 2161; ridx3++) {
+    var alu3 = ((lidx1*6483)+ridx3);
+    var val6 = data1[alu3];
+    var val7 = data2[alu3];
+    var alu4 = (alu3+2161);
+    var val8 = data1[alu4];
+    var val9 = data2[alu4];
+    var alu5 = (alu3+4322);
+    var val10 = data1[alu5];
+    var val11 = data2[alu5];
+    acc4 = (acc4+(i32((((val2<val8)!=true)&((val9!=val3)!=true)))));
+    acc7 = (acc7+(i32((((val2<val10)!=true)&((val11!=val3)!=true)))));
+    acc1 = (acc1+(i32((((val2<val6)!=true)&((val7!=val3)!=true)))));
+    acc5 = (acc5+(i32((((val4<val8)!=true)&((val9!=val5)!=true)))));
+    acc8 = (acc8+(i32((((val4<val10)!=true)&((val11!=val5)!=true)))));
+    acc2 = (acc2+(i32((((val4<val6)!=true)&((val7!=val5)!=true)))));
+    acc3 = (acc3+(i32((((val0<val8)!=true)&((val9!=val1)!=true)))));
+    acc6 = (acc6+(i32((((val0<val10)!=true)&((val11!=val1)!=true)))));
+    acc0 = (acc0+(i32((((val0<val6)!=true)&((val7!=val1)!=true)))));
+  }
+  var alu16 = ((gidx0*576)+(lidx0*72)+(lidx1*3));
+  data0[alu16] = acc0;
+  data0[(alu16+1)] = acc3;
+  data0[(alu16+2)] = acc6;
+  data0[(alu16+24)] = acc1;
+  data0[(alu16+25)] = acc4;
+  data0[(alu16+26)] = acc7;
+  data0[(alu16+48)] = acc2;
+  data0[(alu16+49)] = acc5;
+  data0[(alu16+50)] = acc8;
+}`;
+
+const E_1024_32_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 1024 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<6u);
+  var precast3 = (bitcast<u32>(precast1)<<1u);
+  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+1);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const r_2161_8_3_24 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<i32>;
+@compute @workgroup_size(8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2161 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var alu0 = ((gidx0*576)+(lidx0*72));
+  var val0 = data1[alu0];
+  var val1 = data1[(alu0+1)];
+  var val2 = data1[(alu0+2)];
+  var val3 = data1[(alu0+3)];
+  var val4 = data1[(alu0+4)];
+  var val5 = data1[(alu0+5)];
+  var val6 = data1[(alu0+6)];
+  var val7 = data1[(alu0+7)];
+  var val8 = data1[(alu0+8)];
+  var val9 = data1[(alu0+9)];
+  var val10 = data1[(alu0+10)];
+  var val11 = data1[(alu0+11)];
+  var val12 = data1[(alu0+12)];
+  var val13 = data1[(alu0+13)];
+  var val14 = data1[(alu0+14)];
+  var val15 = data1[(alu0+15)];
+  var val16 = data1[(alu0+16)];
+  var val17 = data1[(alu0+17)];
+  var val18 = data1[(alu0+18)];
+  var val19 = data1[(alu0+19)];
+  var val20 = data1[(alu0+20)];
+  var val21 = data1[(alu0+21)];
+  var val22 = data1[(alu0+22)];
+  var val23 = data1[(alu0+23)];
+  var val24 = data1[(alu0+24)];
+  var val25 = data1[(alu0+25)];
+  var val26 = data1[(alu0+26)];
+  var val27 = data1[(alu0+27)];
+  var val28 = data1[(alu0+28)];
+  var val29 = data1[(alu0+29)];
+  var val30 = data1[(alu0+30)];
+  var val31 = data1[(alu0+31)];
+  var val32 = data1[(alu0+32)];
+  var val33 = data1[(alu0+33)];
+  var val34 = data1[(alu0+34)];
+  var val35 = data1[(alu0+35)];
+  var val36 = data1[(alu0+36)];
+  var val37 = data1[(alu0+37)];
+  var val38 = data1[(alu0+38)];
+  var val39 = data1[(alu0+39)];
+  var val40 = data1[(alu0+40)];
+  var val41 = data1[(alu0+41)];
+  var val42 = data1[(alu0+42)];
+  var val43 = data1[(alu0+43)];
+  var val44 = data1[(alu0+44)];
+  var val45 = data1[(alu0+45)];
+  var val46 = data1[(alu0+46)];
+  var val47 = data1[(alu0+47)];
+  var val48 = data1[(alu0+48)];
+  var val49 = data1[(alu0+49)];
+  var val50 = data1[(alu0+50)];
+  var val51 = data1[(alu0+51)];
+  var val52 = data1[(alu0+52)];
+  var val53 = data1[(alu0+53)];
+  var val54 = data1[(alu0+54)];
+  var val55 = data1[(alu0+55)];
+  var val56 = data1[(alu0+56)];
+  var val57 = data1[(alu0+57)];
+  var val58 = data1[(alu0+58)];
+  var val59 = data1[(alu0+59)];
+  var val60 = data1[(alu0+60)];
+  var val61 = data1[(alu0+61)];
+  var val62 = data1[(alu0+62)];
+  var val63 = data1[(alu0+63)];
+  var val64 = data1[(alu0+64)];
+  var val65 = data1[(alu0+65)];
+  var val66 = data1[(alu0+66)];
+  var val67 = data1[(alu0+67)];
+  var val68 = data1[(alu0+68)];
+  var val69 = data1[(alu0+69)];
+  var val70 = data1[(alu0+70)];
+  var val71 = data1[(alu0+71)];
+  var alu1 = ((gidx0*24)+(lidx0*3));
+  data0[alu1] = (val23+val22+val21+val20+val19+val18+val17+val16+val15+val14+val13+val12+val11+val10+val9+val8+val7+val6+val5+val4+val3+val2+val1+val0);
+  data0[(alu1+1)] = (val47+val46+val45+val44+val43+val42+val41+val40+val39+val38+val37+val36+val35+val34+val33+val32+val31+val30+val29+val28+val27+val26+val24+val25);
+  data0[(alu1+2)] = (val71+val70+val69+val68+val67+val66+val65+val64+val63+val62+val61+val60+val59+val58+val57+val56+val55+val54+val53+val52+val51+val50+val48+val49);
+}`;
+
+const E_256_32_2_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 2 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<8u);
+  var precast3 = (bitcast<u32>(precast1)<<3u);
+  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu1 = (lidx1+alu0);
+  var val0 = data1[alu1];
+  var alu2 = (alu1+6);
+  var val1 = data1[alu2];
+  var alu3 = (alu0-lidx1);
+  var val2 = data1[(alu3+3)];
+  var val3 = data1[(alu3+5)];
+  data0[alu1] = val0;
+  data0[alu2] = val3;
+  data0[(alu1+2)] = val2;
+  data0[(alu1+4)] = val1;
+}`;
+
+const E_512_32_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 512 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 2 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<7u);
+  var precast3 = (bitcast<u32>(precast1)<<2u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+2);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_128_32_4_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32,4) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 4 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<9u);
+  var precast3 = (bitcast<u32>(precast1)<<4u);
+  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu1 = (lidx1+alu0);
+  var val0 = data1[alu1];
+  var alu2 = (alu1+12);
+  var val1 = data1[alu2];
+  var alu3 = (alu0-lidx1);
+  var val2 = data1[(alu3+7)];
+  var val3 = data1[(alu3+11)];
+  data0[alu1] = val0;
+  data0[alu2] = val3;
+  data0[(alu1+4)] = val2;
+  data0[(alu1+8)] = val1;
+}`;
+
+const E_256_32_4_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32,4) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 4 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<8u);
+  var precast3 = (bitcast<u32>(precast1)<<3u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+4);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_128_16_8_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<9u);
+  var precast3 = (bitcast<u32>(precast1)<<5u);
+  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu1 = (lidx1+alu0);
+  var val0 = data1[alu1];
+  var alu2 = (alu1+24);
+  var val1 = data1[alu2];
+  var alu3 = (alu0-lidx1);
+  var val2 = data1[(alu3+15)];
+  var val3 = data1[(alu3+23)];
+  data0[alu1] = val0;
+  data0[alu2] = val3;
+  data0[(alu1+8)] = val2;
+  data0[(alu1+16)] = val1;
+}`;
+
+const E_256_16_8_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<8u);
+  var precast3 = (bitcast<u32>(precast1)<<4u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+8);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_128_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<9u);
+  var precast3 = (bitcast<u32>(precast1)<<6u);
+  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu1 = (lidx1+alu0);
+  var val0 = data1[alu1];
+  var alu2 = (alu1+48);
+  var val1 = data1[alu2];
+  var alu3 = (alu0-lidx1);
+  var val2 = data1[(alu3+31)];
+  var val3 = data1[(alu3+47)];
+  data0[alu1] = val0;
+  data0[alu2] = val3;
+  data0[(alu1+16)] = val2;
+  data0[(alu1+32)] = val1;
+}`;
+
+const E_256_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<8u);
+  var precast3 = (bitcast<u32>(precast1)<<5u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+16);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_64_2_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 64 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<10u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<7u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+96);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+63)];
+  var val3 = data1[(alu2+95)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+32)] = val2;
+  data0[(alu0+64)] = val1;
+}`;
+
+const E_128_2_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 128 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<9u);
+  var precast5 = (bitcast<u32>(precast2)<<6u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+32);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_32_4_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 4 */
+  var gidx1 = i32(gindex.y); /* 32 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<11u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<8u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+192);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+127)];
+  var val3 = data1[(alu2+191)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+64)] = val2;
+  data0[(alu0+128)] = val1;
+}`;
+
+const E_64_4_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 4 */
+  var gidx1 = i32(gindex.y); /* 64 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<10u);
+  var precast5 = (bitcast<u32>(precast2)<<7u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+64);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_16_8_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 8 */
+  var gidx1 = i32(gindex.y); /* 16 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<12u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<9u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+384);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+255)];
+  var val3 = data1[(alu2+383)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+128)] = val2;
+  data0[(alu0+256)] = val1;
+}`;
+
+const E_32_8_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 8 */
+  var gidx1 = i32(gindex.y); /* 32 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<11u);
+  var precast5 = (bitcast<u32>(precast2)<<8u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+128);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_8_16_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 16 */
+  var gidx1 = i32(gindex.y); /* 8 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<13u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<10u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+768);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+511)];
+  var val3 = data1[(alu2+767)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+256)] = val2;
+  data0[(alu0+512)] = val1;
+}`;
+
+const E_16_16_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 16 */
+  var gidx1 = i32(gindex.y); /* 16 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<12u);
+  var precast5 = (bitcast<u32>(precast2)<<9u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+256);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_4_32_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 32 */
+  var gidx1 = i32(gindex.y); /* 4 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<14u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<11u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+1536);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+1023)];
+  var val3 = data1[(alu2+1535)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+512)] = val2;
+  data0[(alu0+1024)] = val1;
+}`;
+
+const E_8_32_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 32 */
+  var gidx1 = i32(gindex.y); /* 8 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<13u);
+  var precast5 = (bitcast<u32>(precast2)<<10u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+512);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_2_64_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 64 */
+  var gidx1 = i32(gindex.y); /* 2 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<15u);
+  var cast0 = bitcast<i32>(precast4);
+  var precast5 = (bitcast<u32>(precast2)<<12u);
+  var cast1 = bitcast<i32>(precast5);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+cast0+cast1);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+3072);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0+cast1)-lidx1);
+  var val2 = data1[(alu2+2047)];
+  var val3 = data1[(alu2+3071)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+1024)] = val2;
+  data0[(alu0+2048)] = val1;
+}`;
+
+const E_4_64_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 64 */
+  var gidx1 = i32(gindex.y); /* 4 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<14u);
+  var precast5 = (bitcast<u32>(precast2)<<11u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+1024);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_128_8_16_2_2n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<13u);
+  var cast0 = bitcast<i32>(precast3);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+cast0);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+6144);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0)-lidx1);
+  var val2 = data1[(alu2+4095)];
+  var val3 = data1[(alu2+6143)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+2048)] = val2;
+  data0[(alu0+4096)] = val1;
+}`;
+
+const E_2_128_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var gidx1 = i32(gindex.y); /* 2 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = lidx0;
+  var precast3 = (bitcast<u32>(precast0)<<4u);
+  var precast4 = (bitcast<u32>(precast1)<<15u);
+  var precast5 = (bitcast<u32>(precast2)<<12u);
+  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+2048);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_256_4_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(4,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 4 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<14u);
+  var cast0 = bitcast<i32>(precast3);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+cast0);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+12288);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0)-lidx1);
+  var val2 = data1[(alu2+8191)];
+  var val3 = data1[(alu2+12287)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+4096)] = val2;
+  data0[(alu0+8192)] = val1;
+}`;
+
+const E_256_8_16_2n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<13u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+4096);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_512_2_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(2,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 512 */
+  var lidx0 = i32(lindex.x); /* 2 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<15u);
+  var cast0 = bitcast<i32>(precast3);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+cast0);
+  var val0 = data1[alu0];
+  var alu1 = (alu0+24576);
+  var val1 = data1[alu1];
+  var alu2 = (((gidx0*-16)+cast0)-lidx1);
+  var val2 = data1[(alu2+16383)];
+  var val3 = data1[(alu2+24575)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+8192)] = val2;
+  data0[(alu0+16384)] = val1;
+}`;
+
+const E_512_4_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(4,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 512 */
+  var lidx0 = i32(lindex.x); /* 4 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<14u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+8192);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_512_32_2_2n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 512 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var precast0 = gidx0;
+  var precast1 = (bitcast<u32>(precast0)<<5u);
+  var alu0 = (lidx0+bitcast<i32>(precast1));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+49152);
+  var val1 = data1[alu1];
+  var alu2 = ((gidx0*-32)-lidx0);
+  var val2 = data1[(alu2+32767)];
+  var val3 = data1[(alu2+49151)];
+  data0[alu0] = val0;
+  data0[alu1] = val3;
+  data0[(alu0+16384)] = val2;
+  data0[(alu0+32768)] = val1;
+}`;
+
+const E_1024_2_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(2,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 1024 */
+  var lidx0 = i32(lindex.x); /* 2 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = lidx0;
+  var precast2 = (bitcast<u32>(precast0)<<4u);
+  var precast3 = (bitcast<u32>(precast1)<<15u);
+  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var val0 = data1[alu0];
+  var alu1 = (alu0+16384);
+  var val1 = data1[alu1];
+  var alu2 = -val0;
+  var alu3 = -val1;
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  data0[alu1] = -alu4;
+  var alu6 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu6;
+}`;
+
+const E_1024_32_2n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 1024 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var precast0 = gidx0;
+  var precast1 = (bitcast<u32>(precast0)<<5u);
+  var alu0 = (lidx0+bitcast<i32>(precast1));
+  var val0 = data1[alu0];
+  var val1 = data1[(((gidx0*-32)-lidx0)+65535)];
+  var alu1 = -val0;
+  var alu2 = -val1;
+  var alu3 = select(alu1,alu2,(alu1<alu2));
+  data0[(alu0+32768)] = -alu3;
+  var alu5 = select(val0,val1,(val0<val1));
+  data0[alu0] = alu5;
+}`;
+
+const r_2161_8_8_2161_3_3n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<i32>;
+@group(0) @binding(3)var<storage,read_write>data2:array<f32>;
+@compute @workgroup_size(8,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2161 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = ((gidx0*24)+(lidx0*3));
+  var val0 = data1[alu0];
+  var val1 = data2[alu0];
+  var alu1 = (alu0+1);
+  var val2 = data1[alu1];
+  var val3 = data2[alu1];
+  var alu2 = (alu0+2);
+  var val4 = data1[alu2];
+  var val5 = data2[alu2];
+  var acc0 = 0;
+  var acc1 = 0;
+  var acc2 = 0;
+  var acc3 = 0;
+  var acc4 = 0;
+  var acc5 = 0;
+  var acc6 = 0;
+  var acc7 = 0;
+  var acc8 = 0;
+  for (var ridx3 = 0; ridx3 < 2161; ridx3++) {
+    var alu3 = ((lidx1*6483)+ridx3);
+    var val6 = data1[alu3];
+    var val7 = data2[alu3];
+    var alu4 = (alu3+2161);
+    var val8 = data1[alu4];
+    var val9 = data2[alu4];
+    var alu5 = (alu3+4322);
+    var val10 = data1[alu5];
+    var val11 = data2[alu5];
+    acc4 = (acc4+(i32((((val2<val8)!=true)&((val9!=val3)!=true)))));
+    acc7 = (acc7+(i32((((val2<val10)!=true)&((val11!=val3)!=true)))));
+    acc1 = (acc1+(i32((((val2<val6)!=true)&((val7!=val3)!=true)))));
+    acc5 = (acc5+(i32((((val4<val8)!=true)&((val9!=val5)!=true)))));
+    acc8 = (acc8+(i32((((val4<val10)!=true)&((val11!=val5)!=true)))));
+    acc2 = (acc2+(i32((((val4<val6)!=true)&((val7!=val5)!=true)))));
+    acc3 = (acc3+(i32((((val0<val8)!=true)&((val9!=val1)!=true)))));
+    acc6 = (acc6+(i32((((val0<val10)!=true)&((val11!=val1)!=true)))));
+    acc0 = (acc0+(i32((((val0<val6)!=true)&((val7!=val1)!=true)))));
+  }
+  var alu16 = ((gidx0*576)+(lidx0*72)+(lidx1*3));
+  data0[alu16] = acc0;
+  data0[(alu16+1)] = acc3;
+  data0[(alu16+2)] = acc6;
+  data0[(alu16+24)] = acc1;
+  data0[(alu16+25)] = acc4;
+  data0[(alu16+26)] = acc7;
+  data0[(alu16+48)] = acc2;
+  data0[(alu16+49)] = acc5;
+  data0[(alu16+50)] = acc8;
+}`;
+
+const r_2161_8_8_2161_3_3n2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@group(0) @binding(3)var<storage,read_write>data2:array<f32>;
+@group(0) @binding(4)var<storage,read_write>data3:array<i32>;
+@group(0) @binding(5)var<storage,read_write>data4:array<i32>;
+@group(0) @binding(6)var<storage,read_write>data5:array<i32>;
+@compute @workgroup_size(8,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2161 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = ((gidx0*24)+(lidx0*3));
+  var val0 = data4[alu0];
+  var val1 = data2[alu0];
+  var alu1 = (alu0+1);
+  var val2 = data4[alu1];
+  var val3 = data2[alu1];
+  var alu2 = (alu0+2);
+  var val4 = data4[alu2];
+  var val5 = data2[alu2];
+  var acc0 = 0;
+  var acc1 = 0;
+  var acc2 = 0;
+  var acc3 = 0;
+  var acc4 = 0;
+  var acc5 = 0;
+  var acc6 = 0;
+  var acc7 = 0;
+  var acc8 = 0;
+  for (var ridx3 = 0; ridx3 < 2161; ridx3++) {
+    var alu3 = ((lidx1*6483)+ridx3);
+    var val6 = data3[alu3];
+    var val7 = data5[alu3];
+    var val8 = data1[alu3];
+    var alu4 = (alu3+2161);
+    var val9 = data3[alu4];
+    var val10 = data5[alu4];
+    var val11 = data1[alu4];
+    var alu5 = (alu3+4322);
+    var val12 = data3[alu5];
+    var val13 = data5[alu5];
+    var val14 = data1[alu5];
+    acc4 = (acc4+((i32((((val11!=val3)!=true)&((val9!=val2)!=true))))*val10));
+    acc7 = (acc7+((i32((((val11!=val5)!=true)&((val9!=val4)!=true))))*val10));
+    acc1 = (acc1+((i32((((val11!=val1)!=true)&((val9!=val0)!=true))))*val10));
+    acc5 = (acc5+((i32((((val14!=val3)!=true)&((val12!=val2)!=true))))*val13));
+    acc8 = (acc8+((i32((((val14!=val5)!=true)&((val12!=val4)!=true))))*val13));
+    acc2 = (acc2+((i32((((val14!=val1)!=true)&((val12!=val0)!=true))))*val13));
+    acc3 = (acc3+((i32((((val8!=val3)!=true)&((val6!=val2)!=true))))*val7));
+    acc6 = (acc6+((i32((((val8!=val5)!=true)&((val6!=val4)!=true))))*val7));
+    acc0 = (acc0+((i32((((val8!=val1)!=true)&((val6!=val0)!=true))))*val7));
+  }
+  var alu16 = ((gidx0*576)+(lidx0*72)+(lidx1*3));
+  data0[alu16] = acc0;
+  data0[(alu16+1)] = acc1;
+  data0[(alu16+2)] = acc2;
+  data0[(alu16+24)] = acc3;
+  data0[(alu16+25)] = acc4;
+  data0[(alu16+26)] = acc5;
+  data0[(alu16+48)] = acc6;
+  data0[(alu16+49)] = acc7;
+  data0[(alu16+50)] = acc8;
 }`;
 
 const setupNet = async (device, safetensor) => {
     const metadata = getTensorMetadata(safetensor);
     const infinityBuf = createInfinityUniformBuf(device);
 
-    const layouts=[device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]})]
+    const layouts=[device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 5, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 6, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]})]
 
     const buf_0 = createEmptyBuf(device, 16515072);;
     const buf_1 = createWeightBuf(device, 207456, getTensorBuffer(safetensor, metadata['token_embedding.arange']));
@@ -2306,8 +3537,14 @@ const setupNet = async (device, safetensor) => {
     const buf_143 = createEmptyBuf(device, 96);;
     const buf_144 = createEmptyBuf(device, 207456);;
     const buf_145 = createEmptyBuf(device, 4);;
-    const buf_146 = createEmptyBuf(device, 96);;
-    const output0 = createEmptyBuf(device, 4);;
+    const buf_146 = createEmptyBuf(device, 4);;
+    const buf_147 = createEmptyBuf(device, 207456);;
+    const buf_148 = createEmptyBuf(device, 262144);;
+    const buf_149 = createEmptyBuf(device, 4978944);;
+    const buf_150 = createEmptyBuf(device, 262144);;
+    const buf_151 = createEmptyBuf(device, 207456);;
+    const buf_152 = createEmptyBuf(device, 207456);;
+    const output0 = createEmptyBuf(device, 207456);;
     const ctx = createUniformBuf(device, 4);;
 
     const gpuWriteBuffer0 = device.createBuffer({size:input0.size, usage: GPUBufferUsage.COPY_SRC | GPUBufferUsage.MAP_WRITE });
@@ -2316,7 +3553,7 @@ const setupNet = async (device, safetensor) => {
 
     const gpuReadBuffer0 = device.createBuffer({size:output0.size, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
 
-    const kernels = [r_112_8_3_16_8_2161_3_4, r_1792_32_3_24, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3n1, r_14_8_8_16_96_4_3_4, E_1792_32_3n1, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3n1, r_14_8_8_16_96_4_3_4, E_1792_32_3n1, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3n1, r_14_8_8_16_96_4_3_4, E_1792_32_3n1, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3n1, r_14_8_8_16_96_4_3_4, E_1792_32_3n1, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_7_2161_16_8_96_3_4_4, r_3_8_2161, r_2161_8_12966_3_4n1, r_24, r_3_8_2161n1, r_24n1];
+    const kernels = [r_112_8_3_16_8_2161_3_4, r_1792_32_3_24, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3, r_14_8_8_16_96_4_3_4, E_1792_32_3, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3, r_14_8_8_16_96_4_3_4, E_1792_32_3, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3, r_14_8_8_16_96_4_3_4, E_1792_32_3, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_3_4_4, E_1792_32_3, r_14_8_8_16_96_4_3_4, E_1792_32_3, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_14_8_8_16_96_4_3_4, r_14_8_8_16_96_3_4_4, r_14_8_8_16_96_4_3_4, r_125_8_4_16_96_3_3_4n1, r_125_8_4_16_96_3_3_4, r_2_14_7_8_16_16_4_4_3_4, r_28_32_112_3_4, r_28_32_112_3_4n1, E_336_7_8_16_4, r_6_14_8_16_112_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_8_8_16_96_4_3_4, r_3_7_125_2_16_4_16_3_4_4, r_28_32_375_3_4, r_28_32_375_3_4n1, E_84_125_32_4_3, r_6_14_8_16_375_4_4_4, r_14_8_8_16_96_4_3_4n1, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_14_32_8_16_96_4_3_4, r_14_8_8_16_384_4_3_4, r_448_16_24, r_448_16_24n1, E_14_8_8_16_3_4, r_7_2161_16_8_96_3_4_4, r_3_8_2161, r_2161_8_12966_3_4, r_24, r_3_8_2161n1, r_24n1, E_2161_8_3, E_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2, r_2161_8_8_2161_3_3, E_1024_32_2, r_2161_8_3_24, E_256_32_2_2_2, E_512_32_2_2, E_1024_32_2, E_128_32_4_2_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_128_16_8_2_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_128_8_16_2_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_64_2_8_16_2_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_32_4_8_16_2_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_16_8_8_16_2_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_8_16_8_16_2_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_4_32_8_16_2_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_2_64_8_16_2_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_128_8_16_2_2n1, E_2_128_8_16_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_256_4_16_2_2, E_256_8_16_2n1, E_2_128_8_16_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_512_2_16_2_2, E_512_4_16_2, E_256_8_16_2n1, E_2_128_8_16_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_512_32_2_2n1, E_1024_2_16_2, E_512_4_16_2, E_256_8_16_2n1, E_2_128_8_16_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, E_1024_32_2n1, E_1024_2_16_2, E_512_4_16_2, E_256_8_16_2n1, E_2_128_8_16_2, E_4_64_8_16_2, E_8_32_8_16_2, E_16_16_8_16_2, E_32_8_8_16_2, E_64_4_8_16_2, E_128_2_8_16_2, E_256_8_16_2, E_256_16_8_2, E_256_32_4_2, E_512_32_2_2, E_1024_32_2, r_2161_8_8_2161_3_3n1, r_2161_8_3_24, r_2161_8_8_2161_3_3n2, r_2161_8_3_24];
     const pipelines = await Promise.all(kernels.map(async (name, i) => {
       return await device.createComputePipelineAsync({
           layout: device.createPipelineLayout({
@@ -2494,8 +3731,166 @@ const setupNet = async (device, safetensor) => {
         addComputePass(device, commandEncoder, pipelines[146], layouts[146], infinityBuf, [buf_143, buf_142, ctx], [3, 1, 1]);
         addComputePass(device, commandEncoder, pipelines[147], layouts[147], infinityBuf, [buf_144], [2161, 1, 1]);
         addComputePass(device, commandEncoder, pipelines[148], layouts[148], infinityBuf, [buf_145, buf_143], [1, 1, 1]);
-        addComputePass(device, commandEncoder, pipelines[149], layouts[149], infinityBuf, [buf_146, buf_142, buf_145, buf_144, ctx], [3, 1, 1]);
-        addComputePass(device, commandEncoder, pipelines[150], layouts[150], infinityBuf, [output0, buf_146], [1, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[149], layouts[149], infinityBuf, [buf_143, buf_142, buf_145, ctx], [3, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[150], layouts[150], infinityBuf, [buf_146, buf_143], [1, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[151], layouts[151], infinityBuf, [buf_147, buf_142, buf_145, buf_146, ctx], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[152], layouts[152], infinityBuf, [buf_148, buf_147], [64, 2, 2]);
+        addComputePass(device, commandEncoder, pipelines[153], layouts[153], infinityBuf, [buf_149, buf_144, buf_147], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[154], layouts[154], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[155], layouts[155], infinityBuf, [buf_151, buf_149], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[156], layouts[156], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[157], layouts[157], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[158], layouts[158], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[159], layouts[159], infinityBuf, [buf_150, buf_148], [128, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[160], layouts[160], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[161], layouts[161], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[162], layouts[162], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[163], layouts[163], infinityBuf, [buf_150, buf_148], [128, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[164], layouts[164], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[165], layouts[165], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[166], layouts[166], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[167], layouts[167], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[168], layouts[168], infinityBuf, [buf_148, buf_150], [128, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[169], layouts[169], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[170], layouts[170], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[171], layouts[171], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[172], layouts[172], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[173], layouts[173], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[174], layouts[174], infinityBuf, [buf_148, buf_150], [2, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[175], layouts[175], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[176], layouts[176], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[177], layouts[177], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[178], layouts[178], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[179], layouts[179], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[180], layouts[180], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[181], layouts[181], infinityBuf, [buf_150, buf_148], [4, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[182], layouts[182], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[183], layouts[183], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[184], layouts[184], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[185], layouts[185], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[186], layouts[186], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[187], layouts[187], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[188], layouts[188], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[189], layouts[189], infinityBuf, [buf_150, buf_148], [8, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[190], layouts[190], infinityBuf, [buf_148, buf_150], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[191], layouts[191], infinityBuf, [buf_150, buf_148], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[192], layouts[192], infinityBuf, [buf_148, buf_150], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[193], layouts[193], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[194], layouts[194], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[195], layouts[195], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[196], layouts[196], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[197], layouts[197], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[198], layouts[198], infinityBuf, [buf_148, buf_150], [16, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[199], layouts[199], infinityBuf, [buf_150, buf_148], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[200], layouts[200], infinityBuf, [buf_148, buf_150], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[201], layouts[201], infinityBuf, [buf_150, buf_148], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[202], layouts[202], infinityBuf, [buf_148, buf_150], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[203], layouts[203], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[204], layouts[204], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[205], layouts[205], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[206], layouts[206], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[207], layouts[207], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[208], layouts[208], infinityBuf, [buf_148, buf_150], [32, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[209], layouts[209], infinityBuf, [buf_150, buf_148], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[210], layouts[210], infinityBuf, [buf_148, buf_150], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[211], layouts[211], infinityBuf, [buf_150, buf_148], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[212], layouts[212], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[213], layouts[213], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[214], layouts[214], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[215], layouts[215], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[216], layouts[216], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[217], layouts[217], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[218], layouts[218], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[219], layouts[219], infinityBuf, [buf_150, buf_148], [64, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[220], layouts[220], infinityBuf, [buf_148, buf_150], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[221], layouts[221], infinityBuf, [buf_150, buf_148], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[222], layouts[222], infinityBuf, [buf_148, buf_150], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[223], layouts[223], infinityBuf, [buf_150, buf_148], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[224], layouts[224], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[225], layouts[225], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[226], layouts[226], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[227], layouts[227], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[228], layouts[228], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[229], layouts[229], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[230], layouts[230], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[231], layouts[231], infinityBuf, [buf_150, buf_148], [128, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[232], layouts[232], infinityBuf, [buf_148, buf_150], [128, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[233], layouts[233], infinityBuf, [buf_150, buf_148], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[234], layouts[234], infinityBuf, [buf_148, buf_150], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[235], layouts[235], infinityBuf, [buf_150, buf_148], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[236], layouts[236], infinityBuf, [buf_148, buf_150], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[237], layouts[237], infinityBuf, [buf_150, buf_148], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[238], layouts[238], infinityBuf, [buf_148, buf_150], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[239], layouts[239], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[240], layouts[240], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[241], layouts[241], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[242], layouts[242], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[243], layouts[243], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[244], layouts[244], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[245], layouts[245], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[246], layouts[246], infinityBuf, [buf_148, buf_150], [128, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[247], layouts[247], infinityBuf, [buf_150, buf_148], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[248], layouts[248], infinityBuf, [buf_148, buf_150], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[249], layouts[249], infinityBuf, [buf_150, buf_148], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[250], layouts[250], infinityBuf, [buf_148, buf_150], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[251], layouts[251], infinityBuf, [buf_150, buf_148], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[252], layouts[252], infinityBuf, [buf_148, buf_150], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[253], layouts[253], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[254], layouts[254], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[255], layouts[255], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[256], layouts[256], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[257], layouts[257], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[258], layouts[258], infinityBuf, [buf_148, buf_150], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[259], layouts[259], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[260], layouts[260], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[261], layouts[261], infinityBuf, [buf_150, buf_148], [128, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[262], layouts[262], infinityBuf, [buf_148, buf_150], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[263], layouts[263], infinityBuf, [buf_150, buf_148], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[264], layouts[264], infinityBuf, [buf_148, buf_150], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[265], layouts[265], infinityBuf, [buf_150, buf_148], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[266], layouts[266], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[267], layouts[267], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[268], layouts[268], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[269], layouts[269], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[270], layouts[270], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[271], layouts[271], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[272], layouts[272], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[273], layouts[273], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[274], layouts[274], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[275], layouts[275], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[276], layouts[276], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[277], layouts[277], infinityBuf, [buf_150, buf_148], [128, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[278], layouts[278], infinityBuf, [buf_148, buf_150], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[279], layouts[279], infinityBuf, [buf_150, buf_148], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[280], layouts[280], infinityBuf, [buf_148, buf_150], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[281], layouts[281], infinityBuf, [buf_150, buf_148], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[282], layouts[282], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[283], layouts[283], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[284], layouts[284], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[285], layouts[285], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[286], layouts[286], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[287], layouts[287], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[288], layouts[288], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[289], layouts[289], infinityBuf, [buf_150, buf_148], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[290], layouts[290], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[291], layouts[291], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[292], layouts[292], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[293], layouts[293], infinityBuf, [buf_150, buf_148], [128, 2, 1]);
+        addComputePass(device, commandEncoder, pipelines[294], layouts[294], infinityBuf, [buf_148, buf_150], [64, 4, 1]);
+        addComputePass(device, commandEncoder, pipelines[295], layouts[295], infinityBuf, [buf_150, buf_148], [32, 8, 1]);
+        addComputePass(device, commandEncoder, pipelines[296], layouts[296], infinityBuf, [buf_148, buf_150], [16, 16, 1]);
+        addComputePass(device, commandEncoder, pipelines[297], layouts[297], infinityBuf, [buf_150, buf_148], [8, 32, 1]);
+        addComputePass(device, commandEncoder, pipelines[298], layouts[298], infinityBuf, [buf_148, buf_150], [4, 64, 1]);
+        addComputePass(device, commandEncoder, pipelines[299], layouts[299], infinityBuf, [buf_150, buf_148], [2, 128, 1]);
+        addComputePass(device, commandEncoder, pipelines[300], layouts[300], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[301], layouts[301], infinityBuf, [buf_150, buf_148], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[302], layouts[302], infinityBuf, [buf_148, buf_150], [256, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[303], layouts[303], infinityBuf, [buf_150, buf_148], [512, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[304], layouts[304], infinityBuf, [buf_148, buf_150], [1024, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[305], layouts[305], infinityBuf, [buf_149, buf_144, buf_148], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[306], layouts[306], infinityBuf, [buf_152, buf_149], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[307], layouts[307], infinityBuf, [buf_149, buf_147, buf_148, buf_151, buf_152, buf_144], [2161, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[308], layouts[308], infinityBuf, [output0, buf_149], [2161, 1, 1]);
         commandEncoder.copyBufferToBuffer(output0, 0, gpuReadBuffer0, 0, output0.size);
         const gpuCommands = commandEncoder.finish();
         device.queue.submit([gpuCommands]);
