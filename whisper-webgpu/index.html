@@ -615,7 +615,7 @@
         });
 
         currentCancel = { cancelled: false };
-        transcribeAudio(async () => await fetchMonoFloat32Array(`./${AUDIO_PATH}`), currentCancel);
+        transcribeAudio(async () => await fetchMonoFloat32Array(`${AUDIO_PATH}`), currentCancel);
     </script>
 </body>
 </html>
