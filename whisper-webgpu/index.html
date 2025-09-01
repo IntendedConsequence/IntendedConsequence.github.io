@@ -114,13 +114,13 @@
         const SAMPLES_PER_SEGMENT = 480000;
         const MEL_SPEC_CHUNK_LENGTH = 80 * 3000;
 
-        const BASE_URL = '.';
+        const BASE_URL = 'https://huggingface.co/TheAcrobat/whisper-webgpu/resolve/main';
         // const AUDIO_PATH = 'RED_16k.wav';
         // const AUDIO_PATH = 'RED_60s.wav';
         // const AUDIO_PATH = 'test.wav';
         // const AUDIO_PATH = 'test2.wav';
         // const AUDIO_PATH = 'TINYCORP_MEETING_2025-07-07-DSWQCT9mypQ.mp3';
-        const AUDIO_PATH = 'TINYCORP_MEETING_2025-08-25-KA0h9zmJtcs.mp3';
+        const AUDIO_PATH = `${BASE_URL}/TINYCORP_MEETING_2025-08-25-KA0h9zmJtcs.mp3`;
 
         async function fetchMonoFloat32Array(url) {
             const response = await fetch(url);
