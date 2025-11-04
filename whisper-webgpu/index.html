@@ -53,7 +53,7 @@
         .transcription-chunk:empty { display: none; }
         #current-transcription {
             color: #fff;
-            min-height: 1.5em;
+            /* min-height: 1.5em; */
             padding: 0.75rem 0;
         }
         #current-transcription::after {
@@ -90,8 +90,20 @@
 
 <body>
     <div class="container">
-        <h2>Whisper Tinygrad WebGPU (small.en)</h2>
+        <h2 id="whisper-title">Whisper Tinygrad WebGPU (tiny.en)</h2>
         <h2 id="wgpu-error" style="display: none;">Error: WebGPU is not supported in this browser. See <a href="https://developer.chrome.com/docs/web-platform/webgpu/troubleshooting-tips">more</a>.</h2>
+
+        <form id="fetchForm">
+            <input size="100%" list="testFiles" id="urlInput" type="text" placeholder="Put media url here...">
+            <button type="submit">Fetch</button>
+        </form>
+        <datalist id="testFiles">
+            <option value="https://raw.githubusercontent.com/tinygrad/tinygrad/master/test/models/whisper/test.wav">test.wav</option>
+            <option value="https://raw.githubusercontent.com/tinygrad/tinygrad/master/test/models/whisper/test2.wav">test2.wav</option>
+            <option value="https://raw.githubusercontent.com/openai/whisper/master/tests/jfk.flac">jfk.flac</option>
+        </datalist>
+
+        <div id="progressbar">Transcription status: idle</div>
         <div id="transcription-container">
             <div id="transcription-log"></div>
             <div id="current-transcription"></div>
@@ -104,104 +116,192 @@
         <span class="loader"></span>
     </div>
 
-    <script>
+    <script type="module">
+        import {
+                SAMPLES_PER_SEGMENT, MEL_SPEC_CHUNK_LENGTH, TOK_EOS,
+                TOK_BEGIN_TRANSCRIPTION,
+                TOK_NO_TIMESTAMPS,
+                TOK_STARTOFPREV,
+                TOK_TRANSCRIBE,
+                TOK_NOSPEECH,
+                TOK_TS_FIRST,
+                TOK_TS_LAST,
+                MAX_TOKENS_TO_DECODE,
+
+                NO_TIMESTAMPS,
+                NO_CONTEXT,
+                SUPPRESS_NONSPEECH_TOKENS,
+
+                tensorStore,
+                initDb,
+                getDevice,
+
+                argsort,
+                logSoftmax,
+                softmax,
+                sample,
+                normalize,
+
+                format_seek,
+                format_text,
+                tokensToText,
+
+                fetchMonoFloat32Array,
+                fetchMonoFloat32ArrayFile,
+                getProgressDlForPart,
+
+                handle_timestamp_tokens,
+                batch_double_helper,
+                decoder_helper,
+                rebuild_cache_tail_index,
+                decodeOne,
+                inferLoop,
+                transcribeAudio
+            } from "./whisper.js";
+
+        function setModelName(model_name) {
+            const h = id => document.getElementById(id);
+            h('whisper-title').textContent = `Whisper Tinygrad WebGPU (${model_name})`;
+        }
+        const model_metadata = await fetch('./model_metadata.json', {cache: 'no-cache'}).then(x => x.json());
+        setModelName(model_metadata.model_name);
+
+        await window.moduleReady;
+        nets.model_metadata = model_metadata;
+
+        let pendingText = null, lastDisplayed = '', lastUpdateTime = 0, inferenceDone = false;
+        let pendingTexts = [];
+        const updateLoop = (now) => {
+            if (pendingText !== null /*&& pendingText !== lastDisplayed*/ && now - lastUpdateTime >= 1000.0 / 30) {
+                let updateScroll = Math.ceil(transcriptionContainer.scrollTop + transcriptionContainer.clientHeight) >= transcriptionContainer.scrollHeight;
+
+                let current = Array.from(document.querySelectorAll("div#current-transcription"));
+                for (let i = 0; i < pendingTexts.length; ++i) {
+                    current[i].innerText = pendingTexts[i];
+                    // currentTranscription.innerText = pendingText;
+                }
+                lastDisplayed = pendingText;
+                lastUpdateTime = now;
+                // let ignored = current.at(-1).offsetHeight;
+                // console.log(ignored);
+                // if (updateScroll) {
+                //     transcriptionContainer.scrollTop = transcriptionContainer.scrollHeight;
+                // }
+                if (updateScroll) {
+                    // transcriptionContainer.scrollTop = transcriptionContainer.scrollHeight;
+                    transcriptionContainer.scrollTo({ top: transcriptionContainer.scrollHeight, behavior: "instant" });
+                }
+            }
+            if (!inferenceDone) requestAnimationFrame(updateLoop);
+        };
+
+        let chunkCount = 0;
+        let chunksRemaining = 0;
+
+        const STATUS_IDLE = 0;
+        const STATUS_AUDIO_DECODING = 1;
+        const STATUS_AUDIO_ENCODING = 2;
+        const STATUS_DECODING = 3;
+
+        let transcriptionStatus = STATUS_IDLE;
+
+        function updateProgress(data) {
+            let progress = document.getElementById("progressbar");
+            let chunksDecoded = chunkCount - chunksRemaining;
+            let currentToken = 0;
+            if (data) {
+                chunksDecoded += data.sequenceStatus.filter(x => x == "done").length;
+                currentToken = data.currentTokenIndex;
+            }
+            let percent = (chunksDecoded / Math.max(chunkCount, 1.0)) * 100;
+            let text = `chunks decoded: ${chunksDecoded} / ${chunkCount} (${percent.toFixed(0).padStart(3, ' ')}%), current token: ${currentToken} / 224`;
+            if (transcriptionStatus === STATUS_AUDIO_ENCODING) {
+                text += " encoding audio features...";
+            } else if (transcriptionStatus === STATUS_AUDIO_DECODING) {
+                text += " fetching and decoding audio...";
+            }
+            progress.innerText = text;
+        }
+
+        function onTranscriptionEvent(event, data) {
+            if (event === "cancel") {
+                currentTranscription.style.display = 'none';
+                inferenceDone = true;
+                transcriptionStatus = STATUS_IDLE;
+            } else if (event === "inferenceDone") {
+                inferenceDone = true;
+                currentTranscription.style.display = 'none';
+                transcriptionStatus = STATUS_IDLE;
+            } else if (event === "inferenceBegin") {
+                chunkCount = data.chunkCount;
+                chunksRemaining = chunkCount;
+                inferenceDone = false;
+                pendingText = '';
+                currentTranscription.style.display = 'block';
+                requestAnimationFrame(updateLoop);
+                updateProgress();
+            } else if (event === "audioDecode") {
+                transcriptionStatus = STATUS_AUDIO_DECODING;
+                updateProgress();
+            } else if (event === "audioEncode") {
+                transcriptionStatus = STATUS_AUDIO_ENCODING;
+                updateProgress();
+            } else if (event === "chunkUpdate") {
+                transcriptionStatus = STATUS_DECODING;
+                pendingTexts = data.pendingTexts;
+                pendingText = data.pendingTexts[0];
+
+                let height = transcriptionContainer.scrollHeight;
+                let current = Array.from(document.querySelectorAll("div#current-transcription"));
+                for (let i = 0; i < current.length && i < pendingTexts.length; ++i) {
+                    current[i].style.display = 'block';
+                }
+                for (let i = 0; i < pendingTexts.length-current.length; ++i) {
+                    let extraTranscription = document.createElement('div');
+                    extraTranscription.id = "current-transcription";
+                    extraTranscription.style.display = 'block';
+                    transcriptionContainer.appendChild(extraTranscription);
+                }
+                if (transcriptionContainer.scrollHeight > height) {
+                    transcriptionContainer.scrollTo({ top: transcriptionContainer.scrollHeight, behavior: "instant" });
+                }
+                updateProgress(data);
+            } else if (event === "chunkDone") {
+                let current = Array.from(document.querySelectorAll("div#current-transcription"));
+                current[data.index].style.display = 'none';
+                const newChunk = document.createElement('div');
+                newChunk.className = 'transcription-chunk';
+                // newChunk.innerText = data.segment_cumlogprob.toFixed(2) + ' ' + data.pendingText;
+                newChunk.innerText = data.pendingText;
+                console.log(data.segment_cumlogprob.toFixed(2) + ' ' + data.pendingText);
+                transcriptionLog.appendChild(newChunk);
+                currentTranscription.innerText = '';
+                pendingText = '';
+                --chunksRemaining;
+            }
+        }
+
+        document.getElementById("fetchForm").addEventListener("submit", async (e) => {
+            // prevent page refresh
+            e.preventDefault();
+            const url = document.getElementById("urlInput").value;
+            try {
+                currentCancel = { cancelled: false };
+                await transcribeAudio(nets, async () => await fetchMonoFloat32Array(url), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
+            } catch (err) {
+                console.error("Fetch failed:", err);
+            }
+        });
+
         const wgpuError = document.getElementById('wgpu-error');
         const loadingContainer = document.getElementById('div-loading');
         const transcriptionLog = document.getElementById('transcription-log');
         const currentTranscription = document.getElementById('current-transcription');
         const transcriptionContainer = document.getElementById('transcription-container');
 
-        const SAMPLES_PER_SEGMENT = 480000;
-        const MEL_SPEC_CHUNK_LENGTH = 80 * 3000;
 
         const BASE_URL = 'https://huggingface.co/TheAcrobat/whisper-webgpu/resolve/main';
-        // const AUDIO_PATH = 'RED_16k.wav';
-        // const AUDIO_PATH = 'RED_60s.wav';
-        // const AUDIO_PATH = 'test.wav';
-        // const AUDIO_PATH = 'test2.wav';
-        // const AUDIO_PATH = 'TINYCORP_MEETING_2025-07-07-DSWQCT9mypQ.mp3';
-        const AUDIO_PATH = `${BASE_URL}/TINYCORP_MEETING_2025-08-25-KA0h9zmJtcs.mp3`;
-
-        async function fetchMonoFloat32Array(url) {
-            const response = await fetch(url);
-            return await fetchMonoFloat32ArrayFile(response);
-        }
-
-        async function fetchMonoFloat32ArrayFile(response) {
-            const arrayBuffer = await response.arrayBuffer();
-            const audioCtx = new AudioContext({ sampleRate: 16000 });
-            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-            const mono = new Float32Array(audioBuffer.length);
-            for (let c = 0; c < audioBuffer.numberOfChannels; c++) {
-                const data = audioBuffer.getChannelData(c);
-                for (let i = 0; i < data.length; i++) mono[i] += data[i] / audioBuffer.numberOfChannels;
-            }
-            return { sampleRate: audioBuffer.sampleRate, samples: mono };
-        }
-
-
-        const getProgressDlForPart = async (part, progressCallback, lastModified) => {
-            const response = await fetch(part, {
-                headers: lastModified ? { "If-Modified-Since": lastModified } : {}
-            });
-            if (response.status === 304) return null; // not modified
-
-            const total = parseInt(response.headers.get('content-length'), 10);
-            const newLastModified = response.headers.get('Last-Modified');
-
-            const res = new Response(new ReadableStream({
-                async start(controller) {
-                    const reader = response.body.getReader();
-                    for (;;) {
-                        const { done, value } = await reader.read();
-                        if (done) break;
-                        progressCallback(part, value.byteLength, total);
-                        controller.enqueue(value);
-                    }
-                    controller.close();
-                },
-            }));
-            return { buffer: await res.arrayBuffer(), lastModified: newLastModified };
-        };
-
-        function initDb() {
-            return new Promise((resolve, reject) => {
-                let db;
-                const request = indexedDB.open('tinywhisperdb', 2);
-                request.onerror = (event) => {
-                    console.error('Database error:', event.target.error);
-                    resolve(null);
-                };
-
-                request.onsuccess = (event) => {
-                    db = event.target.result;
-                    console.log("Db initialized.");
-                    resolve(db);
-                };
-
-                request.onupgradeneeded = (event) => {
-                    db = event.target.result;
-                    if (event.oldVersion < 2 && db.objectStoreNames.contains("tensors")) db.deleteObjectStore?.('tensors');
-                    if (!db.objectStoreNames.contains('tensors')) {
-                        db.createObjectStore('tensors', { keyPath: 'id' });
-                    }
-                };
-            });
-        }
-
-        const tensorStore = (db) => ({
-            get: (id) => new Promise(r => {
-                const req = db.transaction('tensors').objectStore('tensors').get(id);
-                req.onsuccess = () => r(req.result || null);
-                req.onerror = () => r(null);
-            }),
-            put: (id, content, lastModified) => new Promise(r => {
-                const req = db.transaction('tensors', 'readwrite')
-                    .objectStore('tensors').put({ id, content, lastModified });
-                req.onsuccess = () => r();
-                req.onerror = () => r(null);
-            })
-        });
+        const AUDIO_PATH = 'test.wav';
 
         var db;
 
@@ -232,11 +332,10 @@
             }
         }
 
-        let currentCancel = null;
-        async function transcribeAudio(audioFetcher, cancelToken) {
+        async function loadAndInitializeModels() {
             await window.moduleReady;
             if (!nets.encoder) {
-                const device = await getDevice();
+                const device = await getDevice(navigator.gpu);
                 if (!device) {
                     wgpuError.style.display = "block";
                     loadingContainer.style.display = "none";
@@ -252,315 +351,12 @@
 
                 loadingContainer.style.display = "none";
             }
-
-            const { samples } = await audioFetcher();
-
-            let log_specs_full = new Float32Array(Math.ceil(samples.length / SAMPLES_PER_SEGMENT) * MEL_SPEC_CHUNK_LENGTH);
-            for (let i = 0; i < samples.length; i += SAMPLES_PER_SEGMENT) {
-                let chunk = samples.slice(i, i + SAMPLES_PER_SEGMENT);
-                if (chunk.length < SAMPLES_PER_SEGMENT) {
-                    const padded = new Float32Array(SAMPLES_PER_SEGMENT);
-                    padded.set(chunk);
-                    chunk = padded;
-                }
-                let [mel_spec] = await nets.mel(chunk);
-                log_specs_full.set(mel_spec, (MEL_SPEC_CHUNK_LENGTH) * (i / SAMPLES_PER_SEGMENT));
-            }
-
-            // let res = await fetch(`${BASE_URL}/RED_16k.mel_f32`);
-            // log_specs_full = new Float32Array(await res.arrayBuffer());
-            // const audio_features_full = new Float32Array(await fetch(`${BASE_URL}/RED_16k.features`).then((res) => res.arrayBuffer()));
-
-            const mapping = await fetch('./vocab.json').then(res => res.json());
-
-            let pendingText = null, lastDisplayed = '', lastUpdateTime = 0, inferenceDone = false;
-            const updateLoop = (now) => {
-                if (pendingText !== null && pendingText !== lastDisplayed && now - lastUpdateTime >= 1000.0 / 30) {
-                    currentTranscription.innerText = pendingText;
-                    lastDisplayed = pendingText;
-                    lastUpdateTime = now;
-                    transcriptionContainer.scrollTop = transcriptionContainer.scrollHeight;
-                }
-                if (!inferenceDone) requestAnimationFrame(updateLoop);
-            };
-            requestAnimationFrame(updateLoop);
-            currentTranscription.style.display = 'block';
-
-            function argsort(array) {
-                // arange
-                const indices = new Uint32Array(array.length);
-                for (let i = 0; i < indices.length; i++) indices[i] = i;
-                indices.sort((a, b) => array[b] - array[a]);
-                return indices;
-            }
-
-            function logSoftmax(logits) {
-                const max = Math.max.apply(null, logits);
-                const exps = logits.map(x => Math.exp(x - max));
-                const sumExp = exps.reduce((a, b) => a + b, 0);
-                const logSumExp = Math.log(sumExp);
-                return [logits.map(x => x - max - logSumExp), max];
-            }
-
-            function softmax(logits) {
-                const scaled = logits;
-                const max = Math.max.apply(null, scaled); // prevent overflow
-                const exps = scaled.map(x => Math.exp(x - max));
-                const sum = exps.reduce((a, b) => a + b, 0);
-                return exps.map(x => x / sum);
-            }
-
-
-            function sample(probs) {
-                const r = Math.random();
-                let cum = 0;
-                for (let i = 0; i < probs.length; i++) {
-                    cum += probs[i];
-                    if (r < cum) return i;
-                }
-                return probs.length - 1; // fallback for float imprecision
-            }
-
-            function normalize(probs) {
-                const sum = probs.reduce((a, b) => a + b, 0);
-                return probs.map(p => p / sum);
-            }
-
-            const DECODER_OUTPUTS_TOKENS = false;
-            const DECODER_OUTPUTS_LOGITS = true;
-            const NO_TIMESTAMPS = true;
-            const NO_CONTEXT = true;
-
-            const TOK_EOS = 50256;
-            const TOK_BEGIN_TRANSCRIPTION = 50257;
-            const TOK_NO_TIMESTAMPS = 50362;
-            const TOK_STARTOFPREV = 50360;
-            const TOK_TRANSCRIBE = 50358;
-            const TOK_NOSPEECH = 50361;
-
-            const TOK_TS_FIRST = 50363;
-            const TOK_TS_LAST = 51863;
-
-            const MAX_TOKENS_TO_DECODE = 224;
-
-            async function inferLoop(previous_context, temperature, audio_features, seek, cancelToken) {
-                let context = [];
-                if (!NO_CONTEXT && previous_context.length > 0 && previous_context.at(-1) == TOK_EOS) {
-                    let prefix = [TOK_STARTOFPREV];
-                    let suffix = [TOK_BEGIN_TRANSCRIPTION];
-                    if (NO_TIMESTAMPS) suffix.push(TOK_NO_TIMESTAMPS);
-                    let max_context_to_take = MAX_TOKENS_TO_DECODE - prefix.length - suffix.length;
-                    context.push(...prefix);
-                    context.push(...previous_context.filter((tok) => tok < TOK_EOS /*|| (tok >= TOK_TS_FIRST && tok <= TOK_TS_LAST)*/).slice(-max_context_to_take));
-                    context.push(...suffix);
-                } else {
-                    context = [TOK_BEGIN_TRANSCRIPTION];
-                    if (NO_TIMESTAMPS) context.push(TOK_NO_TIMESTAMPS);
-                }
-                console.log(context);
-
-                const offset = context.length;
-                if (offset > MAX_TOKENS_TO_DECODE) {
-                    console.error("Context length exceeds 224");
-                    return;
-                }
-                const suppress = [ 1, 2, 7, 8, 9, 10, 14, 25, 26, 27, 28, 29, 31, 58, 59, 60, 61, 62, 63, 90, 91, 92, 93, 357, 366, 438, 532, 685, 705, 796, 930, 1058, 1220, 1267, 1279, 1303, 1343, 1377, 1391, 1635, 1782, 1875, 2162, 2361, 2488, 3467, 4008, 4211, 4600, 4808, 5299, 5855, 6329, 7203, 9609, 9959, 10563, 10786, 11420, 11709, 11907, 13163, 13697, 13700, 14808, 15306, 16410, 16791, 17992, 19203, 19510, 20724, 22305, 22935, 27007, 30109, 30420, 33409, 34949, 40283, 40493, 40549, 47282, 49146, 50257, 50357, 50358, 50359, 50360, 50361 ];
-                // var v = new Int32Array(51864);
-                // v.fill(0);
-                // v[0] = TOK_NO_TIMESTAMPS;
-
-                function handle_timestamp_tokens(nextTokens, context, token_count, last_token_index, one_before_last_token_index) {
-                    if (!NO_TIMESTAMPS) {
-                        if (token_count === 0) {
-                            nextTokens = nextTokens.filter((t)=> t >= TOK_TS_FIRST && t <= TOK_TS_LAST);
-                        } else if (context[last_token_index] >= TOK_TS_FIRST) {
-                            if (context[one_before_last_token_index] >= TOK_TS_FIRST) {
-                                nextTokens = nextTokens.filter((t)=> t < TOK_TS_FIRST);
-                            } else {
-                                nextTokens = nextTokens.filter((t)=> t >= TOK_EOS);
-                            }
-                        }
-                    }
-
-                    return nextTokens;
-                }
-
-                function format_seek(seek) {
-                    return (seek / MEL_SPEC_CHUNK_LENGTH * 30.0).toFixed(2);
-                }
-
-                function format_text(text, segment_cumlogprob, seek, seek_end) {
-                    return (segment_cumlogprob).toFixed(2) + '\n' + `${format_seek(seek)} ---> ${format_seek(seek_end)} ` + text;
-                }
-
-                async function decodeOne(i, max_range, segment_cumlogprob, context, temperature) {
-                    let avg_logprob;
-                    if (i >= max_range) return [false, context, avg_logprob, segment_cumlogprob];
-
-                    let token_count = context.length - offset;
-                    let last_token_index = i;
-                    let one_before_last_token_index = i - 1;
-
-                    let [decoder_output] = await nets.decoder(context, audio_features, [i]);
-                    let nextLogprobs;
-                    let nextTokens;
-                    let max;
-
-                    if (DECODER_OUTPUTS_TOKENS) {
-                        nextTokens = decoder_output;
-                    } else {
-                        if (DECODER_OUTPUTS_LOGITS) {
-                            if (temperature > 0) decoder_output = decoder_output.map(x => x / temperature);
-                            [nextLogprobs, max] = logSoftmax(decoder_output);
-                        } else {
-                            nextLogprobs = decoder_output;
-                        }
-                        nextTokens = argsort(nextLogprobs);
-                    }
-                    // decoder_output = decoder_output.filter((t)=> ![TOK_NO_TIMESTAMPS, ...suppress].includes(t));
-                    nextTokens = handle_timestamp_tokens(nextTokens, context, token_count, last_token_index, one_before_last_token_index);
-                    let nextTokenIndex = 0;
-                    if (temperature > 0) {
-                        // let sortedSampledIndex = sample(normalize(nextLogprobs));
-                        let dist = normalize(softmax(decoder_output));
-                        if (false) {
-                            let s = [];
-                            for (let i = 0; i < 2; ++i) {
-                                s.push(nextTokens.indexOf(sample(dist)));
-                            }
-                            nextTokenIndex = Math.min(...s);
-                        } else {
-                            nextTokenIndex = nextTokens.indexOf(sample(dist));
-                        }
-                    }
-
-                    context.push(nextTokens[nextTokenIndex]);
-
-                    if (DECODER_OUTPUTS_TOKENS) {
-                        // pendingText = context.slice(offset).map(j => mapping[j]).join('');
-                    } else {
-                        avg_logprob = segment_cumlogprob / (i-offset+1);
-                        segment_cumlogprob += nextLogprobs[nextTokens[nextTokenIndex]];
-                        // pendingText = format_text(context.slice(offset).map(j => mapping[j]).join(''), avg_logprob, seek, Math.min(seek+MEL_SPEC_CHUNK_LENGTH, log_specs_full.length));
-                    }
-
-                    if (nextTokens[nextTokenIndex] == TOK_EOS) {
-                        return [false, context, avg_logprob, segment_cumlogprob];
-                    } else if (i + 1 >= max_range) {
-                        context[context.length-1] = TOK_EOS;
-                    }
-
-                    return [true, context, avg_logprob, segment_cumlogprob];
-                }
-
-                let max_range = offset + MAX_TOKENS_TO_DECODE;
-
-                let indices, max_ranges, cumlogprobs, avg_logprobs, contexts;
-                [indices, cumlogprobs, avg_logprobs, contexts] = [[], [], [], []];
-
-                const BEST_OF = 5;
-                const SEQUENCE_COUNT = temperature > 0 ? BEST_OF : 1;
-                for(let i = 0; i < SEQUENCE_COUNT; ++i) {
-                    indices.push(offset);
-                    cumlogprobs.push(0);
-                    avg_logprobs.push(0);
-                    contexts.push(context.slice());
-                }
-                // [indices, cumlogprobs, avg_logprobs, contexts] = [[offset], [0], [0], [context]];
-
-                for(; contexts.some(c => c.at(-1) !== TOK_EOS);) {
-                    let updated = false;
-                    for (let idx = 0; idx < indices.length; ++idx) {
-                        if (contexts[idx].at(-1) === TOK_EOS) continue;
-                        if (cancelToken.cancelled) return;
-
-                        let keep;
-                        [keep, contexts[idx], avg_logprobs[idx], cumlogprobs[idx]] = await decodeOne(indices[idx], max_range, cumlogprobs[idx], contexts[idx], temperature);
-
-                        if (!updated) {
-                            if (DECODER_OUTPUTS_TOKENS) {
-                                pendingText = contexts[idx].slice(offset).map(j => mapping[j]).join('');
-                            } else {
-                                pendingText = format_text(contexts[idx].slice(offset).map(j => mapping[j]).join(''), avg_logprobs[idx], seek, Math.min(seek+MEL_SPEC_CHUNK_LENGTH, log_specs_full.length));
-                            }
-                            updated = true;
-                        }
-
-                        if (!keep) break;
-                        ++indices[idx];
-                    }
-                }
-
-                let idx = cumlogprobs.indexOf(Math.min.apply(null, cumlogprobs));
-
-                return [avg_logprobs[idx], cumlogprobs[idx], contexts[idx], offset];
-            }
-
-            let previous_context = [];
-            let temperature = 0;
-            // for (let seek = 50 * MEL_SPEC_CHUNK_LENGTH; seek < 51*MEL_SPEC_CHUNK_LENGTH;) {
-            for (let seek = 0; seek < log_specs_full.length;) {
-                console.log("seek to " + (seek / MEL_SPEC_CHUNK_LENGTH * 30.0).toFixed(2));
-                let log_spec = log_specs_full.slice(seek, seek+MEL_SPEC_CHUNK_LENGTH);
-                if (seek + MEL_SPEC_CHUNK_LENGTH > log_specs_full.length) {
-                    console.log("must pad");
-                    let padded = new Float32Array(MEL_SPEC_CHUNK_LENGTH);
-                    padded.set(log_specs_full.slice(seek));
-                    log_spec = padded;
-                }
-                const [audio_features] = await nets.encoder(log_spec);
-                // const audio_features = audio_features_full.slice(576000 * (seek / MEL_SPEC_CHUNK_LENGTH), 576000 * ((seek / MEL_SPEC_CHUNK_LENGTH) + 1));
-
-
-                let [avg_logprob, segment_cumlogprob, context, offset] = await inferLoop(previous_context, temperature, audio_features, seek, cancelToken);
-                if (cancelToken.cancelled) {
-                    console.log("Transcription cancelled");
-                    inferenceDone = true;
-                    currentTranscription.style.display = 'none';
-                    return;
-                } else {
-                    if (avg_logprob < -1 || segment_cumlogprob > -2 || (context.length-offset) < 14) {
-                        temperature += 0.2;
-                        console.log(`decoding failed, raising temperature to ${temperature}, due to one of: avg_logprob: ${avg_logprob}, segment_cumlogprob: ${segment_cumlogprob}, tokens decoded: ${context.length-offset}`);
-                        continue;
-                    } else {
-                        temperature = 0;
-                    }
-                    previous_context = context.slice();
-
-                    const newChunk = document.createElement('div');
-                    newChunk.className = 'transcription-chunk';
-                    if (!DECODER_OUTPUTS_TOKENS) {
-                        newChunk.innerText = segment_cumlogprob.toFixed(2) + ' ' + pendingText;
-                    } else {
-                        newChunk.innerText = pendingText;
-                    }
-                    transcriptionLog.appendChild(newChunk);
-                    pendingText = '';
-                    currentTranscription.innerText = '';
-
-                    seek += MEL_SPEC_CHUNK_LENGTH;
-                }
-            }
-            inferenceDone = true;
-            currentTranscription.style.display = 'none';
         }
 
-        const getDevice = async () => {
-            if (!navigator.gpu) return false;
-            const adapter = await navigator.gpu.requestAdapter();
-            // console.log(adapter.limits);
-            let maxStorageBufferBindingSize = adapter.limits.maxStorageBufferBindingSize;
-            let maxBufferSize = adapter.limits.maxBufferSize;
-            let maxComputeWorkgroupStorageSize = adapter.limits.maxComputeWorkgroupStorageSize;
-            const params = {
-                // requiredFeatures: ["shader-f16"],
-                requiredLimits: { "maxStorageBufferBindingSize": maxStorageBufferBindingSize, "maxBufferSize": maxBufferSize, "maxComputeWorkgroupStorageSize": maxComputeWorkgroupStorageSize },
-                powerPreference: "high-performance"
-            };
-            return adapter?.requestDevice(params);
-        };
+        const mapping = await fetch(`${BASE_URL}/vocab.json`).then(res => res.json());
+        nets.mapping = mapping;
 
+        let currentCancel = null;
         const overlay = document.getElementById('overlay');
 
         let counter = 0;
@@ -603,7 +399,7 @@
                         const file = item.getAsFile();
                         console.log(`... file[${i}].name = ${file.name}`);
                         currentCancel = { cancelled: false };
-                            await transcribeAudio(async () => await fetchMonoFloat32ArrayFile(file), currentCancel);
+                            await transcribeAudio(nets, async () => await fetchMonoFloat32ArrayFile(file), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
                     }
                 });
             } else {
@@ -614,8 +410,9 @@
             }
         });
 
-        currentCancel = { cancelled: false };
-        transcribeAudio(async () => await fetchMonoFloat32Array(`${AUDIO_PATH}`), currentCancel);
+        // currentCancel = { cancelled: false };
+        // transcribeAudio(nets, async () => await fetchMonoFloat32Array(`./${AUDIO_PATH}`), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
+        loadAndInitializeModels();
     </script>
 </body>
 </html>
