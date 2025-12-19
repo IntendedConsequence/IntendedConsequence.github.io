@@ -118,44 +118,14 @@
 
     <script type="module">
         import {
-                SAMPLES_PER_SEGMENT, MEL_SPEC_CHUNK_LENGTH, TOK_EOS,
-                TOK_BEGIN_TRANSCRIPTION,
-                TOK_NO_TIMESTAMPS,
-                TOK_STARTOFPREV,
-                TOK_TRANSCRIBE,
-                TOK_NOSPEECH,
-                TOK_TS_FIRST,
-                TOK_TS_LAST,
-                MAX_TOKENS_TO_DECODE,
-
-                NO_TIMESTAMPS,
-                NO_CONTEXT,
-                SUPPRESS_NONSPEECH_TOKENS,
-
                 tensorStore,
                 initDb,
                 getDevice,
-
-                argsort,
-                logSoftmax,
-                softmax,
-                sample,
-                normalize,
-
-                format_seek,
-                format_text,
-                tokensToText,
 
                 fetchMonoFloat32Array,
                 fetchMonoFloat32ArrayFile,
                 getProgressDlForPart,
 
-                handle_timestamp_tokens,
-                batch_double_helper,
-                decoder_helper,
-                rebuild_cache_tail_index,
-                decodeOne,
-                inferLoop,
                 transcribeAudio
             } from "./whisper.js";
 
@@ -271,9 +241,7 @@
                 current[data.index].style.display = 'none';
                 const newChunk = document.createElement('div');
                 newChunk.className = 'transcription-chunk';
-                // newChunk.innerText = data.segment_cumlogprob.toFixed(2) + ' ' + data.pendingText;
                 newChunk.innerText = data.pendingText;
-                console.log(data.segment_cumlogprob.toFixed(2) + ' ' + data.pendingText);
                 transcriptionLog.appendChild(newChunk);
                 currentTranscription.innerText = '';
                 pendingText = '';
@@ -287,7 +255,7 @@
             const url = document.getElementById("urlInput").value;
             try {
                 currentCancel = { cancelled: false };
-                await transcribeAudio(nets, async () => await fetchMonoFloat32Array(url), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
+                await transcribeAudio(nets, async () => await fetchMonoFloat32Array(url, OfflineAudioContext), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
             } catch (err) {
                 console.error("Fetch failed:", err);
             }
@@ -300,8 +268,13 @@
         const transcriptionContainer = document.getElementById('transcription-container');
 
 
-        const BASE_URL = 'https://huggingface.co/TheAcrobat/whisper-webgpu/resolve/main';
+        const BASE_URL = '.';
+        // const AUDIO_PATH = 'RED_16k.wav';
+        // const AUDIO_PATH = 'RED_60s.wav';
         const AUDIO_PATH = 'test.wav';
+        // const AUDIO_PATH = 'test2.wav';
+        // const AUDIO_PATH = 'TINYCORP_MEETING_2025-07-07-DSWQCT9mypQ.mp3';
+        // const AUDIO_PATH = `${BASE_URL}/TINYCORP_MEETING_2025-08-25-KA0h9zmJtcs.mp3`;
 
         var db;
 
@@ -399,7 +372,7 @@
                         const file = item.getAsFile();
                         console.log(`... file[${i}].name = ${file.name}`);
                         currentCancel = { cancelled: false };
-                            await transcribeAudio(nets, async () => await fetchMonoFloat32ArrayFile(file), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
+                            await transcribeAudio(nets, async () => await fetchMonoFloat32ArrayFile(file, OfflineAudioContext), currentCancel, onTranscriptionEvent, loadAndInitializeModels);
                     }
                 });
             } else {

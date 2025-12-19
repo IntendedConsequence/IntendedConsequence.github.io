@@ -59,24 +59,22 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_32:array<i32>;
 @group(0) @binding(3)var<storage,read_write>data2_19915776:array<f32>;
 @compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 8 */
-  var lidx0 = i32(lindex.x); /* 16 */
-  var gidx0 = i32(gindex.x); /* 24 */
   var gidx1 = i32(gindex.y); /* 32 */
-  var precast0 = gidx0;
   var val0 = data1_32[gidx1];
-  var alu0 = (lidx1*6483);
-  var precast1 = (bitcast<u32>(precast0)<<4u);
-  var alu1 = (lidx0+bitcast<i32>(precast1)+(val0*384));
-  var alu2 = (val0<(alu0+2161));
-  var alu3 = (val0<(alu0+4322));
-  var val1 = select(0.0f, data2_19915776[alu1], ((alu2!=true)&alu3));
-  var val2 = select(0.0f, data2_19915776[alu1], ((alu3!=true)&(val0<(alu0+6483))));
-  var val3 = select(0.0f, data2_19915776[alu1], (((val0<alu0)!=true)&alu2));
+  var gidx0 = i32(gindex.x); /* 24 */
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = (lidx0+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+(val0*384));
+  var alu1 = (lidx1*6483);
+  var alu2 = (val0<(alu1+2161));
+  var alu3 = (val0<(alu1+4322));
+  var val1 = select(0.0f, data2_19915776[alu0], ((alu2!=true)&alu3));
+  var val2 = select(0.0f, data2_19915776[alu0], ((alu3!=true)&(val0<(alu1+6483))));
+  var val3 = select(0.0f, data2_19915776[alu0], (((val0<alu1)!=true)&alu2));
   var alu4 = ((gidx0*384)+(lidx0*24)+(lidx1*3)+(gidx1*9216));
-  data0_294912[alu4] = val3;
   data0_294912[(alu4+1)] = val1;
   data0_294912[(alu4+2)] = val2;
+  data0_294912[alu4] = val3;
 }`;
 
 const r_24_8_16_4_24 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -87,115 +85,113 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(3)var<storage,read_write>data2_172032:array<f32>;
 @group(0) @binding(4)var<uniform>ctx:i32;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 24 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 24 */
-  var precast0 = gidx0;
   var alu0 = ((gidx0*384)+(lidx1*24)+(lidx0*36864));
-  var val0 = data1_294912[alu0];
-  var val1 = data1_294912[(alu0+1)];
-  var val2 = data1_294912[(alu0+2)];
-  var val3 = data1_294912[(alu0+3)];
-  var val4 = data1_294912[(alu0+4)];
-  var val5 = data1_294912[(alu0+5)];
-  var val6 = data1_294912[(alu0+6)];
-  var val7 = data1_294912[(alu0+7)];
-  var val8 = data1_294912[(alu0+8)];
-  var val9 = data1_294912[(alu0+9)];
-  var val10 = data1_294912[(alu0+10)];
-  var val11 = data1_294912[(alu0+11)];
-  var val12 = data1_294912[(alu0+12)];
-  var val13 = data1_294912[(alu0+13)];
-  var val14 = data1_294912[(alu0+14)];
-  var val15 = data1_294912[(alu0+15)];
-  var val16 = data1_294912[(alu0+16)];
-  var val17 = data1_294912[(alu0+17)];
-  var val18 = data1_294912[(alu0+18)];
-  var val19 = data1_294912[(alu0+19)];
-  var val20 = data1_294912[(alu0+20)];
-  var val21 = data1_294912[(alu0+21)];
-  var val22 = data1_294912[(alu0+22)];
-  var val23 = data1_294912[(alu0+23)];
-  var val24 = data1_294912[(alu0+9216)];
-  var val25 = data1_294912[(alu0+9217)];
-  var val26 = data1_294912[(alu0+9218)];
-  var val27 = data1_294912[(alu0+9219)];
-  var val28 = data1_294912[(alu0+9220)];
-  var val29 = data1_294912[(alu0+9221)];
-  var val30 = data1_294912[(alu0+9222)];
-  var val31 = data1_294912[(alu0+9223)];
-  var val32 = data1_294912[(alu0+9224)];
-  var val33 = data1_294912[(alu0+9225)];
-  var val34 = data1_294912[(alu0+9226)];
-  var val35 = data1_294912[(alu0+9227)];
-  var val36 = data1_294912[(alu0+9228)];
-  var val37 = data1_294912[(alu0+9229)];
-  var val38 = data1_294912[(alu0+9230)];
-  var val39 = data1_294912[(alu0+9231)];
-  var val40 = data1_294912[(alu0+9232)];
-  var val41 = data1_294912[(alu0+9233)];
-  var val42 = data1_294912[(alu0+9234)];
-  var val43 = data1_294912[(alu0+9235)];
-  var val44 = data1_294912[(alu0+9236)];
-  var val45 = data1_294912[(alu0+9237)];
-  var val46 = data1_294912[(alu0+9238)];
-  var val47 = data1_294912[(alu0+9239)];
-  var val48 = data1_294912[(alu0+18432)];
-  var val49 = data1_294912[(alu0+18433)];
-  var val50 = data1_294912[(alu0+18434)];
-  var val51 = data1_294912[(alu0+18435)];
-  var val52 = data1_294912[(alu0+18436)];
-  var val53 = data1_294912[(alu0+18437)];
-  var val54 = data1_294912[(alu0+18438)];
-  var val55 = data1_294912[(alu0+18439)];
-  var val56 = data1_294912[(alu0+18440)];
-  var val57 = data1_294912[(alu0+18441)];
-  var val58 = data1_294912[(alu0+18442)];
-  var val59 = data1_294912[(alu0+18443)];
-  var val60 = data1_294912[(alu0+18444)];
-  var val61 = data1_294912[(alu0+18445)];
-  var val62 = data1_294912[(alu0+18446)];
-  var val63 = data1_294912[(alu0+18447)];
-  var val64 = data1_294912[(alu0+18448)];
-  var val65 = data1_294912[(alu0+18449)];
-  var val66 = data1_294912[(alu0+18450)];
-  var val67 = data1_294912[(alu0+18451)];
-  var val68 = data1_294912[(alu0+18452)];
-  var val69 = data1_294912[(alu0+18453)];
-  var val70 = data1_294912[(alu0+18454)];
-  var val71 = data1_294912[(alu0+18455)];
-  var val72 = data1_294912[(alu0+27648)];
-  var val73 = data1_294912[(alu0+27649)];
-  var val74 = data1_294912[(alu0+27650)];
-  var val75 = data1_294912[(alu0+27651)];
-  var val76 = data1_294912[(alu0+27652)];
-  var val77 = data1_294912[(alu0+27653)];
-  var val78 = data1_294912[(alu0+27654)];
-  var val79 = data1_294912[(alu0+27655)];
-  var val80 = data1_294912[(alu0+27656)];
-  var val81 = data1_294912[(alu0+27657)];
-  var val82 = data1_294912[(alu0+27658)];
-  var val83 = data1_294912[(alu0+27659)];
-  var val84 = data1_294912[(alu0+27660)];
-  var val85 = data1_294912[(alu0+27661)];
-  var val86 = data1_294912[(alu0+27662)];
-  var val87 = data1_294912[(alu0+27663)];
-  var val88 = data1_294912[(alu0+27664)];
-  var val89 = data1_294912[(alu0+27665)];
-  var val90 = data1_294912[(alu0+27666)];
-  var val91 = data1_294912[(alu0+27667)];
-  var val92 = data1_294912[(alu0+27668)];
-  var val93 = data1_294912[(alu0+27669)];
-  var val94 = data1_294912[(alu0+27670)];
-  var val95 = data1_294912[(alu0+27671)];
-  var precast1 = (bitcast<u32>(precast0)<<4u);
-  var alu1 = (lidx1+bitcast<i32>(precast1));
-  var val96 = data2_172032[(alu1+(ctx*384))];
+  var val0 = data1_294912[(alu0+1)];
+  var val1 = data1_294912[(alu0+2)];
+  var val2 = data1_294912[(alu0+3)];
+  var val3 = data1_294912[(alu0+4)];
+  var val4 = data1_294912[(alu0+5)];
+  var val5 = data1_294912[(alu0+6)];
+  var val6 = data1_294912[(alu0+7)];
+  var val7 = data1_294912[(alu0+8)];
+  var val8 = data1_294912[(alu0+9)];
+  var val9 = data1_294912[(alu0+10)];
+  var val10 = data1_294912[(alu0+11)];
+  var val11 = data1_294912[(alu0+12)];
+  var val12 = data1_294912[(alu0+13)];
+  var val13 = data1_294912[(alu0+14)];
+  var val14 = data1_294912[(alu0+15)];
+  var val15 = data1_294912[(alu0+16)];
+  var val16 = data1_294912[(alu0+17)];
+  var val17 = data1_294912[(alu0+18)];
+  var val18 = data1_294912[(alu0+19)];
+  var val19 = data1_294912[(alu0+20)];
+  var val20 = data1_294912[(alu0+21)];
+  var val21 = data1_294912[(alu0+22)];
+  var val22 = data1_294912[(alu0+23)];
+  var val23 = data1_294912[alu0];
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u)));
+  var val24 = data2_172032[(alu1+(ctx*384))];
+  var val25 = data1_294912[(alu0+9216)];
+  var val26 = data1_294912[(alu0+9217)];
+  var val27 = data1_294912[(alu0+9218)];
+  var val28 = data1_294912[(alu0+9219)];
+  var val29 = data1_294912[(alu0+9220)];
+  var val30 = data1_294912[(alu0+9221)];
+  var val31 = data1_294912[(alu0+9222)];
+  var val32 = data1_294912[(alu0+9223)];
+  var val33 = data1_294912[(alu0+9224)];
+  var val34 = data1_294912[(alu0+9225)];
+  var val35 = data1_294912[(alu0+9226)];
+  var val36 = data1_294912[(alu0+9227)];
+  var val37 = data1_294912[(alu0+9228)];
+  var val38 = data1_294912[(alu0+9229)];
+  var val39 = data1_294912[(alu0+9230)];
+  var val40 = data1_294912[(alu0+9231)];
+  var val41 = data1_294912[(alu0+9232)];
+  var val42 = data1_294912[(alu0+9233)];
+  var val43 = data1_294912[(alu0+9234)];
+  var val44 = data1_294912[(alu0+9235)];
+  var val45 = data1_294912[(alu0+9236)];
+  var val46 = data1_294912[(alu0+9237)];
+  var val47 = data1_294912[(alu0+9238)];
+  var val48 = data1_294912[(alu0+9239)];
+  var val49 = data1_294912[(alu0+18432)];
+  var val50 = data1_294912[(alu0+18433)];
+  var val51 = data1_294912[(alu0+18434)];
+  var val52 = data1_294912[(alu0+18435)];
+  var val53 = data1_294912[(alu0+18436)];
+  var val54 = data1_294912[(alu0+18437)];
+  var val55 = data1_294912[(alu0+18438)];
+  var val56 = data1_294912[(alu0+18439)];
+  var val57 = data1_294912[(alu0+18440)];
+  var val58 = data1_294912[(alu0+18441)];
+  var val59 = data1_294912[(alu0+18442)];
+  var val60 = data1_294912[(alu0+18443)];
+  var val61 = data1_294912[(alu0+18444)];
+  var val62 = data1_294912[(alu0+18445)];
+  var val63 = data1_294912[(alu0+18446)];
+  var val64 = data1_294912[(alu0+18447)];
+  var val65 = data1_294912[(alu0+18448)];
+  var val66 = data1_294912[(alu0+18449)];
+  var val67 = data1_294912[(alu0+18450)];
+  var val68 = data1_294912[(alu0+18451)];
+  var val69 = data1_294912[(alu0+18452)];
+  var val70 = data1_294912[(alu0+18453)];
+  var val71 = data1_294912[(alu0+18454)];
+  var val72 = data1_294912[(alu0+18455)];
+  var val73 = data1_294912[(alu0+27648)];
+  var val74 = data1_294912[(alu0+27649)];
+  var val75 = data1_294912[(alu0+27650)];
+  var val76 = data1_294912[(alu0+27651)];
+  var val77 = data1_294912[(alu0+27652)];
+  var val78 = data1_294912[(alu0+27653)];
+  var val79 = data1_294912[(alu0+27654)];
+  var val80 = data1_294912[(alu0+27655)];
+  var val81 = data1_294912[(alu0+27656)];
+  var val82 = data1_294912[(alu0+27657)];
+  var val83 = data1_294912[(alu0+27658)];
+  var val84 = data1_294912[(alu0+27659)];
+  var val85 = data1_294912[(alu0+27660)];
+  var val86 = data1_294912[(alu0+27661)];
+  var val87 = data1_294912[(alu0+27662)];
+  var val88 = data1_294912[(alu0+27663)];
+  var val89 = data1_294912[(alu0+27664)];
+  var val90 = data1_294912[(alu0+27665)];
+  var val91 = data1_294912[(alu0+27666)];
+  var val92 = data1_294912[(alu0+27667)];
+  var val93 = data1_294912[(alu0+27668)];
+  var val94 = data1_294912[(alu0+27669)];
+  var val95 = data1_294912[(alu0+27670)];
+  var val96 = data1_294912[(alu0+27671)];
   var alu2 = (alu1+(lidx0*1536));
-  data0_12288[alu2] = (val0+val1+val2+val3+val4+val5+val6+val7+val8+val9+val10+val11+val12+val13+val14+val15+val16+val17+val18+val19+val20+val21+val22+val23+val96);
-  data0_12288[(alu2+384)] = (val24+val25+val26+val27+val28+val29+val30+val31+val32+val33+val34+val35+val36+val37+val38+val39+val40+val41+val42+val43+val44+val45+val46+val47+val96);
-  data0_12288[(alu2+768)] = (val48+val49+val50+val51+val52+val53+val54+val55+val56+val57+val58+val59+val60+val61+val62+val63+val64+val65+val66+val67+val68+val69+val70+val71+val96);
-  data0_12288[(alu2+1152)] = (val72+val73+val74+val75+val76+val77+val78+val79+val80+val81+val82+val83+val84+val85+val86+val87+val88+val89+val90+val91+val92+val93+val94+val95+val96);
+  data0_12288[alu2] = (val23+val0+val1+val2+val3+val4+val5+val6+val7+val8+val9+val10+val11+val12+val13+val14+val15+val16+val17+val18+val19+val20+val21+val22+val24);
+  data0_12288[(alu2+384)] = (val25+val26+val27+val28+val29+val30+val31+val32+val33+val34+val35+val36+val37+val38+val39+val40+val41+val42+val43+val44+val45+val46+val47+val48+val24);
+  data0_12288[(alu2+768)] = (val49+val50+val51+val52+val53+val54+val55+val56+val57+val58+val59+val60+val61+val62+val63+val64+val65+val66+val67+val68+val69+val70+val71+val72+val24);
+  data0_12288[(alu2+1152)] = (val73+val74+val75+val76+val77+val78+val79+val80+val81+val82+val83+val84+val85+val86+val87+val88+val89+val90+val91+val92+val93+val94+val95+val96+val24);
 }`;
 
 const r_32_16_24 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -207,16 +203,16 @@ var<workgroup> temp0: array<f32,16>;
 @compute @workgroup_size(16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,1>;
   var acc1: array<f32,1>;
-  var lidx0 = i32(lindex.x); /* 16 */
   var gidx0 = i32(gindex.x); /* 32 */
+  var lidx0 = i32(lindex.x); /* 16 */
   acc0[0] = 0.0f;
-  acc1[0] = 0.0f;
   for (var Ridx0 = 0; Ridx0 < 24; Ridx0++) {
     var val0 = data1_12288[((lidx0*24)+Ridx0+(gidx0*384))];
     acc0[0] = (acc0[0]+val0);
   }
   temp0[lidx0] = acc0[0];
   workgroupBarrier();
+  acc1[0] = 0.0f;
   for (var Ridx102 = 0; Ridx102 < 16; Ridx102++) {
     var val1 = temp0[Ridx102];
     acc1[0] = (acc1[0]+val1);
@@ -237,18 +233,18 @@ var<workgroup> temp0: array<f32,16>;
 @compute @workgroup_size(16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,1>;
   var acc1: array<f32,1>;
-  var lidx0 = i32(lindex.x); /* 16 */
   var gidx0 = i32(gindex.x); /* 32 */
-  acc0[0] = 0.0f;
-  acc1[0] = 0.0f;
   var val0 = data2_32[gidx0];
+  var lidx0 = i32(lindex.x); /* 16 */
+  acc0[0] = 0.0f;
   for (var Ridx0 = 0; Ridx0 < 24; Ridx0++) {
     var val1 = data1_12288[((lidx0*24)+Ridx0+(gidx0*384))];
-    var alu2 = (val1-val0);
-    acc0[0] = (acc0[0]+(alu2*alu2));
+    var alu1 = (val1-val0);
+    acc0[0] = (acc0[0]+(alu1*alu1));
   }
   temp0[lidx0] = acc0[0];
   workgroupBarrier();
+  acc1[0] = 0.0f;
   for (var Ridx102 = 0; Ridx102 < 16; Ridx102++) {
     var val2 = temp0[Ridx102];
     acc1[0] = (acc1[0]+val2);
@@ -272,65 +268,63 @@ var<uniform> INFINITY : f32;
   var gidx0 = i32(gindex.x); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var precast0 = lidx0;
   var alu0 = ((gidx0*48)+(lidx1*3));
-  var val0 = data4_384[alu0];
-  var val1 = data5_384[alu0];
   var alu1 = (alu0+(lidx0*1536));
+  var alu2 = (alu1+386);
+  var val0 = data1_12288[alu2];
+  var alu3 = (alu1+768);
+  var val1 = data1_12288[alu3];
   var val2 = data1_12288[alu1];
-  var alu2 = (alu1+1);
-  var val3 = data1_12288[alu2];
-  var alu3 = (alu1+2);
-  var val4 = data1_12288[alu3];
-  var alu4 = (alu1+384);
-  var val5 = data1_12288[alu4];
-  var alu5 = (alu1+385);
-  var val6 = data1_12288[alu5];
-  var alu6 = (alu1+386);
-  var val7 = data1_12288[alu6];
-  var alu7 = (alu1+768);
-  var val8 = data1_12288[alu7];
-  var alu8 = (alu1+769);
-  var val9 = data1_12288[alu8];
-  var alu9 = (alu1+770);
-  var val10 = data1_12288[alu9];
-  var alu10 = (alu1+1152);
-  var val11 = data1_12288[alu10];
-  var alu11 = (alu1+1153);
-  var val12 = data1_12288[alu11];
-  var alu12 = (alu1+1154);
-  var val13 = data1_12288[alu12];
-  var alu13 = (alu0+1);
-  var val14 = data4_384[alu13];
-  var val15 = data5_384[alu13];
-  var alu14 = (alu0+2);
-  var val16 = data4_384[alu14];
-  var val17 = data5_384[alu14];
-  var precast1 = (bitcast<u32>(precast0)<<2u);
-  var cast0 = bitcast<i32>(precast1);
-  var val18 = data2_32[cast0];
-  var val19 = data3_32[cast0];
-  var alu15 = (cast0+1);
-  var val20 = data2_32[alu15];
-  var val21 = data3_32[alu15];
-  var alu16 = (cast0+2);
-  var val22 = data2_32[alu16];
-  var val23 = data3_32[alu16];
-  var alu17 = (cast0+3);
-  var val24 = data2_32[alu17];
-  var val25 = data3_32[alu17];
-  data0_12288[alu2] = (((val3-val18)*val19*val14)+val15);
-  data0_12288[alu3] = (((val4-val18)*val19*val16)+val17);
-  data0_12288[alu4] = (((val5-val20)*val21*val0)+val1);
-  data0_12288[alu5] = (((val6-val20)*val21*val14)+val15);
-  data0_12288[alu6] = (((val7-val20)*val21*val16)+val17);
-  data0_12288[alu7] = (((val8-val22)*val23*val0)+val1);
-  data0_12288[alu8] = (((val9-val22)*val23*val14)+val15);
-  data0_12288[alu9] = (((val10-val22)*val23*val16)+val17);
-  data0_12288[alu10] = (((val11-val24)*val25*val0)+val1);
-  data0_12288[alu11] = (((val12-val24)*val25*val14)+val15);
-  data0_12288[alu12] = (((val13-val24)*val25*val16)+val17);
-  data0_12288[alu1] = (((val2-val18)*val19*val0)+val1);
+  var cast0 = bitcast<i32>((bitcast<u32>(lidx0)<<2u));
+  var val3 = data2_32[cast0];
+  var alu4 = (cast0+2);
+  var val4 = data2_32[alu4];
+  var val5 = data3_32[cast0];
+  var alu5 = (alu0+1);
+  var val6 = data4_384[alu5];
+  var alu6 = (alu0+2);
+  var val7 = data4_384[alu6];
+  var val8 = data4_384[alu0];
+  var val9 = data5_384[alu5];
+  var val10 = data5_384[alu0];
+  var alu7 = (alu1+1);
+  var val11 = data1_12288[alu7];
+  var alu8 = (alu1+2);
+  var val12 = data1_12288[alu8];
+  var val13 = data5_384[alu6];
+  var alu9 = (alu1+384);
+  var val14 = data1_12288[alu9];
+  var alu10 = (cast0+1);
+  var val15 = data2_32[alu10];
+  var val16 = data3_32[alu10];
+  var alu11 = (alu1+385);
+  var val17 = data1_12288[alu11];
+  var val18 = data3_32[alu4];
+  var alu12 = (alu1+769);
+  var val19 = data1_12288[alu12];
+  var alu13 = (alu1+770);
+  var val20 = data1_12288[alu13];
+  var alu14 = (alu1+1152);
+  var val21 = data1_12288[alu14];
+  var alu15 = (cast0+3);
+  var val22 = data2_32[alu15];
+  var val23 = data3_32[alu15];
+  var alu16 = (alu1+1153);
+  var val24 = data1_12288[alu16];
+  var alu17 = (alu1+1154);
+  var val25 = data1_12288[alu17];
+  data0_12288[alu9] = (((val14-val15)*val16*val8)+val10);
+  data0_12288[alu11] = (((val17-val15)*val16*val6)+val9);
+  data0_12288[alu2] = (((val0-val15)*val16*val7)+val13);
+  data0_12288[alu3] = (((val1-val4)*val18*val8)+val10);
+  data0_12288[alu12] = (((val19-val4)*val18*val6)+val9);
+  data0_12288[alu13] = (((val20-val4)*val18*val7)+val13);
+  data0_12288[alu14] = (((val21-val22)*val23*val8)+val10);
+  data0_12288[alu16] = (((val24-val22)*val23*val6)+val9);
+  data0_12288[alu17] = (((val25-val22)*val23*val7)+val13);
+  data0_12288[alu7] = (((val11-val3)*val5*val6)+val9);
+  data0_12288[alu8] = (((val12-val3)*val5*val7)+val13);
+  data0_12288[alu1] = (((val2-val3)*val5*val8)+val10);
 }`;
 
 const r_8_8_16_3_4_96_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -344,6 +338,7 @@ var<uniform> INFINITY : f32;
   var gidx0 = i32(gindex.x); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx0*1536);
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
@@ -356,58 +351,52 @@ var<uniform> INFINITY : f32;
   acc0[9] = 0.0f;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
-  var alu12 = (lidx0*1536);
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
-    var alu13 = ((gidx0*18432)+(lidx1*1152)+cast0);
-    var val0 = data2_147456[alu13];
-    var val1 = data2_147456[(alu13+1)];
-    var val2 = data2_147456[(alu13+2)];
-    var val3 = data2_147456[(alu13+3)];
-    var val4 = data2_147456[(alu13+384)];
-    var val5 = data2_147456[(alu13+385)];
-    var val6 = data2_147456[(alu13+386)];
-    var val7 = data2_147456[(alu13+387)];
-    var val8 = data2_147456[(alu13+768)];
-    var val9 = data2_147456[(alu13+769)];
-    var val10 = data2_147456[(alu13+770)];
-    var val11 = data2_147456[(alu13+771)];
-    var alu14 = (alu12+cast0);
-    var val12 = data1_12288[alu14];
-    var val13 = data1_12288[(alu14+1)];
-    var val14 = data1_12288[(alu14+2)];
-    var val15 = data1_12288[(alu14+3)];
-    var val16 = data1_12288[(alu14+384)];
-    var val17 = data1_12288[(alu14+385)];
-    var val18 = data1_12288[(alu14+386)];
-    var val19 = data1_12288[(alu14+387)];
-    var val20 = data1_12288[(alu14+768)];
-    var val21 = data1_12288[(alu14+769)];
-    var val22 = data1_12288[(alu14+770)];
-    var val23 = data1_12288[(alu14+771)];
-    var val24 = data1_12288[(alu14+1152)];
-    var val25 = data1_12288[(alu14+1153)];
-    var val26 = data1_12288[(alu14+1154)];
-    var val27 = data1_12288[(alu14+1155)];
-    acc0[1] = (acc0[1]+(val16*val0)+(val17*val1)+(val18*val2)+(val19*val3));
-    acc0[5] = (acc0[5]+(val16*val4)+(val17*val5)+(val18*val6)+(val19*val7));
-    acc0[9] = (acc0[9]+(val16*val8)+(val17*val9)+(val18*val10)+(val19*val11));
-    acc0[2] = (acc0[2]+(val20*val0)+(val21*val1)+(val22*val2)+(val23*val3));
-    acc0[6] = (acc0[6]+(val20*val4)+(val21*val5)+(val22*val6)+(val23*val7));
-    acc0[10] = (acc0[10]+(val20*val8)+(val21*val9)+(val22*val10)+(val23*val11));
-    acc0[3] = (acc0[3]+(val24*val0)+(val25*val1)+(val26*val2)+(val27*val3));
-    acc0[7] = (acc0[7]+(val24*val4)+(val25*val5)+(val26*val6)+(val27*val7));
-    acc0[11] = (acc0[11]+(val24*val8)+(val25*val9)+(val26*val10)+(val27*val11));
-    acc0[4] = (acc0[4]+(val12*val4)+(val13*val5)+(val14*val6)+(val15*val7));
-    acc0[8] = (acc0[8]+(val12*val8)+(val13*val9)+(val14*val10)+(val15*val11));
-    acc0[0] = (acc0[0]+(val12*val0)+(val13*val1)+(val14*val2)+(val15*val3));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu13 = (alu0+cast0);
+    var val0 = data1_12288[(alu13+1)];
+    var val1 = data1_12288[alu13];
+    var alu14 = ((gidx0*18432)+(lidx1*1152)+cast0);
+    var val2 = data2_147456[(alu14+1)];
+    var val3 = data2_147456[(alu14+2)];
+    var val4 = data2_147456[alu14];
+    var val5 = data1_12288[(alu13+2)];
+    var val6 = data1_12288[(alu13+3)];
+    var val7 = data2_147456[(alu14+3)];
+    var val8 = data1_12288[(alu13+384)];
+    var val9 = data1_12288[(alu13+385)];
+    var val10 = data1_12288[(alu13+386)];
+    var val11 = data1_12288[(alu13+387)];
+    var val12 = data1_12288[(alu13+768)];
+    var val13 = data1_12288[(alu13+769)];
+    var val14 = data1_12288[(alu13+770)];
+    var val15 = data1_12288[(alu13+771)];
+    var val16 = data1_12288[(alu13+1152)];
+    var val17 = data1_12288[(alu13+1153)];
+    var val18 = data1_12288[(alu13+1154)];
+    var val19 = data1_12288[(alu13+1155)];
+    var val20 = data2_147456[(alu14+384)];
+    var val21 = data2_147456[(alu14+385)];
+    var val22 = data2_147456[(alu14+386)];
+    var val23 = data2_147456[(alu14+387)];
+    var val24 = data2_147456[(alu14+768)];
+    var val25 = data2_147456[(alu14+769)];
+    var val26 = data2_147456[(alu14+770)];
+    var val27 = data2_147456[(alu14+771)];
+    acc0[0] = (acc0[0]+(val1*val4)+(val0*val2)+(val5*val3)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val4)+(val9*val2)+(val10*val3)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val4)+(val13*val2)+(val14*val3)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val4)+(val17*val2)+(val18*val3)+(val19*val7));
+    acc0[4] = (acc0[4]+(val1*val20)+(val0*val21)+(val5*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val1*val24)+(val0*val25)+(val5*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
-  var alu28 = ((gidx0*48)+(lidx1*3)+alu12);
-  data0_12288[alu28] = acc0[0];
-  data0_12288[(alu28+1)] = acc0[4];
-  data0_12288[(alu28+2)] = acc0[8];
+  var alu28 = ((gidx0*48)+(lidx1*3)+alu0);
   data0_12288[(alu28+384)] = acc0[1];
   data0_12288[(alu28+385)] = acc0[5];
   data0_12288[(alu28+386)] = acc0[9];
@@ -417,6 +406,9 @@ var<uniform> INFINITY : f32;
   data0_12288[(alu28+1152)] = acc0[3];
   data0_12288[(alu28+1153)] = acc0[7];
   data0_12288[(alu28+1154)] = acc0[11];
+  data0_12288[(alu28+1)] = acc0[4];
+  data0_12288[(alu28+2)] = acc0[8];
+  data0_12288[alu28] = acc0[0];
 }`;
 
 const E_32_7_48_16_8_4n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -427,36 +419,30 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(3)var<storage,read_write>data2_12288:array<f32>;
 @group(0) @binding(4)var<uniform>ctx:i32;
 @compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var gidx1 = i32(gindex.y); /* 7 */
-  var lidx1 = i32(lindex.y); /* 8 */
-  var lidx0 = i32(lindex.x); /* 16 */
-  var gidx2 = i32(gindex.z); /* 32 */
   var gidx0 = i32(gindex.x); /* 48 */
-  var precast0 = gidx0;
-  var precast1 = (bitcast<u32>(precast0)<<3u);
-  var alu0 = (lidx1+bitcast<i32>(precast1));
-  var val0 = data2_12288[(alu0+(gidx2*384))];
+  var gidx1 = i32(gindex.y); /* 7 */
+  var gidx2 = i32(gindex.z); /* 32 */
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<3u)));
   var alu1 = (alu0+(gidx1*24576)+(lidx0*1536)+(gidx2*172032));
-  var val1 = data1_5505024[alu1];
+  var val0 = data1_5505024[alu1];
+  var val1 = data2_12288[(alu0+(gidx2*384))];
   var alu2 = (alu1+384);
   var val2 = data1_5505024[alu2];
   var alu3 = (alu1+768);
   var val3 = data1_5505024[alu3];
   var alu4 = (alu1+1152);
   var val4 = data1_5505024[alu4];
-  var precast2 = gidx1;
-  var precast3 = lidx0;
-  var precast4 = (bitcast<u32>(precast2)<<6u);
-  var precast5 = (bitcast<u32>(precast3)<<2u);
-  var alu5 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu6 = select(val0,val1,(alu5<ctx));
+  var alu5 = (bitcast<i32>((bitcast<u32>(gidx1)<<6u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
+  var alu6 = select(val1,val0,(alu5<ctx));
+  var alu7 = select(val1,val2,((alu5+1)<ctx));
+  var alu8 = select(val1,val3,((alu5+2)<ctx));
+  var alu9 = select(val1,val4,((alu5+3)<ctx));
   data0_5505024[alu1] = alu6;
-  var alu8 = select(val0,val2,((alu5+1)<ctx));
-  data0_5505024[alu2] = alu8;
-  var alu10 = select(val0,val3,((alu5+2)<ctx));
-  data0_5505024[alu3] = alu10;
-  var alu12 = select(val0,val4,((alu5+3)<ctx));
-  data0_5505024[alu4] = alu12;
+  data0_5505024[alu2] = alu7;
+  data0_5505024[alu3] = alu8;
+  data0_5505024[alu4] = alu9;
 }`;
 
 const E_57344_32_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -465,17 +451,17 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_5505024:array<f32>;
 @group(0) @binding(2)var<storage,read_write>data1_5505024:array<f32>;
 @compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 57344 */
+  var lidx0 = i32(lindex.x); /* 32 */
   var alu0 = ((gidx0*96)+(lidx0*3));
-  var val0 = data1_5505024[alu0];
   var alu1 = (alu0+1);
-  var val1 = data1_5505024[alu1];
+  var val0 = data1_5505024[alu1];
   var alu2 = (alu0+2);
-  var val2 = data1_5505024[alu2];
-  data0_5505024[alu1] = val1;
-  data0_5505024[alu2] = val2;
-  data0_5505024[alu0] = val0;
+  var val1 = data1_5505024[alu2];
+  var val2 = data1_5505024[alu0];
+  data0_5505024[alu1] = val0;
+  data0_5505024[alu2] = val1;
+  data0_5505024[alu0] = val2;
 }`;
 
 const r_8_8_16_3_4_96_4n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -490,6 +476,7 @@ var<uniform> INFINITY : f32;
   var gidx0 = i32(gindex.x); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx0*1536);
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
@@ -502,71 +489,68 @@ var<uniform> INFINITY : f32;
   acc0[9] = 0.0f;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
-  var alu12 = (lidx0*1536);
-  var alu13 = ((gidx0*48)+(lidx1*3));
-  var val0 = data3_384[alu13];
-  var val1 = data3_384[(alu13+1)];
-  var val2 = data3_384[(alu13+2)];
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu13 = (alu0+cast0);
+    var val0 = data1_12288[alu13];
     var alu14 = ((gidx0*18432)+(lidx1*1152)+cast0);
+    var val1 = data2_147456[(alu14+1)];
+    var val2 = data2_147456[(alu14+2)];
     var val3 = data2_147456[alu14];
-    var val4 = data2_147456[(alu14+1)];
-    var val5 = data2_147456[(alu14+2)];
-    var val6 = data2_147456[(alu14+3)];
-    var val7 = data2_147456[(alu14+384)];
-    var val8 = data2_147456[(alu14+385)];
-    var val9 = data2_147456[(alu14+386)];
-    var val10 = data2_147456[(alu14+387)];
-    var val11 = data2_147456[(alu14+768)];
-    var val12 = data2_147456[(alu14+769)];
-    var val13 = data2_147456[(alu14+770)];
-    var val14 = data2_147456[(alu14+771)];
-    var alu15 = (alu12+cast0);
-    var val15 = data1_12288[alu15];
-    var val16 = data1_12288[(alu15+1)];
-    var val17 = data1_12288[(alu15+2)];
-    var val18 = data1_12288[(alu15+3)];
-    var val19 = data1_12288[(alu15+384)];
-    var val20 = data1_12288[(alu15+385)];
-    var val21 = data1_12288[(alu15+386)];
-    var val22 = data1_12288[(alu15+387)];
-    var val23 = data1_12288[(alu15+768)];
-    var val24 = data1_12288[(alu15+769)];
-    var val25 = data1_12288[(alu15+770)];
-    var val26 = data1_12288[(alu15+771)];
-    var val27 = data1_12288[(alu15+1152)];
-    var val28 = data1_12288[(alu15+1153)];
-    var val29 = data1_12288[(alu15+1154)];
-    var val30 = data1_12288[(alu15+1155)];
-    acc0[1] = (acc0[1]+(val19*val3)+(val20*val4)+(val21*val5)+(val22*val6));
-    acc0[5] = (acc0[5]+(val19*val7)+(val20*val8)+(val21*val9)+(val22*val10));
-    acc0[9] = (acc0[9]+(val19*val11)+(val20*val12)+(val21*val13)+(val22*val14));
-    acc0[2] = (acc0[2]+(val23*val3)+(val24*val4)+(val25*val5)+(val26*val6));
-    acc0[6] = (acc0[6]+(val23*val7)+(val24*val8)+(val25*val9)+(val26*val10));
-    acc0[10] = (acc0[10]+(val23*val11)+(val24*val12)+(val25*val13)+(val26*val14));
-    acc0[3] = (acc0[3]+(val27*val3)+(val28*val4)+(val29*val5)+(val30*val6));
-    acc0[7] = (acc0[7]+(val27*val7)+(val28*val8)+(val29*val9)+(val30*val10));
-    acc0[11] = (acc0[11]+(val27*val11)+(val28*val12)+(val29*val13)+(val30*val14));
-    acc0[4] = (acc0[4]+(val15*val7)+(val16*val8)+(val17*val9)+(val18*val10));
-    acc0[8] = (acc0[8]+(val15*val11)+(val16*val12)+(val17*val13)+(val18*val14));
-    acc0[0] = (acc0[0]+(val15*val3)+(val16*val4)+(val17*val5)+(val18*val6));
+    var val4 = data1_12288[(alu13+1)];
+    var val5 = data1_12288[(alu13+2)];
+    var val6 = data1_12288[(alu13+3)];
+    var val7 = data2_147456[(alu14+3)];
+    var val8 = data1_12288[(alu13+384)];
+    var val9 = data1_12288[(alu13+385)];
+    var val10 = data1_12288[(alu13+386)];
+    var val11 = data1_12288[(alu13+387)];
+    var val12 = data1_12288[(alu13+768)];
+    var val13 = data1_12288[(alu13+769)];
+    var val14 = data1_12288[(alu13+770)];
+    var val15 = data1_12288[(alu13+771)];
+    var val16 = data1_12288[(alu13+1152)];
+    var val17 = data1_12288[(alu13+1153)];
+    var val18 = data1_12288[(alu13+1154)];
+    var val19 = data1_12288[(alu13+1155)];
+    var val20 = data2_147456[(alu14+384)];
+    var val21 = data2_147456[(alu14+385)];
+    var val22 = data2_147456[(alu14+386)];
+    var val23 = data2_147456[(alu14+387)];
+    var val24 = data2_147456[(alu14+768)];
+    var val25 = data2_147456[(alu14+769)];
+    var val26 = data2_147456[(alu14+770)];
+    var val27 = data2_147456[(alu14+771)];
+    acc0[0] = (acc0[0]+(val0*val3)+(val4*val1)+(val5*val2)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val3)+(val9*val1)+(val10*val2)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val3)+(val13*val1)+(val14*val2)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val3)+(val17*val1)+(val18*val2)+(val19*val7));
+    acc0[4] = (acc0[4]+(val0*val20)+(val4*val21)+(val5*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val0*val24)+(val4*val25)+(val5*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
-  var alu29 = (alu13+alu12);
-  data0_12288[alu29] = (acc0[0]+val0);
-  data0_12288[(alu29+384)] = (acc0[1]+val0);
-  data0_12288[(alu29+768)] = (acc0[2]+val0);
-  data0_12288[(alu29+1152)] = (acc0[3]+val0);
-  data0_12288[(alu29+1)] = (acc0[4]+val1);
-  data0_12288[(alu29+385)] = (acc0[5]+val1);
-  data0_12288[(alu29+769)] = (acc0[6]+val1);
-  data0_12288[(alu29+1153)] = (acc0[7]+val1);
-  data0_12288[(alu29+2)] = (acc0[8]+val2);
-  data0_12288[(alu29+386)] = (acc0[9]+val2);
-  data0_12288[(alu29+770)] = (acc0[10]+val2);
-  data0_12288[(alu29+1154)] = (acc0[11]+val2);
+  var alu28 = ((gidx0*48)+(lidx1*3));
+  var val28 = data3_384[(alu28+2)];
+  var val29 = data3_384[alu28];
+  var val30 = data3_384[(alu28+1)];
+  var alu29 = (alu28+alu0);
+  data0_12288[(alu29+384)] = (acc0[1]+val29);
+  data0_12288[(alu29+385)] = (acc0[5]+val30);
+  data0_12288[(alu29+386)] = (acc0[9]+val28);
+  data0_12288[(alu29+768)] = (acc0[2]+val29);
+  data0_12288[(alu29+769)] = (acc0[6]+val30);
+  data0_12288[(alu29+770)] = (acc0[10]+val28);
+  data0_12288[(alu29+1152)] = (acc0[3]+val29);
+  data0_12288[(alu29+1153)] = (acc0[7]+val30);
+  data0_12288[(alu29+1154)] = (acc0[11]+val28);
+  data0_12288[(alu29+1)] = (acc0[4]+val30);
+  data0_12288[(alu29+2)] = (acc0[8]+val28);
+  data0_12288[alu29] = (acc0[0]+val29);
 }`;
 
 const r_4_375_24_2_4_16_4_96_4n2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -580,91 +564,81 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(6)var<uniform>update_cache:i32;
 @compute @workgroup_size(2,4,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,1>;
-  var lidx0 = i32(lindex.x); /* 2 */
-  var gidx2 = i32(gindex.z); /* 4 */
-  var lidx1 = i32(lindex.y); /* 4 */
-  var lidx2 = i32(lindex.z); /* 16 */
   var gidx0 = i32(gindex.x); /* 24 */
   var gidx1 = i32(gindex.y); /* 375 */
-  var precast0 = update_cache;
-  var precast1 = gidx0;
-  var precast2 = gidx2;
-  var precast3 = lidx0;
+  var lidx1 = i32(lindex.y); /* 4 */
+  var lidx2 = i32(lindex.z); /* 16 */
+  var alu0 = ((gidx1*1536)+(lidx1*384));
   acc0[0] = 0.0f;
-  var alu1 = (off+1);
-  var alu2 = ((gidx2*4608000)+(lidx0*2304000));
-  var alu3 = ((gidx1*1536)+(lidx1*384));
-  var precast4 = (bitcast<u32>(precast0)<<5u);
-  var cast0 = bitcast<i32>(precast4);
-  var precast5 = (bitcast<u32>(precast1)<<4u);
-  var alu4 = (lidx2+bitcast<i32>(precast5)+alu3);
-  var alu5 = (alu4+alu2+(update_cache*-18432000));
-  var alu6 = (alu4+alu2);
-  var alu7 = (alu5+576000);
-  var alu8 = (alu5+1152000);
-  var alu9 = (alu5+1728000);
-  var alu10 = (alu6+576000);
-  var alu11 = (alu6+1152000);
-  var alu12 = (alu6+1728000);
-  var precast6 = (bitcast<u32>(precast2)<<3u);
-  var precast7 = (bitcast<u32>(precast3)<<2u);
-  var alu13 = (bitcast<i32>(precast6)+bitcast<i32>(precast7));
-  var alu14 = (alu13+(update_cache*-32));
-  var alu15 = (alu14+1);
-  var alu16 = (alu14+2);
-  var alu17 = (alu14+3);
-  var alu18 = (alu13<cast0);
-  var val0 = select(0.0f, data1_18432000[alu6], alu18);
-  var alu19 = (alu14<off);
-  var alu20 = (alu14<alu1);
-  var alu21 = ((alu13+1)<cast0);
-  var val1 = select(0.0f, data1_18432000[alu10], alu21);
-  var alu22 = ((alu13+2)<cast0);
-  var val2 = select(0.0f, data1_18432000[alu11], alu22);
-  var alu23 = ((alu13+3)<cast0);
-  var val3 = select(0.0f, data1_18432000[alu12], alu23);
-  var alu24 = (alu15<off);
-  var alu25 = (alu15<alu1);
-  var alu26 = (alu16<off);
-  var alu27 = (alu16<alu1);
-  var alu28 = (alu17<off);
-  var alu29 = (alu17<alu1);
-  var val4 = select(0.0f, data1_18432000[alu5], ((alu20|alu18)!=true));
-  var val5 = select(0.0f, data1_18432000[alu7], ((alu25|alu21)!=true));
-  var val6 = select(0.0f, data1_18432000[alu8], ((alu27|alu22)!=true));
-  var val7 = select(0.0f, data1_18432000[alu9], ((alu29|alu23)!=true));
-  var val8 = select(0.0f, data1_18432000[alu9], ((-4<alu14)&alu28&(alu23!=true)));
-  var val9 = select(0.0f, data1_18432000[alu8], ((-3<alu14)&alu26&(alu22!=true)));
-  var val10 = select(0.0f, data1_18432000[alu7], ((-2<alu14)&alu24&(alu21!=true)));
-  var val11 = select(0.0f, data1_18432000[alu5], ((-1<alu14)&alu19&(alu18!=true)));
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast8 = Ridx0;
-    var precast9 = (bitcast<u32>(precast8)<<2u);
-    var cast1 = bitcast<i32>(precast9);
-    var alu30 = ((gidx0*6144)+(lidx2*384)+cast1);
-    var val12 = data3_147456[alu30];
-    var val13 = data3_147456[(alu30+1)];
-    var val14 = data3_147456[(alu30+2)];
-    var val15 = data3_147456[(alu30+3)];
-    var alu31 = (alu3+cast1);
-    var val16 = data2_576000[alu31];
-    var val17 = data2_576000[(alu31+1)];
-    var val18 = data2_576000[(alu31+2)];
-    var val19 = data2_576000[(alu31+3)];
-    acc0[0] = (acc0[0]+(val16*val12)+(val17*val13)+(val18*val14)+(val19*val15));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu2 = (alu0+cast0);
+    var val0 = data2_576000[(alu2+3)];
+    var val1 = data2_576000[alu2];
+    var alu3 = ((gidx0*6144)+(lidx2*384)+cast0);
+    var val2 = data3_147456[(alu3+2)];
+    var val3 = data3_147456[(alu3+3)];
+    var val4 = data3_147456[alu3];
+    var val5 = data2_576000[(alu2+1)];
+    var val6 = data3_147456[(alu3+1)];
+    var val7 = data2_576000[(alu2+2)];
+    acc0[0] = (acc0[0]+(val1*val4)+(val5*val6)+(val7*val2)+(val0*val3));
   }
-  var alu34 = select(0.0f,acc0[0],((alu19!=true)&alu20));
-  var alu35 = select((val11+alu34+val4),0.0f,alu18);
-  data0_18432000[alu6] = (val0+alu35);
-  var alu37 = select(0.0f,acc0[0],((alu24!=true)&alu25));
-  var alu38 = select((val10+alu37+val5),0.0f,alu21);
-  data0_18432000[alu10] = (val1+alu38);
-  var alu40 = select(0.0f,acc0[0],((alu26!=true)&alu27));
-  var alu41 = select((val9+alu40+val6),0.0f,alu22);
-  data0_18432000[alu11] = (val2+alu41);
-  var alu43 = select(0.0f,acc0[0],((alu28!=true)&alu29));
-  var alu44 = select((val8+alu43+val7),0.0f,alu23);
-  data0_18432000[alu12] = (val3+alu44);
+  var gidx2 = i32(gindex.z); /* 4 */
+  var lidx0 = i32(lindex.x); /* 2 */
+  var cast1 = bitcast<i32>((bitcast<u32>(update_cache)<<5u));
+  var alu6 = (bitcast<i32>((bitcast<u32>(gidx2)<<3u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
+  var alu7 = (lidx2+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
+  var alu8 = (alu6+(update_cache*-32));
+  var alu9 = ((gidx2*4608000)+(lidx0*2304000));
+  var alu10 = (alu7+alu9+(update_cache*-18432000));
+  var alu11 = (alu6<cast1);
+  var alu12 = (alu8<off);
+  var val8 = select(0.0f, data1_18432000[alu10], ((-1<alu8)&alu12&(alu11!=true)));
+  var alu13 = (alu7+alu9);
+  var val9 = select(0.0f, data1_18432000[alu13], alu11);
+  var alu14 = (off+1);
+  var alu15 = (alu8<alu14);
+  var val10 = select(0.0f, data1_18432000[alu10], ((alu15|alu11)!=true));
+  var alu16 = (alu8+1);
+  var alu17 = (alu10+576000);
+  var alu18 = ((alu6+1)<cast1);
+  var alu19 = (alu16<alu14);
+  var val11 = select(0.0f, data1_18432000[alu17], ((alu19|alu18)!=true));
+  var alu20 = (alu16<off);
+  var val12 = select(0.0f, data1_18432000[alu17], ((-2<alu8)&alu20&(alu18!=true)));
+  var alu21 = (alu8+2);
+  var alu22 = (alu10+1152000);
+  var alu23 = ((alu6+2)<cast1);
+  var alu24 = (alu21<alu14);
+  var val13 = select(0.0f, data1_18432000[alu22], ((alu24|alu23)!=true));
+  var alu25 = (alu21<off);
+  var val14 = select(0.0f, data1_18432000[alu22], ((-3<alu8)&alu25&(alu23!=true)));
+  var alu26 = (alu8+3);
+  var alu27 = (alu10+1728000);
+  var alu28 = ((alu6+3)<cast1);
+  var alu29 = (alu26<alu14);
+  var val15 = select(0.0f, data1_18432000[alu27], ((alu29|alu28)!=true));
+  var alu30 = (alu26<off);
+  var val16 = select(0.0f, data1_18432000[alu27], ((-4<alu8)&alu30&(alu28!=true)));
+  var alu31 = (alu13+576000);
+  var val17 = select(0.0f, data1_18432000[alu31], alu18);
+  var alu32 = (alu13+1152000);
+  var val18 = select(0.0f, data1_18432000[alu32], alu23);
+  var alu33 = (alu13+1728000);
+  var val19 = select(0.0f, data1_18432000[alu33], alu28);
+  var alu34 = select(0.0f,acc0[0],((alu12!=true)&alu15));
+  var alu35 = select((val8+alu34+val10),0.0f,alu11);
+  var alu36 = select(0.0f,acc0[0],((alu20!=true)&alu19));
+  var alu37 = select(0.0f,acc0[0],((alu25!=true)&alu24));
+  var alu38 = select(0.0f,acc0[0],((alu30!=true)&alu29));
+  var alu39 = select((val12+alu36+val11),0.0f,alu18);
+  var alu40 = select((val14+alu37+val13),0.0f,alu23);
+  var alu41 = select((val16+alu38+val15),0.0f,alu28);
+  data0_18432000[alu13] = (val9+alu35);
+  data0_18432000[alu31] = (val17+alu39);
+  data0_18432000[alu32] = (val18+alu40);
+  data0_18432000[alu33] = (val19+alu41);
 }`;
 
 const r_4_375_24_2_4_16_4_96_4n3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -679,94 +653,84 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(7)var<uniform>update_cache:i32;
 @compute @workgroup_size(2,4,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,1>;
-  var lidx0 = i32(lindex.x); /* 2 */
-  var gidx2 = i32(gindex.z); /* 4 */
-  var lidx1 = i32(lindex.y); /* 4 */
-  var lidx2 = i32(lindex.z); /* 16 */
   var gidx0 = i32(gindex.x); /* 24 */
   var gidx1 = i32(gindex.y); /* 375 */
-  var precast0 = update_cache;
-  var precast1 = gidx0;
-  var precast2 = gidx2;
-  var precast3 = lidx0;
+  var lidx1 = i32(lindex.y); /* 4 */
+  var lidx2 = i32(lindex.z); /* 16 */
+  var alu0 = ((gidx1*1536)+(lidx1*384));
   acc0[0] = 0.0f;
-  var alu1 = (off+1);
-  var alu2 = ((gidx2*4608000)+(lidx0*2304000));
-  var alu3 = ((gidx1*1536)+(lidx1*384));
-  var precast4 = (bitcast<u32>(precast0)<<5u);
-  var cast0 = bitcast<i32>(precast4);
-  var precast5 = (bitcast<u32>(precast1)<<4u);
-  var alu4 = (lidx2+bitcast<i32>(precast5));
-  var val0 = data4_384[alu4];
-  var alu5 = (alu4+alu3);
-  var alu6 = (alu5+alu2+(update_cache*-18432000));
-  var alu7 = (alu5+alu2);
-  var alu8 = (alu6+576000);
-  var alu9 = (alu6+1152000);
-  var alu10 = (alu6+1728000);
-  var alu11 = (alu7+576000);
-  var alu12 = (alu7+1152000);
-  var alu13 = (alu7+1728000);
-  var precast6 = (bitcast<u32>(precast2)<<3u);
-  var precast7 = (bitcast<u32>(precast3)<<2u);
-  var alu14 = (bitcast<i32>(precast6)+bitcast<i32>(precast7));
-  var alu15 = (alu14+(update_cache*-32));
-  var alu16 = (alu15+1);
-  var alu17 = (alu15+2);
-  var alu18 = (alu15+3);
-  var alu19 = (alu14<cast0);
-  var val1 = select(0.0f, data1_18432000[alu7], alu19);
-  var alu20 = (alu15<off);
-  var alu21 = (alu15<alu1);
-  var alu22 = ((alu14+1)<cast0);
-  var val2 = select(0.0f, data1_18432000[alu11], alu22);
-  var alu23 = ((alu14+2)<cast0);
-  var val3 = select(0.0f, data1_18432000[alu12], alu23);
-  var alu24 = ((alu14+3)<cast0);
-  var val4 = select(0.0f, data1_18432000[alu13], alu24);
-  var alu25 = (alu16<off);
-  var alu26 = (alu16<alu1);
-  var alu27 = (alu17<off);
-  var alu28 = (alu17<alu1);
-  var alu29 = (alu18<off);
-  var alu30 = (alu18<alu1);
-  var val5 = select(0.0f, data1_18432000[alu6], ((alu21|alu19)!=true));
-  var val6 = select(0.0f, data1_18432000[alu8], ((alu26|alu22)!=true));
-  var val7 = select(0.0f, data1_18432000[alu9], ((alu28|alu23)!=true));
-  var val8 = select(0.0f, data1_18432000[alu10], ((alu30|alu24)!=true));
-  var val9 = select(0.0f, data1_18432000[alu10], ((-4<alu15)&alu29&(alu24!=true)));
-  var val10 = select(0.0f, data1_18432000[alu9], ((-3<alu15)&alu27&(alu23!=true)));
-  var val11 = select(0.0f, data1_18432000[alu8], ((-2<alu15)&alu25&(alu22!=true)));
-  var val12 = select(0.0f, data1_18432000[alu6], ((-1<alu15)&alu20&(alu19!=true)));
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast8 = Ridx0;
-    var precast9 = (bitcast<u32>(precast8)<<2u);
-    var cast1 = bitcast<i32>(precast9);
-    var alu31 = ((gidx0*6144)+(lidx2*384)+cast1);
-    var val13 = data3_147456[alu31];
-    var val14 = data3_147456[(alu31+1)];
-    var val15 = data3_147456[(alu31+2)];
-    var val16 = data3_147456[(alu31+3)];
-    var alu32 = (alu3+cast1);
-    var val17 = data2_576000[alu32];
-    var val18 = data2_576000[(alu32+1)];
-    var val19 = data2_576000[(alu32+2)];
-    var val20 = data2_576000[(alu32+3)];
-    acc0[0] = (acc0[0]+(val17*val13)+(val18*val14)+(val19*val15)+(val20*val16));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu2 = (alu0+cast0);
+    var val0 = data2_576000[(alu2+2)];
+    var val1 = data2_576000[alu2];
+    var alu3 = ((gidx0*6144)+(lidx2*384)+cast0);
+    var val2 = data3_147456[(alu3+3)];
+    var val3 = data3_147456[alu3];
+    var val4 = data2_576000[(alu2+1)];
+    var val5 = data3_147456[(alu3+1)];
+    var val6 = data3_147456[(alu3+2)];
+    var val7 = data2_576000[(alu2+3)];
+    acc0[0] = (acc0[0]+(val1*val3)+(val4*val5)+(val0*val6)+(val7*val2));
   }
-  var alu35 = (acc0[0]+val0);
-  var alu36 = select(0.0f,alu35,((alu20!=true)&alu21));
-  var alu37 = select((val12+alu36+val5),0.0f,alu19);
-  data0_18432000[alu7] = (val1+alu37);
-  var alu39 = select(0.0f,alu35,((alu25!=true)&alu26));
-  var alu40 = select((val11+alu39+val6),0.0f,alu22);
-  data0_18432000[alu11] = (val2+alu40);
-  var alu42 = select(0.0f,alu35,((alu27!=true)&alu28));
-  var alu43 = select((val10+alu42+val7),0.0f,alu23);
-  data0_18432000[alu12] = (val3+alu43);
-  var alu45 = select(0.0f,alu35,((alu29!=true)&alu30));
-  var alu46 = select((val9+alu45+val8),0.0f,alu24);
-  data0_18432000[alu13] = (val4+alu46);
+  var gidx2 = i32(gindex.z); /* 4 */
+  var lidx0 = i32(lindex.x); /* 2 */
+  var cast1 = bitcast<i32>((bitcast<u32>(update_cache)<<5u));
+  var alu6 = (lidx2+bitcast<i32>((bitcast<u32>(gidx0)<<4u)));
+  var alu7 = (bitcast<i32>((bitcast<u32>(gidx2)<<3u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
+  var alu8 = (alu6+alu0);
+  var alu9 = (alu7+(update_cache*-32));
+  var alu10 = ((gidx2*4608000)+(lidx0*2304000));
+  var alu11 = (alu8+alu10+(update_cache*-18432000));
+  var alu12 = (alu7<cast1);
+  var alu13 = (alu9<off);
+  var val8 = select(0.0f, data1_18432000[alu11], ((-1<alu9)&alu13&(alu12!=true)));
+  var alu14 = (alu8+alu10);
+  var val9 = select(0.0f, data1_18432000[alu14], alu12);
+  var val10 = data4_384[alu6];
+  var alu15 = (off+1);
+  var alu16 = (alu9<alu15);
+  var val11 = select(0.0f, data1_18432000[alu11], ((alu16|alu12)!=true));
+  var alu17 = (alu9+1);
+  var alu18 = (alu11+576000);
+  var alu19 = ((alu7+1)<cast1);
+  var alu20 = (alu17<alu15);
+  var val12 = select(0.0f, data1_18432000[alu18], ((alu20|alu19)!=true));
+  var alu21 = (alu17<off);
+  var val13 = select(0.0f, data1_18432000[alu18], ((-2<alu9)&alu21&(alu19!=true)));
+  var alu22 = (alu9+2);
+  var alu23 = (alu11+1152000);
+  var alu24 = ((alu7+2)<cast1);
+  var alu25 = (alu22<alu15);
+  var val14 = select(0.0f, data1_18432000[alu23], ((alu25|alu24)!=true));
+  var alu26 = (alu22<off);
+  var val15 = select(0.0f, data1_18432000[alu23], ((-3<alu9)&alu26&(alu24!=true)));
+  var alu27 = (alu9+3);
+  var alu28 = (alu11+1728000);
+  var alu29 = ((alu7+3)<cast1);
+  var alu30 = (alu27<alu15);
+  var val16 = select(0.0f, data1_18432000[alu28], ((alu30|alu29)!=true));
+  var alu31 = (alu27<off);
+  var val17 = select(0.0f, data1_18432000[alu28], ((-4<alu9)&alu31&(alu29!=true)));
+  var alu32 = (alu14+576000);
+  var val18 = select(0.0f, data1_18432000[alu32], alu19);
+  var alu33 = (alu14+1152000);
+  var val19 = select(0.0f, data1_18432000[alu33], alu24);
+  var alu34 = (alu14+1728000);
+  var val20 = select(0.0f, data1_18432000[alu34], alu29);
+  var alu35 = (acc0[0]+val10);
+  var alu36 = select(0.0f,alu35,((alu13!=true)&alu16));
+  var alu37 = select((val8+alu36+val11),0.0f,alu12);
+  var alu38 = select(0.0f,alu35,((alu21!=true)&alu20));
+  var alu39 = select(0.0f,alu35,((alu26!=true)&alu25));
+  var alu40 = select(0.0f,alu35,((alu31!=true)&alu30));
+  var alu41 = select((val13+alu38+val12),0.0f,alu19);
+  var alu42 = select((val15+alu39+val14),0.0f,alu24);
+  var alu43 = select((val17+alu40+val16),0.0f,alu29);
+  data0_18432000[alu14] = (val9+alu37);
+  data0_18432000[alu32] = (val18+alu41);
+  data0_18432000[alu33] = (val19+alu42);
+  data0_18432000[alu34] = (val20+alu43);
 }`;
 
 const E_192000_32_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -775,18 +739,18 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_18432000:array<f32>;
 @group(0) @binding(2)var<storage,read_write>data1_18432000:array<f32>;
 @compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 48000 */
   var gidx1 = i32(gindex.y); /* 4 */
   var lidx0 = i32(lindex.x); /* 32 */
-  var gidx0 = i32(gindex.x); /* 48000 */
   var alu0 = ((gidx0*384)+(gidx1*96)+(lidx0*3));
-  var val0 = data1_18432000[alu0];
   var alu1 = (alu0+1);
-  var val1 = data1_18432000[alu1];
+  var val0 = data1_18432000[alu1];
   var alu2 = (alu0+2);
-  var val2 = data1_18432000[alu2];
-  data0_18432000[alu1] = val1;
-  data0_18432000[alu2] = val2;
-  data0_18432000[alu0] = val0;
+  var val1 = data1_18432000[alu2];
+  var val2 = data1_18432000[alu0];
+  data0_18432000[alu1] = val0;
+  data0_18432000[alu2] = val1;
+  data0_18432000[alu0] = val2;
 }`;
 
 const r_2_6_28ctx2B129_8_4_4_8 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -803,153 +767,125 @@ var<workgroup> temp0: array<f32,128>;
   var acc1: array<f32,4>;
   var alu0 = (ctx+1);
   var gidx0 = i32(gindex.x); /* (ctx+1) */
-  var gidx2 = i32(gindex.z); /* 2 */
-  var lidx1 = i32(lindex.y); /* 4 */
   var gidx1 = i32(gindex.y); /* 6 */
+  var gidx2 = i32(gindex.z); /* 2 */
   var lidx0 = i32(lindex.x); /* 8 */
-  var precast0 = lidx0;
-  var precast1 = lidx1;
-  var precast2 = (bitcast<u32>(precast0)<<2u);
-  var precast3 = (bitcast<u32>(precast1)<<5u);
-  var cast0 = bitcast<i32>(precast3);
-  var alu1 = (bitcast<i32>(precast2)+cast0);
-  var precast4 = ctx;
-  var precast5 = gidx2;
+  var lidx1 = i32(lindex.y); /* 4 */
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx2)<<4u)));
+  var alu2 = ((ctx*6)+6);
+  var alu3 = (gidx0+(alu1*alu2));
+  var alu4 = (alu3/alu0);
+  var alu5 = (gidx1+alu4);
+  var alu6 = (((alu5>>1u)*10923)>>15u);
+  var alu7 = (alu5-(6*alu6));
+  var alu8 = (gidx0+((alu1+4)*alu2));
+  var alu9 = (alu8/alu0);
+  var alu10 = (gidx1+alu9);
+  var alu11 = (((alu10>>1u)*10923)>>15u);
+  var alu12 = (alu10-(6*alu11));
+  var alu13 = (gidx0+((alu1+8)*alu2));
+  var alu14 = (alu13/alu0);
+  var alu15 = (gidx1+alu14);
+  var alu16 = (((alu15>>1u)*43691)>>17u);
+  var alu17 = (alu15-(6*alu16));
+  var alu18 = (gidx0+((alu1+12)*alu2));
+  var alu19 = (alu18/alu0);
+  var alu20 = (gidx1+alu19);
+  var alu21 = (((alu20>>1u)*43691)>>17u);
+  var alu22 = (alu20-(6*alu21));
+  var alu23 = (bitcast<i32>((bitcast<u32>(ctx)<<6u))+64);
+  var alu24 = ((ctx*384)+384);
+  var alu25 = (alu6&31);
+  var alu26 = ((alu23*alu7)+(alu3-(alu0*alu4))+(alu24*alu25));
+  var alu27 = (alu26/alu0);
+  var alu28 = (lidx0+alu27);
+  var alu29 = (alu11&31);
+  var alu30 = ((alu23*alu12)+(alu8-(alu0*alu9))+(alu24*alu29));
+  var alu31 = (alu30/alu0);
+  var alu32 = (lidx0+alu31);
+  var alu33 = (alu16&31);
+  var alu34 = ((alu23*alu17)+(alu13-(alu0*alu14))+(alu24*alu33));
+  var alu35 = (alu34/alu0);
+  var alu36 = (lidx0+alu35);
+  var alu37 = (alu21&31);
+  var alu38 = ((alu23*alu22)+(alu18-(alu0*alu19))+(alu24*alu37));
+  var alu39 = (alu38/alu0);
+  var alu40 = (lidx0+alu39);
+  var alu41 = select(0,7,(alu28<0));
+  var alu42 = select(0,7,(alu32<0));
+  var alu43 = select(0,7,(alu36<0));
+  var alu44 = select(0,7,(alu40<0));
+  var alu45 = (alu26-(alu0*alu27));
+  var alu46 = (alu30-(alu0*alu31));
+  var alu47 = (alu34-(alu0*alu35));
+  var alu48 = (alu38-(alu0*alu39));
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
+  for (var Ridx0 = 0; Ridx0 < 8; Ridx0++) {
+    var alu53 = (lidx0+bitcast<i32>((bitcast<u32>(Ridx0)<<3u)));
+    var val0 = data1_12288[(alu53+bitcast<i32>((bitcast<u32>(alu7)<<6u))+(alu25*384))];
+    var alu54 = (((alu28+alu41)>>3u)+Ridx0);
+    var alu55 = select(0,7,(alu54<0));
+    var alu56 = ((alu54+alu55)>>3u);
+    var val1 = data2_5505024[(bitcast<i32>((bitcast<u32>((alu56-(6*(alu56/6))))<<6u))+((alu53+alu27)&63)+(alu45*384)+((((alu54/48)+(alu45/alu0))&31)*172032))];
+    var val2 = data1_12288[(alu53+bitcast<i32>((bitcast<u32>(alu12)<<6u))+(alu29*384))];
+    var alu57 = (((alu32+alu42)>>3u)+Ridx0);
+    var alu58 = select(0,7,(alu57<0));
+    var alu59 = ((alu57+alu58)>>3u);
+    var val3 = data2_5505024[(bitcast<i32>((bitcast<u32>((alu59-(6*(alu59/6))))<<6u))+((alu53+alu31)&63)+(alu46*384)+((((alu57/48)+(alu46/alu0))&31)*172032))];
+    var val4 = data1_12288[(alu53+bitcast<i32>((bitcast<u32>(alu17)<<6u))+(alu33*384))];
+    var alu60 = (((alu36+alu43)>>3u)+Ridx0);
+    var alu61 = select(0,7,(alu60<0));
+    var alu62 = ((alu60+alu61)>>3u);
+    var val5 = data2_5505024[(bitcast<i32>((bitcast<u32>((alu62-(6*(alu62/6))))<<6u))+((alu53+alu35)&63)+(alu47*384)+((((alu60/48)+(alu47/alu0))&31)*172032))];
+    var val6 = data1_12288[(alu53+bitcast<i32>((bitcast<u32>(alu22)<<6u))+(alu37*384))];
+    var alu63 = (((alu40+alu44)>>3u)+Ridx0);
+    var alu64 = select(0,7,(alu63<0));
+    var alu65 = ((alu63+alu64)>>3u);
+    var val7 = data2_5505024[(bitcast<i32>((bitcast<u32>((alu65-(6*(alu65/6))))<<6u))+((alu53+alu39)&63)+(alu48*384)+((((alu63/48)+(alu48/alu0))&31)*172032))];
+    acc0[0] = (acc0[0]+(val0*val1));
+    acc0[1] = (acc0[1]+(val2*val3));
+    acc0[2] = (acc0[2]+(val4*val5));
+    acc0[3] = (acc0[3]+(val6*val7));
+  }
+  var cast0 = bitcast<i32>((bitcast<u32>(lidx1)<<5u));
+  var alu71 = (bitcast<i32>((bitcast<u32>(lidx0)<<2u))+cast0);
+  temp0[alu71] = acc0[0];
+  temp0[(alu71+1)] = acc0[1];
+  temp0[(alu71+2)] = acc0[2];
+  temp0[(alu71+3)] = acc0[3];
+  workgroupBarrier();
   acc1[0] = 0.0f;
   acc1[1] = 0.0f;
   acc1[2] = 0.0f;
   acc1[3] = 0.0f;
-  var val0 = data3_200704[0];
-  var alu10 = ((ctx*6)+6);
-  var alu11 = ((ctx*384)+384);
-  var precast6 = (bitcast<u32>(precast4)<<6u);
-  var alu12 = (bitcast<i32>(precast6)+64);
-  var precast7 = (bitcast<u32>(precast5)<<4u);
-  var alu13 = (lidx1+bitcast<i32>(precast7));
-  var alu14 = (gidx0+(alu13*alu10));
-  var alu15 = (gidx0+((alu13+4)*alu10));
-  var alu16 = (gidx0+((alu13+8)*alu10));
-  var alu17 = (gidx0+((alu13+12)*alu10));
-  var alu18 = (alu14/alu0);
-  var alu19 = (gidx1+alu18);
-  var alu20 = (((alu19>>1u)*10923)>>15u);
-  var alu21 = (alu15/alu0);
-  var alu22 = (gidx1+alu21);
-  var alu23 = (((alu22>>1u)*10923)>>15u);
-  var alu24 = (alu16/alu0);
-  var alu25 = (gidx1+alu24);
-  var alu26 = (((alu25>>1u)*43691)>>17u);
-  var alu27 = (alu17/alu0);
-  var alu28 = (gidx1+alu27);
-  var alu29 = (((alu28>>1u)*43691)>>17u);
-  var alu30 = (alu20&31);
-  var alu31 = (alu23&31);
-  var alu32 = (alu26&31);
-  var alu33 = (alu29&31);
-  var alu34 = (alu19-(6*alu20));
-  var precast8 = alu34;
-  var alu35 = ((alu12*alu34)+(alu14-(alu0*alu18))+(alu11*alu30));
-  var precast9 = (bitcast<u32>(precast8)<<6u);
-  var alu36 = (alu35/alu0);
-  var alu37 = (lidx0+alu36);
-  var alu38 = (alu22-(6*alu23));
-  var precast10 = alu38;
-  var alu39 = ((alu12*alu38)+(alu15-(alu0*alu21))+(alu11*alu31));
-  var precast11 = (bitcast<u32>(precast10)<<6u);
-  var alu40 = (alu39/alu0);
-  var alu41 = (lidx0+alu40);
-  var alu42 = (alu25-(6*alu26));
-  var precast12 = alu42;
-  var alu43 = ((alu12*alu42)+(alu16-(alu0*alu24))+(alu11*alu32));
-  var precast13 = (bitcast<u32>(precast12)<<6u);
-  var alu44 = (alu43/alu0);
-  var alu45 = (lidx0+alu44);
-  var alu46 = (alu28-(6*alu29));
-  var precast14 = alu46;
-  var alu47 = ((alu12*alu46)+(alu17-(alu0*alu27))+(alu11*alu33));
-  var precast15 = (bitcast<u32>(precast14)<<6u);
-  var alu48 = (alu47/alu0);
-  var alu49 = (lidx0+alu48);
-  var alu50 = (alu35-(alu0*alu36));
-  var alu51 = (alu39-(alu0*alu40));
-  var alu52 = (alu43-(alu0*alu44));
-  var alu53 = (alu47-(alu0*alu48));
-  var alu54 = select(0,7,(alu37<0));
-  var alu55 = select(0,7,(alu41<0));
-  var alu56 = select(0,7,(alu45<0));
-  var alu57 = select(0,7,(alu49<0));
-  for (var Ridx0 = 0; Ridx0 < 8; Ridx0++) {
-    var precast16 = Ridx0;
-    var alu58 = (((alu37+alu54)>>3u)+Ridx0);
-    var alu59 = (((alu41+alu55)>>3u)+Ridx0);
-    var alu60 = (((alu45+alu56)>>3u)+Ridx0);
-    var alu61 = (((alu49+alu57)>>3u)+Ridx0);
-    var precast17 = (bitcast<u32>(precast16)<<3u);
-    var alu62 = (lidx0+bitcast<i32>(precast17));
-    var val1 = data1_12288[(alu62+bitcast<i32>(precast9)+(alu30*384))];
-    var val2 = data1_12288[(alu62+bitcast<i32>(precast11)+(alu31*384))];
-    var val3 = data1_12288[(alu62+bitcast<i32>(precast13)+(alu32*384))];
-    var val4 = data1_12288[(alu62+bitcast<i32>(precast15)+(alu33*384))];
-    var alu63 = select(0,7,(alu58<0));
-    var alu64 = ((alu58+alu63)>>3u);
-    var precast18 = (alu64-(6*(alu64/6)));
-    var precast19 = (bitcast<u32>(precast18)<<6u);
-    var val5 = data2_5505024[(bitcast<i32>(precast19)+((alu62+alu36)&63)+(alu50*384)+((((alu58/48)+(alu50/alu0))&31)*172032))];
-    acc0[0] = (acc0[0]+(val1*val5));
-    var alu66 = select(0,7,(alu59<0));
-    var alu67 = ((alu59+alu66)>>3u);
-    var precast20 = (alu67-(6*(alu67/6)));
-    var precast21 = (bitcast<u32>(precast20)<<6u);
-    var val6 = data2_5505024[(bitcast<i32>(precast21)+((alu62+alu40)&63)+(alu51*384)+((((alu59/48)+(alu51/alu0))&31)*172032))];
-    acc0[1] = (acc0[1]+(val2*val6));
-    var alu69 = select(0,7,(alu60<0));
-    var alu70 = ((alu60+alu69)>>3u);
-    var precast22 = (alu70-(6*(alu70/6)));
-    var precast23 = (bitcast<u32>(precast22)<<6u);
-    var val7 = data2_5505024[(bitcast<i32>(precast23)+((alu62+alu44)&63)+(alu52*384)+((((alu60/48)+(alu52/alu0))&31)*172032))];
-    acc0[2] = (acc0[2]+(val3*val7));
-    var alu72 = select(0,7,(alu61<0));
-    var alu73 = ((alu61+alu72)>>3u);
-    var precast24 = (alu73-(6*(alu73/6)));
-    var precast25 = (bitcast<u32>(precast24)<<6u);
-    var val8 = data2_5505024[(bitcast<i32>(precast25)+((alu62+alu48)&63)+(alu53*384)+((((alu61/48)+(alu53/alu0))&31)*172032))];
-    acc0[3] = (acc0[3]+(val4*val8));
-  }
-  temp0[alu1] = acc0[0];
-  temp0[(alu1+1)] = acc0[1];
-  temp0[(alu1+2)] = acc0[2];
-  temp0[(alu1+3)] = acc0[3];
-  workgroupBarrier();
   for (var Ridx104 = 0; Ridx104 < 8; Ridx104++) {
-    var precast26 = Ridx104;
-    var precast27 = (bitcast<u32>(precast26)<<2u);
-    var alu81 = (cast0+bitcast<i32>(precast27));
-    var val9 = temp0[alu81];
-    var val10 = temp0[(alu81+1)];
-    var val11 = temp0[(alu81+2)];
-    var val12 = temp0[(alu81+3)];
-    acc1[0] = (acc1[0]+val9);
-    acc1[1] = (acc1[1]+val10);
-    acc1[2] = (acc1[2]+val11);
-    acc1[3] = (acc1[3]+val12);
+    var alu81 = (cast0+bitcast<i32>((bitcast<u32>(Ridx104)<<2u)));
+    var val8 = temp0[alu81];
+    var val9 = temp0[(alu81+1)];
+    var val10 = temp0[(alu81+2)];
+    var val11 = temp0[(alu81+3)];
+    acc1[0] = (acc1[0]+val8);
+    acc1[1] = (acc1[1]+val9);
+    acc1[2] = (acc1[2]+val10);
+    acc1[3] = (acc1[3]+val11);
   }
+  var val12 = data3_200704[0];
   var alu87 = (gidx0+(gidx1*448)+(gidx2*43008)+(lidx1*2688));
   var alu88 = ((bool(lidx0))!=true);
   if (alu88) {
-    data0_86016[alu87] = ((acc1[0]*0.125f)+val0);
+    data0_86016[alu87] = ((acc1[0]*0.125f)+val12);
   }
   if (alu88) {
-    data0_86016[(alu87+10752)] = ((acc1[1]*0.125f)+val0);
+    data0_86016[(alu87+10752)] = ((acc1[1]*0.125f)+val12);
   }
   if (alu88) {
-    data0_86016[(alu87+21504)] = ((acc1[2]*0.125f)+val0);
+    data0_86016[(alu87+21504)] = ((acc1[2]*0.125f)+val12);
   }
   if (alu88) {
-    data0_86016[(alu87+32256)] = ((acc1[3]*0.125f)+val0);
+    data0_86016[(alu87+32256)] = ((acc1[3]*0.125f)+val12);
   }
 }`;
 
@@ -969,24 +905,20 @@ var<uniform> INFINITY : f32;
   acc0[3] = (f32(-INFINITY));
   for (var Ridx0 = 0; Ridx0 < (ctx+1); Ridx0++) {
     var alu4 = ((gidx0*28672)+(lidx0*1792)+Ridx0);
-    var val0 = data1_86016[alu4];
-    var val1 = data1_86016[(alu4+448)];
+    var val0 = data1_86016[(alu4+448)];
+    var val1 = data1_86016[alu4];
     var val2 = data1_86016[(alu4+896)];
     var val3 = data1_86016[(alu4+1344)];
-    var alu5 = select(acc0[0],val0,(acc0[0]<val0));
+    var alu5 = select(acc0[0],val1,(acc0[0]<val1));
+    var alu6 = select(acc0[1],val0,(acc0[1]<val0));
+    var alu7 = select(acc0[2],val2,(acc0[2]<val2));
+    var alu8 = select(acc0[3],val3,(acc0[3]<val3));
     acc0[0] = alu5;
-    var alu7 = select(acc0[1],val1,(acc0[1]<val1));
-    acc0[1] = alu7;
-    var alu9 = select(acc0[2],val2,(acc0[2]<val2));
-    acc0[2] = alu9;
-    var alu11 = select(acc0[3],val3,(acc0[3]<val3));
-    acc0[3] = alu11;
+    acc0[1] = alu6;
+    acc0[2] = alu7;
+    acc0[3] = alu8;
   }
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<6u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var alu14 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu14 = (bitcast<i32>((bitcast<u32>(gidx0)<<6u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
   data0_192[alu14] = acc0[0];
   data0_192[(alu14+1)] = acc0[1];
   data0_192[(alu14+2)] = acc0[2];
@@ -1004,37 +936,33 @@ var<uniform> INFINITY : f32;
   var acc0: array<f32,4>;
   var gidx0 = i32(gindex.x); /* 3 */
   var lidx0 = i32(lindex.x); /* 16 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<6u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
+  var val0 = data2_192[alu0];
+  var alu1 = (alu0+1);
+  var val1 = data2_192[alu1];
+  var alu2 = (alu0+2);
+  var val2 = data2_192[alu2];
+  var alu3 = (alu0+3);
+  var val3 = data2_192[alu3];
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
-  var precast2 = (bitcast<u32>(precast0)<<6u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var alu4 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
-  var val0 = data2_192[alu4];
-  var alu5 = (alu4+1);
-  var val1 = data2_192[alu5];
-  var alu6 = (alu4+2);
-  var val2 = data2_192[alu6];
-  var alu7 = (alu4+3);
-  var val3 = data2_192[alu7];
   for (var Ridx0 = 0; Ridx0 < (ctx+1); Ridx0++) {
     var alu8 = ((gidx0*28672)+(lidx0*1792)+Ridx0);
-    var val4 = data1_86016[alu8];
-    var val5 = data1_86016[(alu8+448)];
+    var val4 = data1_86016[(alu8+448)];
+    var val5 = data1_86016[alu8];
     var val6 = data1_86016[(alu8+896)];
     var val7 = data1_86016[(alu8+1344)];
-    acc0[1] = (acc0[1]+exp2(((val5-val1)*1.4426950408889634f)));
+    acc0[0] = (acc0[0]+exp2(((val5-val0)*1.4426950408889634f)));
+    acc0[1] = (acc0[1]+exp2(((val4-val1)*1.4426950408889634f)));
     acc0[2] = (acc0[2]+exp2(((val6-val2)*1.4426950408889634f)));
     acc0[3] = (acc0[3]+exp2(((val7-val3)*1.4426950408889634f)));
-    acc0[0] = (acc0[0]+exp2(((val4-val0)*1.4426950408889634f)));
   }
-  data0_192[alu4] = acc0[0];
-  data0_192[alu5] = acc0[1];
-  data0_192[alu6] = acc0[2];
-  data0_192[alu7] = acc0[3];
+  data0_192[alu0] = acc0[0];
+  data0_192[alu1] = acc0[1];
+  data0_192[alu2] = acc0[2];
+  data0_192[alu3] = acc0[3];
 }`;
 
 const r_16_2_2_3_16_4_28ctx2B129 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1049,52 +977,44 @@ var<uniform> INFINITY : f32;
 @compute @workgroup_size(2,3,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,4>;
   var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 16 */
   var lidx0 = i32(lindex.x); /* 2 */
   var lidx1 = i32(lindex.y); /* 3 */
-  var gidx1 = i32(gindex.y); /* 16 */
   var lidx2 = i32(lindex.z); /* 16 */
-  var precast0 = gidx1;
-  var precast1 = lidx2;
+  var cast0 = bitcast<i32>((bitcast<u32>(lidx2)<<2u));
+  var alu0 = (ctx+1);
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
-  var alu4 = (ctx+1);
-  var precast2 = (bitcast<u32>(precast0)<<1u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var cast0 = bitcast<i32>(precast3);
-  for (var Ridx0 = 0; Ridx0 < alu4; Ridx0++) {
-    var alu5 = (((lidx0+bitcast<i32>(precast2))*((ctx*6)+6))+Ridx0);
-    var alu6 = (alu5/alu4);
+  for (var Ridx0 = 0; Ridx0 < alu0; Ridx0++) {
+    var alu5 = (((lidx0+bitcast<i32>((bitcast<u32>(gidx1)<<1u)))*((ctx*6)+6))+Ridx0);
+    var alu6 = (alu5/alu0);
     var alu7 = (lidx1+(gidx0*3)+alu6);
-    var alu8 = ((gidx0+((lidx1+alu6)/3))>>1u);
-    var alu9 = (alu8&31);
-    var alu10 = (alu7-(6*(((alu7>>1u)*43691)>>17u)));
-    var precast4 = alu10;
-    var alu11 = ((alu9*6)+alu10);
-    var val0 = data2_192[alu11];
-    var val1 = data3_192[alu11];
-    var precast5 = (bitcast<u32>(precast4)<<6u);
-    var alu12 = (alu5-(alu4*alu6));
-    var val2 = data1_86016[((alu10*448)+alu12+(alu9*2688))];
-    var alu13 = (cast0+bitcast<i32>(precast5)+(alu12*384)+(((alu8+(alu12/alu4))&31)*172032));
+    var alu8 = (alu7-(6*(((alu7>>1u)*43691)>>17u)));
+    var alu9 = (alu5-(alu0*alu6));
+    var alu10 = ((gidx0+((lidx1+alu6)/3))>>1u);
+    var alu11 = (alu10&31);
+    var val0 = data1_86016[((alu8*448)+alu9+(alu11*2688))];
+    var alu12 = ((alu11*6)+alu8);
+    var val1 = data2_192[alu12];
+    var val2 = data3_192[alu12];
+    var alu13 = (cast0+bitcast<i32>((bitcast<u32>(alu8)<<6u))+(alu9*384)+(((alu10+(alu9/alu0))&31)*172032));
     var val3 = data4_5505024[alu13];
     var val4 = data4_5505024[(alu13+1)];
     var val5 = data4_5505024[(alu13+2)];
     var val6 = data4_5505024[(alu13+3)];
-    var alu14 = (exp2(((val2-val0)*1.4426950408889634f))*(1/val1));
+    var alu14 = (exp2(((val0-val1)*1.4426950408889634f))*(1/val2));
     acc0[0] = (acc0[0]+(alu14*val3));
     acc0[1] = (acc0[1]+(alu14*val4));
     acc0[2] = (acc0[2]+(alu14*val5));
     acc0[3] = (acc0[3]+(alu14*val6));
   }
-  var precast6 = lidx1;
-  var precast7 = (bitcast<u32>(precast6)<<6u);
-  var alu20 = ((gidx0*192)+bitcast<i32>(precast7)+cast0+(gidx1*768)+(lidx0*384));
-  data0_12288[alu20] = acc0[0];
+  var alu20 = ((gidx0*192)+bitcast<i32>((bitcast<u32>(lidx1)<<6u))+cast0+(gidx1*768)+(lidx0*384));
   data0_12288[(alu20+1)] = acc0[1];
   data0_12288[(alu20+2)] = acc0[2];
   data0_12288[(alu20+3)] = acc0[3];
+  data0_12288[alu20] = acc0[0];
 }`;
 
 const r_8_8_16_3_4_96_4n2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1110,6 +1030,7 @@ var<uniform> INFINITY : f32;
   var gidx0 = i32(gindex.x); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx0*1536);
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
@@ -1122,94 +1043,91 @@ var<uniform> INFINITY : f32;
   acc0[9] = 0.0f;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
-  var alu12 = (lidx0*1536);
-  var alu13 = ((gidx0*48)+(lidx1*3));
-  var val0 = data4_384[alu13];
-  var alu14 = (alu13+alu12);
-  var val1 = data1_12288[alu14];
-  var alu15 = (alu14+1);
-  var val2 = data1_12288[alu15];
-  var alu16 = (alu14+2);
-  var val3 = data1_12288[alu16];
-  var alu17 = (alu14+384);
-  var val4 = data1_12288[alu17];
-  var alu18 = (alu14+385);
-  var val5 = data1_12288[alu18];
-  var alu19 = (alu14+386);
-  var val6 = data1_12288[alu19];
-  var alu20 = (alu14+768);
-  var val7 = data1_12288[alu20];
-  var alu21 = (alu14+769);
-  var val8 = data1_12288[alu21];
-  var alu22 = (alu14+770);
-  var val9 = data1_12288[alu22];
-  var alu23 = (alu14+1152);
-  var val10 = data1_12288[alu23];
-  var alu24 = (alu14+1153);
-  var val11 = data1_12288[alu24];
-  var alu25 = (alu14+1154);
-  var val12 = data1_12288[alu25];
-  var val13 = data4_384[(alu13+1)];
-  var val14 = data4_384[(alu13+2)];
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
-    var alu26 = ((gidx0*18432)+(lidx1*1152)+cast0);
-    var val15 = data3_147456[alu26];
-    var val16 = data3_147456[(alu26+1)];
-    var val17 = data3_147456[(alu26+2)];
-    var val18 = data3_147456[(alu26+3)];
-    var val19 = data3_147456[(alu26+384)];
-    var val20 = data3_147456[(alu26+385)];
-    var val21 = data3_147456[(alu26+386)];
-    var val22 = data3_147456[(alu26+387)];
-    var val23 = data3_147456[(alu26+768)];
-    var val24 = data3_147456[(alu26+769)];
-    var val25 = data3_147456[(alu26+770)];
-    var val26 = data3_147456[(alu26+771)];
-    var alu27 = (alu12+cast0);
-    var val27 = data2_12288[alu27];
-    var val28 = data2_12288[(alu27+1)];
-    var val29 = data2_12288[(alu27+2)];
-    var val30 = data2_12288[(alu27+3)];
-    var val31 = data2_12288[(alu27+384)];
-    var val32 = data2_12288[(alu27+385)];
-    var val33 = data2_12288[(alu27+386)];
-    var val34 = data2_12288[(alu27+387)];
-    var val35 = data2_12288[(alu27+768)];
-    var val36 = data2_12288[(alu27+769)];
-    var val37 = data2_12288[(alu27+770)];
-    var val38 = data2_12288[(alu27+771)];
-    var val39 = data2_12288[(alu27+1152)];
-    var val40 = data2_12288[(alu27+1153)];
-    var val41 = data2_12288[(alu27+1154)];
-    var val42 = data2_12288[(alu27+1155)];
-    acc0[1] = (acc0[1]+(val31*val15)+(val32*val16)+(val33*val17)+(val34*val18));
-    acc0[5] = (acc0[5]+(val31*val19)+(val32*val20)+(val33*val21)+(val34*val22));
-    acc0[9] = (acc0[9]+(val31*val23)+(val32*val24)+(val33*val25)+(val34*val26));
-    acc0[2] = (acc0[2]+(val35*val15)+(val36*val16)+(val37*val17)+(val38*val18));
-    acc0[6] = (acc0[6]+(val35*val19)+(val36*val20)+(val37*val21)+(val38*val22));
-    acc0[10] = (acc0[10]+(val35*val23)+(val36*val24)+(val37*val25)+(val38*val26));
-    acc0[3] = (acc0[3]+(val39*val15)+(val40*val16)+(val41*val17)+(val42*val18));
-    acc0[7] = (acc0[7]+(val39*val19)+(val40*val20)+(val41*val21)+(val42*val22));
-    acc0[11] = (acc0[11]+(val39*val23)+(val40*val24)+(val41*val25)+(val42*val26));
-    acc0[4] = (acc0[4]+(val27*val19)+(val28*val20)+(val29*val21)+(val30*val22));
-    acc0[8] = (acc0[8]+(val27*val23)+(val28*val24)+(val29*val25)+(val30*val26));
-    acc0[0] = (acc0[0]+(val27*val15)+(val28*val16)+(val29*val17)+(val30*val18));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu13 = (alu0+cast0);
+    var val0 = data2_12288[alu13];
+    var alu14 = ((gidx0*18432)+(lidx1*1152)+cast0);
+    var val1 = data3_147456[alu14];
+    var val2 = data2_12288[(alu13+1)];
+    var val3 = data3_147456[(alu14+1)];
+    var val4 = data2_12288[(alu13+2)];
+    var val5 = data3_147456[(alu14+2)];
+    var val6 = data2_12288[(alu13+3)];
+    var val7 = data3_147456[(alu14+3)];
+    var val8 = data2_12288[(alu13+384)];
+    var val9 = data2_12288[(alu13+385)];
+    var val10 = data2_12288[(alu13+386)];
+    var val11 = data2_12288[(alu13+387)];
+    var val12 = data2_12288[(alu13+768)];
+    var val13 = data2_12288[(alu13+769)];
+    var val14 = data2_12288[(alu13+770)];
+    var val15 = data2_12288[(alu13+771)];
+    var val16 = data2_12288[(alu13+1152)];
+    var val17 = data2_12288[(alu13+1153)];
+    var val18 = data2_12288[(alu13+1154)];
+    var val19 = data2_12288[(alu13+1155)];
+    var val20 = data3_147456[(alu14+384)];
+    var val21 = data3_147456[(alu14+385)];
+    var val22 = data3_147456[(alu14+386)];
+    var val23 = data3_147456[(alu14+387)];
+    var val24 = data3_147456[(alu14+768)];
+    var val25 = data3_147456[(alu14+769)];
+    var val26 = data3_147456[(alu14+770)];
+    var val27 = data3_147456[(alu14+771)];
+    acc0[0] = (acc0[0]+(val0*val1)+(val2*val3)+(val4*val5)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val1)+(val9*val3)+(val10*val5)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val1)+(val13*val3)+(val14*val5)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val1)+(val17*val3)+(val18*val5)+(val19*val7));
+    acc0[4] = (acc0[4]+(val0*val20)+(val2*val21)+(val4*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val0*val24)+(val2*val25)+(val4*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
-  data0_12288[alu14] = (val1+acc0[0]+val0);
-  data0_12288[alu15] = (val2+acc0[4]+val13);
-  data0_12288[alu16] = (val3+acc0[8]+val14);
-  data0_12288[alu17] = (val4+acc0[1]+val0);
-  data0_12288[alu18] = (val5+acc0[5]+val13);
-  data0_12288[alu19] = (val6+acc0[9]+val14);
-  data0_12288[alu20] = (val7+acc0[2]+val0);
-  data0_12288[alu21] = (val8+acc0[6]+val13);
-  data0_12288[alu22] = (val9+acc0[10]+val14);
-  data0_12288[alu23] = (val10+acc0[3]+val0);
-  data0_12288[alu24] = (val11+acc0[7]+val13);
-  data0_12288[alu25] = (val12+acc0[11]+val14);
+  var alu28 = ((gidx0*48)+(lidx1*3));
+  var val28 = data4_384[(alu28+1)];
+  var val29 = data4_384[alu28];
+  var alu29 = (alu28+alu0);
+  var alu30 = (alu29+1);
+  var val30 = data1_12288[alu30];
+  var alu31 = (alu29+2);
+  var val31 = data1_12288[alu31];
+  var val32 = data4_384[(alu28+2)];
+  var alu32 = (alu29+384);
+  var val33 = data1_12288[alu32];
+  var alu33 = (alu29+385);
+  var val34 = data1_12288[alu33];
+  var alu34 = (alu29+386);
+  var val35 = data1_12288[alu34];
+  var alu35 = (alu29+768);
+  var val36 = data1_12288[alu35];
+  var alu36 = (alu29+769);
+  var val37 = data1_12288[alu36];
+  var alu37 = (alu29+770);
+  var val38 = data1_12288[alu37];
+  var alu38 = (alu29+1152);
+  var val39 = data1_12288[alu38];
+  var alu39 = (alu29+1153);
+  var val40 = data1_12288[alu39];
+  var alu40 = (alu29+1154);
+  var val41 = data1_12288[alu40];
+  var val42 = data1_12288[alu29];
+  data0_12288[alu32] = (val33+acc0[1]+val29);
+  data0_12288[alu33] = (val34+acc0[5]+val28);
+  data0_12288[alu34] = (val35+acc0[9]+val32);
+  data0_12288[alu35] = (val36+acc0[2]+val29);
+  data0_12288[alu36] = (val37+acc0[6]+val28);
+  data0_12288[alu37] = (val38+acc0[10]+val32);
+  data0_12288[alu38] = (val39+acc0[3]+val29);
+  data0_12288[alu39] = (val40+acc0[7]+val28);
+  data0_12288[alu40] = (val41+acc0[11]+val32);
+  data0_12288[alu30] = (val30+acc0[4]+val28);
+  data0_12288[alu31] = (val31+acc0[8]+val32);
+  data0_12288[alu29] = (val42+acc0[0]+val29);
 }`;
 
 const r_2_6_1500_8_4_4_8 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1222,55 +1140,45 @@ var<workgroup> temp0: array<f32,128>;
 @compute @workgroup_size(8,4) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,4>;
   var acc1: array<f32,4>;
-  var gidx2 = i32(gindex.z); /* 2 */
-  var lidx1 = i32(lindex.y); /* 4 */
-  var gidx1 = i32(gindex.y); /* 6 */
-  var lidx0 = i32(lindex.x); /* 8 */
   var gidx0 = i32(gindex.x); /* 1500 */
-  var precast0 = lidx0;
-  var precast1 = lidx1;
-  var precast2 = (bitcast<u32>(precast0)<<2u);
-  var precast3 = (bitcast<u32>(precast1)<<5u);
-  var cast0 = bitcast<i32>(precast3);
-  var alu0 = (bitcast<i32>(precast2)+cast0);
-  var precast4 = gidx1;
+  var gidx1 = i32(gindex.y); /* 6 */
+  var gidx2 = i32(gindex.z); /* 2 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 4 */
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
+  for (var Ridx0 = 0; Ridx0 < 8; Ridx0++) {
+    var alu4 = (lidx0+bitcast<i32>((bitcast<u32>(Ridx0)<<3u))+bitcast<i32>((bitcast<u32>(gidx1)<<6u)));
+    var alu5 = (alu4+(gidx2*6144)+(lidx1*384));
+    var val0 = data1_12288[alu5];
+    var alu6 = (alu4+(gidx0*384)+(gidx2*9216000)+(lidx1*576000));
+    var val1 = data2_18432000[alu6];
+    var val2 = data1_12288[(alu5+1536)];
+    var val3 = data2_18432000[(alu6+2304000)];
+    var val4 = data1_12288[(alu5+3072)];
+    var val5 = data2_18432000[(alu6+4608000)];
+    var val6 = data1_12288[(alu5+4608)];
+    var val7 = data2_18432000[(alu6+6912000)];
+    acc0[0] = (acc0[0]+(val0*val1));
+    acc0[1] = (acc0[1]+(val2*val3));
+    acc0[2] = (acc0[2]+(val4*val5));
+    acc0[3] = (acc0[3]+(val6*val7));
+  }
+  var cast0 = bitcast<i32>((bitcast<u32>(lidx1)<<5u));
+  var alu12 = (bitcast<i32>((bitcast<u32>(lidx0)<<2u))+cast0);
+  temp0[alu12] = acc0[0];
+  temp0[(alu12+1)] = acc0[1];
+  temp0[(alu12+2)] = acc0[2];
+  temp0[(alu12+3)] = acc0[3];
+  workgroupBarrier();
   acc1[0] = 0.0f;
   acc1[1] = 0.0f;
   acc1[2] = 0.0f;
   acc1[3] = 0.0f;
-  var precast5 = (bitcast<u32>(precast4)<<6u);
-  for (var Ridx0 = 0; Ridx0 < 8; Ridx0++) {
-    var precast6 = Ridx0;
-    var precast7 = (bitcast<u32>(precast6)<<3u);
-    var alu9 = (lidx0+bitcast<i32>(precast7)+bitcast<i32>(precast5));
-    var alu10 = (alu9+(gidx2*6144)+(lidx1*384));
-    var val0 = data1_12288[alu10];
-    var val1 = data1_12288[(alu10+1536)];
-    var val2 = data1_12288[(alu10+3072)];
-    var val3 = data1_12288[(alu10+4608)];
-    var alu11 = (alu9+(gidx0*384)+(gidx2*9216000)+(lidx1*576000));
-    var val4 = data2_18432000[alu11];
-    var val5 = data2_18432000[(alu11+2304000)];
-    var val6 = data2_18432000[(alu11+4608000)];
-    var val7 = data2_18432000[(alu11+6912000)];
-    acc0[0] = (acc0[0]+(val0*val4));
-    acc0[1] = (acc0[1]+(val1*val5));
-    acc0[2] = (acc0[2]+(val2*val6));
-    acc0[3] = (acc0[3]+(val3*val7));
-  }
-  temp0[alu0] = acc0[0];
-  temp0[(alu0+1)] = acc0[1];
-  temp0[(alu0+2)] = acc0[2];
-  temp0[(alu0+3)] = acc0[3];
-  workgroupBarrier();
   for (var Ridx104 = 0; Ridx104 < 8; Ridx104++) {
-    var precast8 = Ridx104;
-    var precast9 = (bitcast<u32>(precast8)<<2u);
-    var alu22 = (cast0+bitcast<i32>(precast9));
+    var alu22 = (cast0+bitcast<i32>((bitcast<u32>(Ridx104)<<2u)));
     var val8 = temp0[alu22];
     var val9 = temp0[(alu22+1)];
     var val10 = temp0[(alu22+2)];
@@ -1307,22 +1215,18 @@ var<uniform> INFINITY : f32;
   var lidx0 = i32(lindex.x); /* 32 */
   acc0[0] = (f32(-INFINITY));
   for (var Ridx0 = 0; Ridx0 < 375; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var alu1 = ((gidx0*48000)+(lidx0*1500)+bitcast<i32>(precast1));
-    var val0 = data1_288000[alu1];
-    var val1 = data1_288000[(alu1+1)];
-    var val2 = data1_288000[(alu1+2)];
-    var val3 = data1_288000[(alu1+3)];
-    var alu2 = select(acc0[0],val0,(acc0[0]<val0));
-    var alu3 = select(alu2,val1,(alu2<val1));
-    var alu4 = select(alu3,val2,(alu3<val2));
-    var alu5 = select(alu4,val3,(alu4<val3));
+    var alu1 = ((gidx0*48000)+(lidx0*1500)+bitcast<i32>((bitcast<u32>(Ridx0)<<2u)));
+    var val0 = data1_288000[(alu1+1)];
+    var val1 = data1_288000[(alu1+2)];
+    var val2 = data1_288000[(alu1+3)];
+    var val3 = data1_288000[alu1];
+    var alu2 = select(acc0[0],val3,(acc0[0]<val3));
+    var alu3 = select(alu2,val0,(alu2<val0));
+    var alu4 = select(alu3,val1,(alu3<val1));
+    var alu5 = select(alu4,val2,(alu4<val2));
     acc0[0] = alu5;
   }
-  var precast2 = gidx0;
-  var precast3 = (bitcast<u32>(precast2)<<5u);
-  data0_192[(lidx0+bitcast<i32>(precast3))] = acc0[0];
+  data0_192[(lidx0+bitcast<i32>((bitcast<u32>(gidx0)<<5u)))] = acc0[0];
 }`;
 
 const r_6_32_375_4n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1335,22 +1239,18 @@ var<uniform> INFINITY : f32;
   var acc0: array<f32,1>;
   var gidx0 = i32(gindex.x); /* 6 */
   var lidx0 = i32(lindex.x); /* 32 */
-  var precast0 = gidx0;
+  var alu0 = (lidx0+bitcast<i32>((bitcast<u32>(gidx0)<<5u)));
+  var val0 = data2_192[alu0];
   acc0[0] = 0.0f;
-  var precast1 = (bitcast<u32>(precast0)<<5u);
-  var alu1 = (lidx0+bitcast<i32>(precast1));
-  var val0 = data2_192[alu1];
   for (var Ridx0 = 0; Ridx0 < 375; Ridx0++) {
-    var precast2 = Ridx0;
-    var precast3 = (bitcast<u32>(precast2)<<2u);
-    var alu2 = ((gidx0*48000)+(lidx0*1500)+bitcast<i32>(precast3));
-    var val1 = data1_288000[alu2];
-    var val2 = data1_288000[(alu2+1)];
-    var val3 = data1_288000[(alu2+2)];
-    var val4 = data1_288000[(alu2+3)];
-    acc0[0] = (acc0[0]+exp2(((val1-val0)*1.4426950408889634f))+exp2(((val2-val0)*1.4426950408889634f))+exp2(((val3-val0)*1.4426950408889634f))+exp2(((val4-val0)*1.4426950408889634f)));
+    var alu2 = ((gidx0*48000)+(lidx0*1500)+bitcast<i32>((bitcast<u32>(Ridx0)<<2u)));
+    var val1 = data1_288000[(alu2+1)];
+    var val2 = data1_288000[(alu2+2)];
+    var val3 = data1_288000[(alu2+3)];
+    var val4 = data1_288000[alu2];
+    acc0[0] = (acc0[0]+exp2(((val4-val0)*1.4426950408889634f))+exp2(((val1-val0)*1.4426950408889634f))+exp2(((val2-val0)*1.4426950408889634f))+exp2(((val3-val0)*1.4426950408889634f)));
   }
-  data0_192[alu1] = acc0[0];
+  data0_192[alu0] = acc0[0];
 }`;
 
 const r_16_2_2_3_16_4_375_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1364,62 +1264,56 @@ var<uniform> INFINITY : f32;
 @compute @workgroup_size(2,3,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,4>;
   var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 16 */
   var lidx0 = i32(lindex.x); /* 2 */
   var lidx1 = i32(lindex.y); /* 3 */
-  var gidx1 = i32(gindex.y); /* 16 */
+  var alu0 = (lidx1+(gidx0*3)+(gidx1*12)+(lidx0*6));
+  var val0 = data2_192[alu0];
   var lidx2 = i32(lindex.z); /* 16 */
-  var precast0 = lidx1;
-  var precast1 = lidx2;
+  var alu1 = ((gidx0*192)+bitcast<i32>((bitcast<u32>(lidx1)<<6u))+bitcast<i32>((bitcast<u32>(lidx2)<<2u)));
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
-  var alu4 = (lidx1+(gidx0*3)+(gidx1*12)+(lidx0*6));
-  var val0 = data2_192[alu4];
-  var val1 = data3_192[alu4];
-  var precast2 = (bitcast<u32>(precast0)<<6u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var alu5 = ((gidx0*192)+bitcast<i32>(precast2)+bitcast<i32>(precast3));
   for (var Ridx0 = 0; Ridx0 < 375; Ridx0++) {
-    var precast4 = Ridx0;
-    var alu6 = (alu5+(Ridx0*1536)+(gidx1*1152000)+(lidx0*576000));
-    var val2 = data4_18432000[alu6];
-    var val3 = data4_18432000[(alu6+1)];
-    var val4 = data4_18432000[(alu6+2)];
-    var val5 = data4_18432000[(alu6+3)];
-    var val6 = data4_18432000[(alu6+384)];
-    var val7 = data4_18432000[(alu6+385)];
-    var val8 = data4_18432000[(alu6+386)];
-    var val9 = data4_18432000[(alu6+387)];
-    var val10 = data4_18432000[(alu6+768)];
-    var val11 = data4_18432000[(alu6+769)];
-    var val12 = data4_18432000[(alu6+770)];
-    var val13 = data4_18432000[(alu6+771)];
-    var val14 = data4_18432000[(alu6+1152)];
-    var val15 = data4_18432000[(alu6+1153)];
-    var val16 = data4_18432000[(alu6+1154)];
-    var val17 = data4_18432000[(alu6+1155)];
-    var precast5 = (bitcast<u32>(precast4)<<2u);
-    var alu7 = ((gidx0*4500)+(lidx1*1500)+bitcast<i32>(precast5)+(gidx1*18000)+(lidx0*9000));
-    var val18 = data1_288000[alu7];
-    var val19 = data1_288000[(alu7+1)];
-    var val20 = data1_288000[(alu7+2)];
-    var val21 = data1_288000[(alu7+3)];
-    var alu8 = exp2(((val19-val0)*1.4426950408889634f));
-    var alu9 = exp2(((val20-val0)*1.4426950408889634f));
-    var alu10 = exp2(((val21-val0)*1.4426950408889634f));
-    var alu11 = exp2(((val18-val0)*1.4426950408889634f));
-    acc0[1] = (acc0[1]+(alu11*val3)+(alu8*val7)+(alu9*val11)+(alu10*val15));
-    acc0[2] = (acc0[2]+(alu11*val4)+(alu8*val8)+(alu9*val12)+(alu10*val16));
-    acc0[3] = (acc0[3]+(alu11*val5)+(alu8*val9)+(alu9*val13)+(alu10*val17));
-    acc0[0] = (acc0[0]+(alu11*val2)+(alu8*val6)+(alu9*val10)+(alu10*val14));
+    var alu6 = ((gidx0*4500)+(lidx1*1500)+bitcast<i32>((bitcast<u32>(Ridx0)<<2u))+(gidx1*18000)+(lidx0*9000));
+    var val1 = data1_288000[(alu6+1)];
+    var val2 = data1_288000[(alu6+3)];
+    var val3 = data1_288000[alu6];
+    var alu7 = (alu1+(Ridx0*1536)+(gidx1*1152000)+(lidx0*576000));
+    var val4 = data4_18432000[(alu7+1)];
+    var val5 = data4_18432000[(alu7+384)];
+    var val6 = data4_18432000[(alu7+768)];
+    var val7 = data4_18432000[(alu7+1152)];
+    var val8 = data4_18432000[alu7];
+    var val9 = data1_288000[(alu6+2)];
+    var val10 = data4_18432000[(alu7+2)];
+    var val11 = data4_18432000[(alu7+385)];
+    var val12 = data4_18432000[(alu7+386)];
+    var val13 = data4_18432000[(alu7+769)];
+    var val14 = data4_18432000[(alu7+1153)];
+    var val15 = data4_18432000[(alu7+3)];
+    var val16 = data4_18432000[(alu7+387)];
+    var val17 = data4_18432000[(alu7+770)];
+    var val18 = data4_18432000[(alu7+771)];
+    var val19 = data4_18432000[(alu7+1154)];
+    var val20 = data4_18432000[(alu7+1155)];
+    var alu8 = exp2(((val1-val0)*1.4426950408889634f));
+    var alu9 = exp2(((val9-val0)*1.4426950408889634f));
+    var alu10 = exp2(((val2-val0)*1.4426950408889634f));
+    var alu11 = exp2(((val3-val0)*1.4426950408889634f));
+    acc0[0] = (acc0[0]+(alu11*val8)+(alu8*val5)+(alu9*val6)+(alu10*val7));
+    acc0[1] = (acc0[1]+(alu11*val4)+(alu8*val11)+(alu9*val13)+(alu10*val14));
+    acc0[2] = (acc0[2]+(alu11*val10)+(alu8*val12)+(alu9*val17)+(alu10*val19));
+    acc0[3] = (acc0[3]+(alu11*val15)+(alu8*val16)+(alu9*val18)+(alu10*val20));
   }
-  var alu17 = (1/val1);
-  var alu18 = (alu5+(gidx1*768)+(lidx0*384));
-  data0_12288[alu18] = (acc0[0]*alu17);
-  data0_12288[(alu18+1)] = (acc0[1]*alu17);
-  data0_12288[(alu18+2)] = (acc0[2]*alu17);
-  data0_12288[(alu18+3)] = (acc0[3]*alu17);
+  var val21 = data3_192[alu0];
+  var alu17 = (alu1+(gidx1*768)+(lidx0*384));
+  var alu18 = (1/val21);
+  data0_12288[(alu17+1)] = (acc0[1]*alu18);
+  data0_12288[(alu17+2)] = (acc0[2]*alu18);
+  data0_12288[(alu17+3)] = (acc0[3]*alu18);
+  data0_12288[alu17] = (acc0[0]*alu18);
 }`;
 
 const r_32_8_16_3_4_96_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1431,9 +1325,9 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(4)var<storage,read_write>data3_1536:array<f32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,12>;
+  var gidx0 = i32(gindex.x); /* 32 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 32 */
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
@@ -1446,82 +1340,80 @@ var<uniform> INFINITY : f32;
   acc0[9] = 0.0f;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
-  var alu12 = ((gidx0*48)+(lidx1*3));
-  var val0 = data3_1536[alu12];
-  var val1 = data3_1536[(alu12+1)];
-  var val2 = data3_1536[(alu12+2)];
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu12 = ((lidx0*1536)+cast0);
+    var val0 = data1_12288[(alu12+2)];
+    var val1 = data1_12288[alu12];
     var alu13 = ((gidx0*18432)+(lidx1*1152)+cast0);
-    var val3 = data2_589824[alu13];
+    var val2 = data2_589824[alu13];
+    var val3 = data1_12288[(alu12+1)];
     var val4 = data2_589824[(alu13+1)];
     var val5 = data2_589824[(alu13+2)];
-    var val6 = data2_589824[(alu13+3)];
-    var val7 = data2_589824[(alu13+384)];
-    var val8 = data2_589824[(alu13+385)];
-    var val9 = data2_589824[(alu13+386)];
-    var val10 = data2_589824[(alu13+387)];
-    var val11 = data2_589824[(alu13+768)];
-    var val12 = data2_589824[(alu13+769)];
-    var val13 = data2_589824[(alu13+770)];
-    var val14 = data2_589824[(alu13+771)];
-    var alu14 = ((lidx0*1536)+cast0);
-    var val15 = data1_12288[alu14];
-    var val16 = data1_12288[(alu14+1)];
-    var val17 = data1_12288[(alu14+2)];
-    var val18 = data1_12288[(alu14+3)];
-    var val19 = data1_12288[(alu14+384)];
-    var val20 = data1_12288[(alu14+385)];
-    var val21 = data1_12288[(alu14+386)];
-    var val22 = data1_12288[(alu14+387)];
-    var val23 = data1_12288[(alu14+768)];
-    var val24 = data1_12288[(alu14+769)];
-    var val25 = data1_12288[(alu14+770)];
-    var val26 = data1_12288[(alu14+771)];
-    var val27 = data1_12288[(alu14+1152)];
-    var val28 = data1_12288[(alu14+1153)];
-    var val29 = data1_12288[(alu14+1154)];
-    var val30 = data1_12288[(alu14+1155)];
-    acc0[1] = (acc0[1]+(val19*val3)+(val20*val4)+(val21*val5)+(val22*val6));
-    acc0[5] = (acc0[5]+(val19*val7)+(val20*val8)+(val21*val9)+(val22*val10));
-    acc0[9] = (acc0[9]+(val19*val11)+(val20*val12)+(val21*val13)+(val22*val14));
-    acc0[2] = (acc0[2]+(val23*val3)+(val24*val4)+(val25*val5)+(val26*val6));
-    acc0[6] = (acc0[6]+(val23*val7)+(val24*val8)+(val25*val9)+(val26*val10));
-    acc0[10] = (acc0[10]+(val23*val11)+(val24*val12)+(val25*val13)+(val26*val14));
-    acc0[3] = (acc0[3]+(val27*val3)+(val28*val4)+(val29*val5)+(val30*val6));
-    acc0[7] = (acc0[7]+(val27*val7)+(val28*val8)+(val29*val9)+(val30*val10));
-    acc0[11] = (acc0[11]+(val27*val11)+(val28*val12)+(val29*val13)+(val30*val14));
-    acc0[4] = (acc0[4]+(val15*val7)+(val16*val8)+(val17*val9)+(val18*val10));
-    acc0[8] = (acc0[8]+(val15*val11)+(val16*val12)+(val17*val13)+(val18*val14));
-    acc0[0] = (acc0[0]+(val15*val3)+(val16*val4)+(val17*val5)+(val18*val6));
+    var val6 = data1_12288[(alu12+3)];
+    var val7 = data2_589824[(alu13+3)];
+    var val8 = data1_12288[(alu12+384)];
+    var val9 = data1_12288[(alu12+385)];
+    var val10 = data1_12288[(alu12+386)];
+    var val11 = data1_12288[(alu12+387)];
+    var val12 = data1_12288[(alu12+768)];
+    var val13 = data1_12288[(alu12+769)];
+    var val14 = data1_12288[(alu12+770)];
+    var val15 = data1_12288[(alu12+771)];
+    var val16 = data1_12288[(alu12+1152)];
+    var val17 = data1_12288[(alu12+1153)];
+    var val18 = data1_12288[(alu12+1154)];
+    var val19 = data1_12288[(alu12+1155)];
+    var val20 = data2_589824[(alu13+384)];
+    var val21 = data2_589824[(alu13+385)];
+    var val22 = data2_589824[(alu13+386)];
+    var val23 = data2_589824[(alu13+387)];
+    var val24 = data2_589824[(alu13+768)];
+    var val25 = data2_589824[(alu13+769)];
+    var val26 = data2_589824[(alu13+770)];
+    var val27 = data2_589824[(alu13+771)];
+    acc0[0] = (acc0[0]+(val1*val2)+(val3*val4)+(val0*val5)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val2)+(val9*val4)+(val10*val5)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val2)+(val13*val4)+(val14*val5)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val2)+(val17*val4)+(val18*val5)+(val19*val7));
+    acc0[4] = (acc0[4]+(val1*val20)+(val3*val21)+(val0*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val1*val24)+(val3*val25)+(val0*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
-  var alu28 = (acc0[0]+val0);
-  var alu29 = (acc0[1]+val0);
-  var alu30 = (acc0[2]+val0);
-  var alu31 = (acc0[3]+val0);
-  var alu32 = (acc0[4]+val1);
-  var alu33 = (acc0[5]+val1);
-  var alu34 = (acc0[6]+val1);
-  var alu35 = (acc0[7]+val1);
-  var alu36 = (acc0[8]+val2);
-  var alu37 = (acc0[9]+val2);
-  var alu38 = (acc0[10]+val2);
-  var alu39 = (acc0[11]+val2);
-  var alu40 = (alu12+(lidx0*6144));
-  data0_49152[alu40] = ((1/(1.0f+exp2(((alu28+(0.044715f*alu28*alu28*alu28))*-2.302208198144325f))))*alu28);
-  data0_49152[(alu40+1536)] = ((1/(1.0f+exp2(((alu29+(0.044715f*alu29*alu29*alu29))*-2.302208198144325f))))*alu29);
-  data0_49152[(alu40+3072)] = ((1/(1.0f+exp2(((alu30+(0.044715f*alu30*alu30*alu30))*-2.302208198144325f))))*alu30);
-  data0_49152[(alu40+4608)] = ((1/(1.0f+exp2(((alu31+(0.044715f*alu31*alu31*alu31))*-2.302208198144325f))))*alu31);
-  data0_49152[(alu40+1)] = ((1/(1.0f+exp2(((alu32+(0.044715f*alu32*alu32*alu32))*-2.302208198144325f))))*alu32);
-  data0_49152[(alu40+1537)] = ((1/(1.0f+exp2(((alu33+(0.044715f*alu33*alu33*alu33))*-2.302208198144325f))))*alu33);
-  data0_49152[(alu40+3073)] = ((1/(1.0f+exp2(((alu34+(0.044715f*alu34*alu34*alu34))*-2.302208198144325f))))*alu34);
-  data0_49152[(alu40+4609)] = ((1/(1.0f+exp2(((alu35+(0.044715f*alu35*alu35*alu35))*-2.302208198144325f))))*alu35);
-  data0_49152[(alu40+2)] = ((1/(1.0f+exp2(((alu36+(0.044715f*alu36*alu36*alu36))*-2.302208198144325f))))*alu36);
-  data0_49152[(alu40+1538)] = ((1/(1.0f+exp2(((alu37+(0.044715f*alu37*alu37*alu37))*-2.302208198144325f))))*alu37);
-  data0_49152[(alu40+3074)] = ((1/(1.0f+exp2(((alu38+(0.044715f*alu38*alu38*alu38))*-2.302208198144325f))))*alu38);
-  data0_49152[(alu40+4610)] = ((1/(1.0f+exp2(((alu39+(0.044715f*alu39*alu39*alu39))*-2.302208198144325f))))*alu39);
+  var alu27 = ((gidx0*48)+(lidx1*3));
+  var val28 = data3_1536[alu27];
+  var val29 = data3_1536[(alu27+1)];
+  var val30 = data3_1536[(alu27+2)];
+  var alu28 = (alu27+(lidx0*6144));
+  var alu29 = (acc0[1]+val28);
+  var alu30 = (acc0[5]+val29);
+  var alu31 = (acc0[9]+val30);
+  data0_49152[(alu28+1536)] = ((1/(1.0f+exp2(((alu29+(0.044715f*alu29*alu29*alu29))*-2.302208198144325f))))*alu29);
+  data0_49152[(alu28+1537)] = ((1/(1.0f+exp2(((alu30+(0.044715f*alu30*alu30*alu30))*-2.302208198144325f))))*alu30);
+  data0_49152[(alu28+1538)] = ((1/(1.0f+exp2(((alu31+(0.044715f*alu31*alu31*alu31))*-2.302208198144325f))))*alu31);
+  var alu35 = (acc0[2]+val28);
+  var alu36 = (acc0[6]+val29);
+  var alu37 = (acc0[10]+val30);
+  data0_49152[(alu28+3072)] = ((1/(1.0f+exp2(((alu35+(0.044715f*alu35*alu35*alu35))*-2.302208198144325f))))*alu35);
+  data0_49152[(alu28+3073)] = ((1/(1.0f+exp2(((alu36+(0.044715f*alu36*alu36*alu36))*-2.302208198144325f))))*alu36);
+  data0_49152[(alu28+3074)] = ((1/(1.0f+exp2(((alu37+(0.044715f*alu37*alu37*alu37))*-2.302208198144325f))))*alu37);
+  var alu41 = (acc0[3]+val28);
+  var alu42 = (acc0[7]+val29);
+  var alu43 = (acc0[11]+val30);
+  data0_49152[(alu28+4608)] = ((1/(1.0f+exp2(((alu41+(0.044715f*alu41*alu41*alu41))*-2.302208198144325f))))*alu41);
+  data0_49152[(alu28+4609)] = ((1/(1.0f+exp2(((alu42+(0.044715f*alu42*alu42*alu42))*-2.302208198144325f))))*alu42);
+  data0_49152[(alu28+4610)] = ((1/(1.0f+exp2(((alu43+(0.044715f*alu43*alu43*alu43))*-2.302208198144325f))))*alu43);
+  var alu47 = (acc0[0]+val28);
+  var alu48 = (acc0[4]+val29);
+  var alu49 = (acc0[8]+val30);
+  data0_49152[(alu28+1)] = ((1/(1.0f+exp2(((alu48+(0.044715f*alu48*alu48*alu48))*-2.302208198144325f))))*alu48);
+  data0_49152[(alu28+2)] = ((1/(1.0f+exp2(((alu49+(0.044715f*alu49*alu49*alu49))*-2.302208198144325f))))*alu49);
+  data0_49152[alu28] = ((1/(1.0f+exp2(((alu47+(0.044715f*alu47*alu47*alu47))*-2.302208198144325f))))*alu47);
 }`;
 
 const r_8_8_16_3_4_384_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1549,93 +1441,91 @@ var<uniform> INFINITY : f32;
   acc0[9] = 0.0f;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
-  var alu12 = ((gidx0*48)+(lidx1*3));
-  var val0 = data4_384[alu12];
-  var alu13 = (alu12+(lidx0*1536));
-  var val1 = data1_12288[alu13];
-  var alu14 = (alu13+1);
-  var val2 = data1_12288[alu14];
-  var alu15 = (alu13+2);
-  var val3 = data1_12288[alu15];
-  var alu16 = (alu13+384);
-  var val4 = data1_12288[alu16];
-  var alu17 = (alu13+385);
-  var val5 = data1_12288[alu17];
-  var alu18 = (alu13+386);
-  var val6 = data1_12288[alu18];
-  var alu19 = (alu13+768);
-  var val7 = data1_12288[alu19];
-  var alu20 = (alu13+769);
-  var val8 = data1_12288[alu20];
-  var alu21 = (alu13+770);
-  var val9 = data1_12288[alu21];
-  var alu22 = (alu13+1152);
-  var val10 = data1_12288[alu22];
-  var alu23 = (alu13+1153);
-  var val11 = data1_12288[alu23];
-  var alu24 = (alu13+1154);
-  var val12 = data1_12288[alu24];
-  var val13 = data4_384[(alu12+1)];
-  var val14 = data4_384[(alu12+2)];
   for (var Ridx0 = 0; Ridx0 < 384; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
-    var alu25 = ((gidx0*73728)+(lidx1*4608)+cast0);
-    var val15 = data3_589824[alu25];
-    var val16 = data3_589824[(alu25+1)];
-    var val17 = data3_589824[(alu25+2)];
-    var val18 = data3_589824[(alu25+3)];
-    var val19 = data3_589824[(alu25+1536)];
-    var val20 = data3_589824[(alu25+1537)];
-    var val21 = data3_589824[(alu25+1538)];
-    var val22 = data3_589824[(alu25+1539)];
-    var val23 = data3_589824[(alu25+3072)];
-    var val24 = data3_589824[(alu25+3073)];
-    var val25 = data3_589824[(alu25+3074)];
-    var val26 = data3_589824[(alu25+3075)];
-    var alu26 = ((lidx0*6144)+cast0);
-    var val27 = data2_49152[alu26];
-    var val28 = data2_49152[(alu26+1)];
-    var val29 = data2_49152[(alu26+2)];
-    var val30 = data2_49152[(alu26+3)];
-    var val31 = data2_49152[(alu26+1536)];
-    var val32 = data2_49152[(alu26+1537)];
-    var val33 = data2_49152[(alu26+1538)];
-    var val34 = data2_49152[(alu26+1539)];
-    var val35 = data2_49152[(alu26+3072)];
-    var val36 = data2_49152[(alu26+3073)];
-    var val37 = data2_49152[(alu26+3074)];
-    var val38 = data2_49152[(alu26+3075)];
-    var val39 = data2_49152[(alu26+4608)];
-    var val40 = data2_49152[(alu26+4609)];
-    var val41 = data2_49152[(alu26+4610)];
-    var val42 = data2_49152[(alu26+4611)];
-    acc0[1] = (acc0[1]+(val31*val15)+(val32*val16)+(val33*val17)+(val34*val18));
-    acc0[5] = (acc0[5]+(val31*val19)+(val32*val20)+(val33*val21)+(val34*val22));
-    acc0[9] = (acc0[9]+(val31*val23)+(val32*val24)+(val33*val25)+(val34*val26));
-    acc0[2] = (acc0[2]+(val35*val15)+(val36*val16)+(val37*val17)+(val38*val18));
-    acc0[6] = (acc0[6]+(val35*val19)+(val36*val20)+(val37*val21)+(val38*val22));
-    acc0[10] = (acc0[10]+(val35*val23)+(val36*val24)+(val37*val25)+(val38*val26));
-    acc0[3] = (acc0[3]+(val39*val15)+(val40*val16)+(val41*val17)+(val42*val18));
-    acc0[7] = (acc0[7]+(val39*val19)+(val40*val20)+(val41*val21)+(val42*val22));
-    acc0[11] = (acc0[11]+(val39*val23)+(val40*val24)+(val41*val25)+(val42*val26));
-    acc0[4] = (acc0[4]+(val27*val19)+(val28*val20)+(val29*val21)+(val30*val22));
-    acc0[8] = (acc0[8]+(val27*val23)+(val28*val24)+(val29*val25)+(val30*val26));
-    acc0[0] = (acc0[0]+(val27*val15)+(val28*val16)+(val29*val17)+(val30*val18));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu12 = ((lidx0*6144)+cast0);
+    var val0 = data2_49152[alu12];
+    var alu13 = ((gidx0*73728)+(lidx1*4608)+cast0);
+    var val1 = data3_589824[(alu13+1)];
+    var val2 = data3_589824[(alu13+2)];
+    var val3 = data3_589824[alu13];
+    var val4 = data2_49152[(alu12+1)];
+    var val5 = data2_49152[(alu12+2)];
+    var val6 = data2_49152[(alu12+3)];
+    var val7 = data3_589824[(alu13+3)];
+    var val8 = data2_49152[(alu12+1536)];
+    var val9 = data2_49152[(alu12+1537)];
+    var val10 = data2_49152[(alu12+1538)];
+    var val11 = data2_49152[(alu12+1539)];
+    var val12 = data2_49152[(alu12+3072)];
+    var val13 = data2_49152[(alu12+3073)];
+    var val14 = data2_49152[(alu12+3074)];
+    var val15 = data2_49152[(alu12+3075)];
+    var val16 = data2_49152[(alu12+4608)];
+    var val17 = data2_49152[(alu12+4609)];
+    var val18 = data2_49152[(alu12+4610)];
+    var val19 = data2_49152[(alu12+4611)];
+    var val20 = data3_589824[(alu13+1536)];
+    var val21 = data3_589824[(alu13+1537)];
+    var val22 = data3_589824[(alu13+1538)];
+    var val23 = data3_589824[(alu13+1539)];
+    var val24 = data3_589824[(alu13+3072)];
+    var val25 = data3_589824[(alu13+3073)];
+    var val26 = data3_589824[(alu13+3074)];
+    var val27 = data3_589824[(alu13+3075)];
+    acc0[0] = (acc0[0]+(val0*val3)+(val4*val1)+(val5*val2)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val3)+(val9*val1)+(val10*val2)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val3)+(val13*val1)+(val14*val2)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val3)+(val17*val1)+(val18*val2)+(val19*val7));
+    acc0[4] = (acc0[4]+(val0*val20)+(val4*val21)+(val5*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val0*val24)+(val4*val25)+(val5*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
-  data0_12288[alu13] = (val1+acc0[0]+val0);
-  data0_12288[alu14] = (val2+acc0[4]+val13);
-  data0_12288[alu15] = (val3+acc0[8]+val14);
-  data0_12288[alu16] = (val4+acc0[1]+val0);
-  data0_12288[alu17] = (val5+acc0[5]+val13);
-  data0_12288[alu18] = (val6+acc0[9]+val14);
-  data0_12288[alu19] = (val7+acc0[2]+val0);
-  data0_12288[alu20] = (val8+acc0[6]+val13);
-  data0_12288[alu21] = (val9+acc0[10]+val14);
-  data0_12288[alu22] = (val10+acc0[3]+val0);
-  data0_12288[alu23] = (val11+acc0[7]+val13);
-  data0_12288[alu24] = (val12+acc0[11]+val14);
+  var alu27 = ((gidx0*48)+(lidx1*3));
+  var val28 = data4_384[alu27];
+  var alu28 = (alu27+(lidx0*1536));
+  var alu29 = (alu28+1);
+  var val29 = data1_12288[alu29];
+  var val30 = data4_384[(alu27+1)];
+  var alu30 = (alu28+2);
+  var val31 = data1_12288[alu30];
+  var val32 = data4_384[(alu27+2)];
+  var alu31 = (alu28+384);
+  var val33 = data1_12288[alu31];
+  var alu32 = (alu28+385);
+  var val34 = data1_12288[alu32];
+  var alu33 = (alu28+386);
+  var val35 = data1_12288[alu33];
+  var alu34 = (alu28+768);
+  var val36 = data1_12288[alu34];
+  var alu35 = (alu28+769);
+  var val37 = data1_12288[alu35];
+  var alu36 = (alu28+770);
+  var val38 = data1_12288[alu36];
+  var alu37 = (alu28+1152);
+  var val39 = data1_12288[alu37];
+  var alu38 = (alu28+1153);
+  var val40 = data1_12288[alu38];
+  var alu39 = (alu28+1154);
+  var val41 = data1_12288[alu39];
+  var val42 = data1_12288[alu28];
+  data0_12288[alu31] = (val33+acc0[1]+val28);
+  data0_12288[alu32] = (val34+acc0[5]+val30);
+  data0_12288[alu33] = (val35+acc0[9]+val32);
+  data0_12288[alu34] = (val36+acc0[2]+val28);
+  data0_12288[alu35] = (val37+acc0[6]+val30);
+  data0_12288[alu36] = (val38+acc0[10]+val32);
+  data0_12288[alu37] = (val39+acc0[3]+val28);
+  data0_12288[alu38] = (val40+acc0[7]+val30);
+  data0_12288[alu39] = (val41+acc0[11]+val32);
+  data0_12288[alu29] = (val29+acc0[4]+val30);
+  data0_12288[alu30] = (val31+acc0[8]+val32);
+  data0_12288[alu28] = (val42+acc0[0]+val28);
 }`;
 
 const r_2161_8_8_3_4_96_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1646,9 +1536,9 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(3)var<storage,read_write>data2_19915776:array<f32>;
 @compute @workgroup_size(8,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,12>;
+  var gidx0 = i32(gindex.x); /* 2161 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 8 */
-  var gidx0 = i32(gindex.x); /* 2161 */
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
   acc0[2] = 0.0f;
@@ -1662,56 +1552,51 @@ var<uniform> INFINITY : f32;
   acc0[10] = 0.0f;
   acc0[11] = 0.0f;
   for (var Ridx0 = 0; Ridx0 < 96; Ridx0++) {
-    var precast0 = Ridx0;
-    var precast1 = (bitcast<u32>(precast0)<<2u);
-    var cast0 = bitcast<i32>(precast1);
-    var alu12 = ((gidx0*9216)+(lidx1*1152)+cast0);
-    var val0 = data2_19915776[alu12];
-    var val1 = data2_19915776[(alu12+1)];
-    var val2 = data2_19915776[(alu12+2)];
-    var val3 = data2_19915776[(alu12+3)];
-    var val4 = data2_19915776[(alu12+384)];
-    var val5 = data2_19915776[(alu12+385)];
-    var val6 = data2_19915776[(alu12+386)];
-    var val7 = data2_19915776[(alu12+387)];
-    var val8 = data2_19915776[(alu12+768)];
-    var val9 = data2_19915776[(alu12+769)];
-    var val10 = data2_19915776[(alu12+770)];
-    var val11 = data2_19915776[(alu12+771)];
-    var alu13 = ((lidx0*1536)+cast0);
-    var val12 = data1_12288[alu13];
-    var val13 = data1_12288[(alu13+1)];
-    var val14 = data1_12288[(alu13+2)];
-    var val15 = data1_12288[(alu13+3)];
-    var val16 = data1_12288[(alu13+384)];
-    var val17 = data1_12288[(alu13+385)];
-    var val18 = data1_12288[(alu13+386)];
-    var val19 = data1_12288[(alu13+387)];
-    var val20 = data1_12288[(alu13+768)];
-    var val21 = data1_12288[(alu13+769)];
-    var val22 = data1_12288[(alu13+770)];
-    var val23 = data1_12288[(alu13+771)];
-    var val24 = data1_12288[(alu13+1152)];
-    var val25 = data1_12288[(alu13+1153)];
-    var val26 = data1_12288[(alu13+1154)];
-    var val27 = data1_12288[(alu13+1155)];
-    acc0[1] = (acc0[1]+(val16*val0)+(val17*val1)+(val18*val2)+(val19*val3));
-    acc0[5] = (acc0[5]+(val16*val4)+(val17*val5)+(val18*val6)+(val19*val7));
-    acc0[9] = (acc0[9]+(val16*val8)+(val17*val9)+(val18*val10)+(val19*val11));
-    acc0[2] = (acc0[2]+(val20*val0)+(val21*val1)+(val22*val2)+(val23*val3));
-    acc0[6] = (acc0[6]+(val20*val4)+(val21*val5)+(val22*val6)+(val23*val7));
-    acc0[10] = (acc0[10]+(val20*val8)+(val21*val9)+(val22*val10)+(val23*val11));
-    acc0[3] = (acc0[3]+(val24*val0)+(val25*val1)+(val26*val2)+(val27*val3));
-    acc0[7] = (acc0[7]+(val24*val4)+(val25*val5)+(val26*val6)+(val27*val7));
-    acc0[11] = (acc0[11]+(val24*val8)+(val25*val9)+(val26*val10)+(val27*val11));
-    acc0[4] = (acc0[4]+(val12*val4)+(val13*val5)+(val14*val6)+(val15*val7));
-    acc0[8] = (acc0[8]+(val12*val8)+(val13*val9)+(val14*val10)+(val15*val11));
-    acc0[0] = (acc0[0]+(val12*val0)+(val13*val1)+(val14*val2)+(val15*val3));
+    var cast0 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
+    var alu12 = ((lidx0*1536)+cast0);
+    var val0 = data1_12288[(alu12+1)];
+    var val1 = data1_12288[alu12];
+    var alu13 = ((gidx0*9216)+(lidx1*1152)+cast0);
+    var val2 = data2_19915776[(alu13+1)];
+    var val3 = data2_19915776[(alu13+2)];
+    var val4 = data2_19915776[alu13];
+    var val5 = data1_12288[(alu12+2)];
+    var val6 = data1_12288[(alu12+3)];
+    var val7 = data2_19915776[(alu13+3)];
+    var val8 = data1_12288[(alu12+384)];
+    var val9 = data1_12288[(alu12+385)];
+    var val10 = data1_12288[(alu12+386)];
+    var val11 = data1_12288[(alu12+387)];
+    var val12 = data1_12288[(alu12+768)];
+    var val13 = data1_12288[(alu12+769)];
+    var val14 = data1_12288[(alu12+770)];
+    var val15 = data1_12288[(alu12+771)];
+    var val16 = data1_12288[(alu12+1152)];
+    var val17 = data1_12288[(alu12+1153)];
+    var val18 = data1_12288[(alu12+1154)];
+    var val19 = data1_12288[(alu12+1155)];
+    var val20 = data2_19915776[(alu13+384)];
+    var val21 = data2_19915776[(alu13+385)];
+    var val22 = data2_19915776[(alu13+386)];
+    var val23 = data2_19915776[(alu13+387)];
+    var val24 = data2_19915776[(alu13+768)];
+    var val25 = data2_19915776[(alu13+769)];
+    var val26 = data2_19915776[(alu13+770)];
+    var val27 = data2_19915776[(alu13+771)];
+    acc0[0] = (acc0[0]+(val1*val4)+(val0*val2)+(val5*val3)+(val6*val7));
+    acc0[1] = (acc0[1]+(val8*val4)+(val9*val2)+(val10*val3)+(val11*val7));
+    acc0[2] = (acc0[2]+(val12*val4)+(val13*val2)+(val14*val3)+(val15*val7));
+    acc0[3] = (acc0[3]+(val16*val4)+(val17*val2)+(val18*val3)+(val19*val7));
+    acc0[4] = (acc0[4]+(val1*val20)+(val0*val21)+(val5*val22)+(val6*val23));
+    acc0[5] = (acc0[5]+(val8*val20)+(val9*val21)+(val10*val22)+(val11*val23));
+    acc0[6] = (acc0[6]+(val12*val20)+(val13*val21)+(val14*val22)+(val15*val23));
+    acc0[7] = (acc0[7]+(val16*val20)+(val17*val21)+(val18*val22)+(val19*val23));
+    acc0[8] = (acc0[8]+(val1*val24)+(val0*val25)+(val5*val26)+(val6*val27));
+    acc0[9] = (acc0[9]+(val8*val24)+(val9*val25)+(val10*val26)+(val11*val27));
+    acc0[10] = (acc0[10]+(val12*val24)+(val13*val25)+(val14*val26)+(val15*val27));
+    acc0[11] = (acc0[11]+(val16*val24)+(val17*val25)+(val18*val26)+(val19*val27));
   }
   var alu27 = ((gidx0*24)+(lidx1*3)+(lidx0*207456));
-  data0_1659648[alu27] = acc0[0];
-  data0_1659648[(alu27+1)] = acc0[4];
-  data0_1659648[(alu27+2)] = acc0[8];
   data0_1659648[(alu27+51864)] = acc0[1];
   data0_1659648[(alu27+51865)] = acc0[5];
   data0_1659648[(alu27+51866)] = acc0[9];
@@ -1721,6 +1606,9 @@ var<uniform> INFINITY : f32;
   data0_1659648[(alu27+155592)] = acc0[3];
   data0_1659648[(alu27+155593)] = acc0[7];
   data0_1659648[(alu27+155594)] = acc0[11];
+  data0_1659648[(alu27+1)] = acc0[4];
+  data0_1659648[(alu27+2)] = acc0[8];
+  data0_1659648[alu27] = acc0[0];
 }`;
 
 const r_6_32_4_2161 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1745,29 +1633,25 @@ var<uniform> INFINITY : f32;
     var alu5 = select(1.0f,-1.0f,(val1<0.0f));
     var alu6 = select(0.0f,alu5,(bool(val1)));
     var alu7 = (val1*alu6);
-    var alu8 = select(1.0f,-1.0f,(val0<0.0f));
-    var alu9 = select(0.0f,alu8,(bool(val0)));
-    var alu10 = (val0*alu9);
-    var alu11 = select(acc0[0],alu10,(acc0[0]<alu10));
-    acc0[0] = alu11;
-    var alu13 = select(acc0[1],alu7,(acc0[1]<alu7));
-    acc0[1] = alu13;
-    var alu15 = select(1.0f,-1.0f,(val2<0.0f));
-    var alu16 = select(0.0f,alu15,(bool(val2)));
-    var alu17 = (val2*alu16);
-    var alu18 = select(acc0[2],alu17,(acc0[2]<alu17));
-    acc0[2] = alu18;
-    var alu20 = select(1.0f,-1.0f,(val3<0.0f));
-    var alu21 = select(0.0f,alu20,(bool(val3)));
-    var alu22 = (val3*alu21);
-    var alu23 = select(acc0[3],alu22,(acc0[3]<alu22));
-    acc0[3] = alu23;
+    var alu8 = select(1.0f,-1.0f,(val2<0.0f));
+    var alu9 = select(0.0f,alu8,(bool(val2)));
+    var alu10 = (val2*alu9);
+    var alu11 = select(1.0f,-1.0f,(val3<0.0f));
+    var alu12 = select(0.0f,alu11,(bool(val3)));
+    var alu13 = (val3*alu12);
+    var alu14 = select(1.0f,-1.0f,(val0<0.0f));
+    var alu15 = select(0.0f,alu14,(bool(val0)));
+    var alu16 = (val0*alu15);
+    var alu17 = select(acc0[0],alu16,(acc0[0]<alu16));
+    var alu18 = select(acc0[1],alu7,(acc0[1]<alu7));
+    var alu19 = select(acc0[2],alu10,(acc0[2]<alu10));
+    var alu20 = select(acc0[3],alu13,(acc0[3]<alu13));
+    acc0[0] = alu17;
+    acc0[1] = alu18;
+    acc0[2] = alu19;
+    acc0[3] = alu20;
   }
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<7u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var alu26 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu26 = (bitcast<i32>((bitcast<u32>(gidx0)<<7u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
   data0_768[alu26] = acc0[0];
   data0_768[(alu26+1)] = acc0[1];
   data0_768[(alu26+2)] = acc0[2];
@@ -1782,53 +1666,53 @@ var<uniform> INFINITY : f32;
 @compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var lidx0 = i32(lindex.x); /* 32 */
   var alu0 = (lidx0*24);
-  var val0 = data1_768[alu0];
-  var val1 = data1_768[(alu0+1)];
-  var val2 = data1_768[(alu0+2)];
-  var val3 = data1_768[(alu0+3)];
-  var val4 = data1_768[(alu0+4)];
-  var val5 = data1_768[(alu0+5)];
-  var val6 = data1_768[(alu0+6)];
-  var val7 = data1_768[(alu0+7)];
-  var val8 = data1_768[(alu0+8)];
-  var val9 = data1_768[(alu0+9)];
-  var val10 = data1_768[(alu0+10)];
-  var val11 = data1_768[(alu0+11)];
-  var val12 = data1_768[(alu0+12)];
-  var val13 = data1_768[(alu0+13)];
-  var val14 = data1_768[(alu0+14)];
-  var val15 = data1_768[(alu0+15)];
-  var val16 = data1_768[(alu0+16)];
-  var val17 = data1_768[(alu0+17)];
-  var val18 = data1_768[(alu0+18)];
-  var val19 = data1_768[(alu0+19)];
-  var val20 = data1_768[(alu0+20)];
-  var val21 = data1_768[(alu0+21)];
-  var val22 = data1_768[(alu0+22)];
-  var val23 = data1_768[(alu0+23)];
-  var alu1 = select(val0,val1,(val0<val1));
-  var alu2 = select(alu1,val2,(alu1<val2));
-  var alu3 = select(alu2,val3,(alu2<val3));
-  var alu4 = select(alu3,val4,(alu3<val4));
-  var alu5 = select(alu4,val5,(alu4<val5));
-  var alu6 = select(alu5,val6,(alu5<val6));
-  var alu7 = select(alu6,val7,(alu6<val7));
-  var alu8 = select(alu7,val8,(alu7<val8));
-  var alu9 = select(alu8,val9,(alu8<val9));
-  var alu10 = select(alu9,val10,(alu9<val10));
-  var alu11 = select(alu10,val11,(alu10<val11));
-  var alu12 = select(alu11,val12,(alu11<val12));
-  var alu13 = select(alu12,val13,(alu12<val13));
-  var alu14 = select(alu13,val14,(alu13<val14));
-  var alu15 = select(alu14,val15,(alu14<val15));
-  var alu16 = select(alu15,val16,(alu15<val16));
-  var alu17 = select(alu16,val17,(alu16<val17));
-  var alu18 = select(alu17,val18,(alu17<val18));
-  var alu19 = select(alu18,val19,(alu18<val19));
-  var alu20 = select(alu19,val20,(alu19<val20));
-  var alu21 = select(alu20,val21,(alu20<val21));
-  var alu22 = select(alu21,val22,(alu21<val22));
-  var alu23 = select(alu22,val23,(alu22<val23));
+  var val0 = data1_768[(alu0+1)];
+  var val1 = data1_768[(alu0+2)];
+  var val2 = data1_768[(alu0+3)];
+  var val3 = data1_768[(alu0+4)];
+  var val4 = data1_768[(alu0+5)];
+  var val5 = data1_768[(alu0+6)];
+  var val6 = data1_768[(alu0+7)];
+  var val7 = data1_768[(alu0+8)];
+  var val8 = data1_768[(alu0+9)];
+  var val9 = data1_768[(alu0+10)];
+  var val10 = data1_768[(alu0+11)];
+  var val11 = data1_768[(alu0+12)];
+  var val12 = data1_768[(alu0+13)];
+  var val13 = data1_768[(alu0+14)];
+  var val14 = data1_768[(alu0+15)];
+  var val15 = data1_768[(alu0+16)];
+  var val16 = data1_768[(alu0+17)];
+  var val17 = data1_768[(alu0+18)];
+  var val18 = data1_768[(alu0+19)];
+  var val19 = data1_768[(alu0+20)];
+  var val20 = data1_768[(alu0+21)];
+  var val21 = data1_768[(alu0+22)];
+  var val22 = data1_768[(alu0+23)];
+  var val23 = data1_768[alu0];
+  var alu1 = select(val23,val0,(val23<val0));
+  var alu2 = select(alu1,val1,(alu1<val1));
+  var alu3 = select(alu2,val2,(alu2<val2));
+  var alu4 = select(alu3,val3,(alu3<val3));
+  var alu5 = select(alu4,val4,(alu4<val4));
+  var alu6 = select(alu5,val5,(alu5<val5));
+  var alu7 = select(alu6,val6,(alu6<val6));
+  var alu8 = select(alu7,val7,(alu7<val7));
+  var alu9 = select(alu8,val8,(alu8<val8));
+  var alu10 = select(alu9,val9,(alu9<val9));
+  var alu11 = select(alu10,val10,(alu10<val10));
+  var alu12 = select(alu11,val11,(alu11<val11));
+  var alu13 = select(alu12,val12,(alu12<val12));
+  var alu14 = select(alu13,val13,(alu13<val13));
+  var alu15 = select(alu14,val14,(alu14<val14));
+  var alu16 = select(alu15,val15,(alu15<val15));
+  var alu17 = select(alu16,val16,(alu16<val16));
+  var alu18 = select(alu17,val17,(alu17<val17));
+  var alu19 = select(alu18,val18,(alu18<val18));
+  var alu20 = select(alu19,val19,(alu19<val19));
+  var alu21 = select(alu20,val20,(alu20<val20));
+  var alu22 = select(alu21,val21,(alu21<val21));
+  var alu23 = select(alu22,val22,(alu22<val22));
   data0_32[lidx0] = alu23;
 }`;
 
@@ -1839,39 +1723,29 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_1659648:array<f32>;
 @group(0) @binding(3)var<storage,read_write>data2_32:array<f32>;
 @compute @workgroup_size(4,16,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx2 = i32(lindex.z); /* 2 */
-  var lidx0 = i32(lindex.x); /* 4 */
-  var gidx1 = i32(gindex.y); /* 8 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 1024 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx1;
-  var cast0 = bitcast<u32>(precast0);
-  var cast1 = bitcast<u32>(precast1);
-  var alu0 = ((gidx1*207456)+(lidx0*51864));
-  var precast3 = (cast0<<4u);
-  var precast4 = (cast0<<6u);
-  var precast5 = (cast1<<2u);
-  var val0 = data2_32[(lidx0+bitcast<i32>(precast5))];
-  var precast6 = (bitcast<u32>(precast2)<<2u);
-  var alu1 = (bitcast<i32>(precast4)+bitcast<i32>(precast6));
-  var alu2 = (lidx2+alu1);
-  var alu3 = (alu1+(lidx2*51863)+3);
-  var alu4 = ((lidx1+bitcast<i32>(precast3))<12966);
-  var alu5 = (alu2-(51864*(((alu2>>3u)*647)>>22u)));
-  var val1 = select(0.0f, data1_1659648[(alu0+alu5)], alu4);
-  var alu6 = (alu3-(51864*(((alu3>>3u)*647)>>22u)));
-  var val2 = select(0.0f, data1_1659648[(alu0+alu6)], alu4);
-  var precast7 = lidx0;
-  var alu7 = (1/val0);
-  var precast8 = (cast1<<18u);
-  var precast9 = (bitcast<u32>(precast7)<<16u);
-  var alu8 = (alu2+bitcast<i32>(precast8)+bitcast<i32>(precast9));
-  var alu9 = select(-2147483648,((i32(((u32(((val1*alu7*255.0f)+256.0f)))<<16u)))+alu5),alu4);
-  data0_2097152[alu8] = alu9;
-  var alu11 = select(-2147483648,((i32(((u32(((val2*alu7*255.0f)+256.0f)))<<16u)))+alu6),alu4);
-  data0_2097152[(alu8+2)] = alu11;
+  var gidx1 = i32(gindex.y); /* 8 */
+  var lidx0 = i32(lindex.x); /* 4 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var lidx2 = i32(lindex.z); /* 2 */
+  var cast0 = bitcast<u32>(gidx0);
+  var alu0 = (bitcast<i32>((cast0<<6u))+bitcast<i32>((bitcast<u32>(lidx1)<<2u)));
+  var alu1 = (lidx2+alu0);
+  var alu2 = ((gidx1*207456)+(lidx0*51864));
+  var alu3 = (alu1-(51864*(((alu1>>3u)*647)>>22u)));
+  var alu4 = ((lidx1+bitcast<i32>((cast0<<4u)))<12966);
+  var val0 = select(0.0f, data1_1659648[(alu2+alu3)], alu4);
+  var cast1 = bitcast<u32>(gidx1);
+  var val1 = data2_32[(lidx0+bitcast<i32>((cast1<<2u)))];
+  var alu5 = (alu0+(lidx2*51863)+3);
+  var alu6 = (alu5-(51864*(((alu5>>3u)*647)>>22u)));
+  var val2 = select(0.0f, data1_1659648[(alu2+alu6)], alu4);
+  var alu7 = (alu1+bitcast<i32>((cast1<<18u))+bitcast<i32>((bitcast<u32>(lidx0)<<16u)));
+  var alu8 = (1/val1);
+  var alu9 = select(-2147483648,((i32(((u32(((val0*alu8*255.0f)+256.0f)))<<16u)))+alu3),alu4);
+  var alu10 = select(-2147483648,((i32(((u32(((val2*alu8*255.0f)+256.0f)))<<16u)))+alu6),alu4);
+  data0_2097152[alu7] = alu9;
+  data0_2097152[(alu7+2)] = alu10;
 }`;
 
 const E_32768_32_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1880,22 +1754,18 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 32768 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<6u);
-  var precast3 = (bitcast<u32>(precast1)<<1u);
-  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 32 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<6u))+bitcast<i32>((bitcast<u32>(lidx0)<<1u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+1);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_8192_32_2_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1904,14 +1774,10 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 2 */
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 8192 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<8u);
-  var precast3 = (bitcast<u32>(precast1)<<3u);
-  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 2 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<8u))+bitcast<i32>((bitcast<u32>(lidx0)<<3u)));
   var alu1 = (lidx1+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+6);
@@ -1920,9 +1786,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+3)];
   var val3 = data1_2097152[(alu3+5)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+2)] = val2;
   data0_2097152[(alu1+4)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_16384_32_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1931,23 +1797,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 2 */
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 16384 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<7u);
-  var precast3 = (bitcast<u32>(precast1)<<2u);
-  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 2 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<7u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+2);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_4096_32_4_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1956,14 +1818,10 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32,4) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 4 */
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 4096 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<9u);
-  var precast3 = (bitcast<u32>(precast1)<<4u);
-  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 4 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<9u))+bitcast<i32>((bitcast<u32>(lidx0)<<4u)));
   var alu1 = (lidx1+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+12);
@@ -1972,9 +1830,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+7)];
   var val3 = data1_2097152[(alu3+11)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+4)] = val2;
   data0_2097152[(alu1+8)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_8192_32_4_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -1983,23 +1841,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32,4) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 4 */
-  var lidx0 = i32(lindex.x); /* 32 */
   var gidx0 = i32(gindex.x); /* 8192 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<8u);
-  var precast3 = (bitcast<u32>(precast1)<<3u);
-  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 32 */
+  var lidx1 = i32(lindex.y); /* 4 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<8u))+bitcast<i32>((bitcast<u32>(lidx0)<<3u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+4);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_4096_16_8_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2008,14 +1862,10 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 8 */
-  var lidx0 = i32(lindex.x); /* 16 */
   var gidx0 = i32(gindex.x); /* 4096 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<9u);
-  var precast3 = (bitcast<u32>(precast1)<<5u);
-  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<9u))+bitcast<i32>((bitcast<u32>(lidx0)<<5u)));
   var alu1 = (lidx1+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+24);
@@ -2024,9 +1874,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+15)];
   var val3 = data1_2097152[(alu3+23)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+8)] = val2;
   data0_2097152[(alu1+16)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_8192_16_8_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2035,23 +1885,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(16,8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 8 */
-  var lidx0 = i32(lindex.x); /* 16 */
   var gidx0 = i32(gindex.x); /* 8192 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<8u);
-  var precast3 = (bitcast<u32>(precast1)<<4u);
-  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var lidx0 = i32(lindex.x); /* 16 */
+  var lidx1 = i32(lindex.y); /* 8 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<8u))+bitcast<i32>((bitcast<u32>(lidx0)<<4u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+8);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_4096_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2060,14 +1906,10 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 4096 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 4096 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<9u);
-  var precast3 = (bitcast<u32>(precast1)<<6u);
-  var alu0 = (bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx0)<<9u))+bitcast<i32>((bitcast<u32>(lidx0)<<6u)));
   var alu1 = (lidx1+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+48);
@@ -2076,9 +1918,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+31)];
   var val3 = data1_2097152[(alu3+47)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+16)] = val2;
   data0_2097152[(alu1+32)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_8192_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2087,23 +1929,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 8192 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 8192 */
-  var precast0 = gidx0;
-  var precast1 = lidx0;
-  var precast2 = (bitcast<u32>(precast0)<<8u);
-  var precast3 = (bitcast<u32>(precast1)<<5u);
-  var alu0 = (lidx1+bitcast<i32>(precast2)+bitcast<i32>(precast3));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<8u))+bitcast<i32>((bitcast<u32>(lidx0)<<5u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+16);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_2048_2_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2113,17 +1951,11 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 2048 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 2048 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<10u);
-  var precast5 = (bitcast<u32>(precast2)<<7u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<10u))+bitcast<i32>((bitcast<u32>(lidx0)<<7u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+96);
   var val1 = data1_2097152[alu2];
@@ -2131,9 +1963,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+63)];
   var val3 = data1_2097152[(alu3+95)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+32)] = val2;
   data0_2097152[(alu1+64)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_4096_2_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2143,25 +1975,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 2 */
+  var gidx1 = i32(gindex.y); /* 4096 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 4096 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<9u);
-  var precast5 = (bitcast<u32>(precast2)<<6u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<9u))+bitcast<i32>((bitcast<u32>(lidx0)<<6u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+32);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_1024_4_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2171,17 +1997,11 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 4 */
+  var gidx1 = i32(gindex.y); /* 1024 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 1024 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<11u);
-  var precast5 = (bitcast<u32>(precast2)<<8u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<11u))+bitcast<i32>((bitcast<u32>(lidx0)<<8u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+192);
   var val1 = data1_2097152[alu2];
@@ -2189,9 +2009,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+127)];
   var val3 = data1_2097152[(alu3+191)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+64)] = val2;
   data0_2097152[(alu1+128)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_2048_4_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2201,25 +2021,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 4 */
+  var gidx1 = i32(gindex.y); /* 2048 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 2048 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<10u);
-  var precast5 = (bitcast<u32>(precast2)<<7u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<10u))+bitcast<i32>((bitcast<u32>(lidx0)<<7u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+64);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_512_8_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2229,17 +2043,11 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 8 */
+  var gidx1 = i32(gindex.y); /* 512 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 512 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<12u);
-  var precast5 = (bitcast<u32>(precast2)<<9u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<12u))+bitcast<i32>((bitcast<u32>(lidx0)<<9u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+384);
   var val1 = data1_2097152[alu2];
@@ -2247,9 +2055,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+255)];
   var val3 = data1_2097152[(alu3+383)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+128)] = val2;
   data0_2097152[(alu1+256)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_1024_8_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2259,25 +2067,19 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var gidx0 = i32(gindex.x); /* 8 */
+  var gidx1 = i32(gindex.y); /* 1024 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 1024 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<11u);
-  var precast5 = (bitcast<u32>(precast2)<<8u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<11u))+bitcast<i32>((bitcast<u32>(lidx0)<<8u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+128);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_256_16_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2286,18 +2088,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
   var gidx0 = i32(gindex.x); /* 16 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx1 = i32(gindex.y); /* 256 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<13u);
-  var precast5 = (bitcast<u32>(precast2)<<10u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<13u))+bitcast<i32>((bitcast<u32>(lidx0)<<10u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+768);
   var val1 = data1_2097152[alu2];
@@ -2305,9 +2101,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+511)];
   var val3 = data1_2097152[(alu3+767)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+256)] = val2;
   data0_2097152[(alu1+512)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_512_16_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2316,26 +2112,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
   var gidx0 = i32(gindex.x); /* 16 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx1 = i32(gindex.y); /* 512 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<12u);
-  var precast5 = (bitcast<u32>(precast2)<<9u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<12u))+bitcast<i32>((bitcast<u32>(lidx0)<<9u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+256);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_128_32_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2344,18 +2134,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 32 */
   var gidx1 = i32(gindex.y); /* 128 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<14u);
-  var precast5 = (bitcast<u32>(precast2)<<11u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<14u))+bitcast<i32>((bitcast<u32>(lidx0)<<11u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+1536);
   var val1 = data1_2097152[alu2];
@@ -2363,9 +2147,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+1023)];
   var val3 = data1_2097152[(alu3+1535)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+512)] = val2;
   data0_2097152[(alu1+1024)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_256_32_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2374,26 +2158,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 32 */
   var gidx1 = i32(gindex.y); /* 256 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<13u);
-  var precast5 = (bitcast<u32>(precast2)<<10u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<13u))+bitcast<i32>((bitcast<u32>(lidx0)<<10u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+512);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_64_64_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2402,18 +2180,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 64 */
   var gidx1 = i32(gindex.y); /* 64 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<15u);
-  var precast5 = (bitcast<u32>(precast2)<<12u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<15u))+bitcast<i32>((bitcast<u32>(lidx0)<<12u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+3072);
   var val1 = data1_2097152[alu2];
@@ -2421,9 +2193,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+2047)];
   var val3 = data1_2097152[(alu3+3071)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+1024)] = val2;
   data0_2097152[(alu1+2048)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_128_64_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2432,26 +2204,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 64 */
   var gidx1 = i32(gindex.y); /* 128 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<14u);
-  var precast5 = (bitcast<u32>(precast2)<<11u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<14u))+bitcast<i32>((bitcast<u32>(lidx0)<<11u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+1024);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_32_128_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2460,18 +2226,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var gidx1 = i32(gindex.y); /* 32 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 32 */
-  var gidx0 = i32(gindex.x); /* 128 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<16u);
-  var precast5 = (bitcast<u32>(precast2)<<13u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<16u))+bitcast<i32>((bitcast<u32>(lidx0)<<13u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+6144);
   var val1 = data1_2097152[alu2];
@@ -2479,9 +2239,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+4095)];
   var val3 = data1_2097152[(alu3+6143)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+2048)] = val2;
   data0_2097152[(alu1+4096)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_64_128_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2490,26 +2250,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 128 */
+  var gidx1 = i32(gindex.y); /* 64 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 64 */
-  var gidx0 = i32(gindex.x); /* 128 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<15u);
-  var precast5 = (bitcast<u32>(precast2)<<12u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<15u))+bitcast<i32>((bitcast<u32>(lidx0)<<12u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+2048);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_16_256_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2518,18 +2272,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var gidx1 = i32(gindex.y); /* 16 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 256 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<17u);
-  var precast5 = (bitcast<u32>(precast2)<<14u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var gidx1 = i32(gindex.y); /* 16 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<17u))+bitcast<i32>((bitcast<u32>(lidx0)<<14u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+12288);
   var val1 = data1_2097152[alu2];
@@ -2537,9 +2285,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+8191)];
   var val3 = data1_2097152[(alu3+12287)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+4096)] = val2;
   data0_2097152[(alu1+8192)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_32_256_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2548,26 +2296,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 256 */
+  var gidx1 = i32(gindex.y); /* 32 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx1 = i32(gindex.y); /* 32 */
-  var gidx0 = i32(gindex.x); /* 256 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<16u);
-  var precast5 = (bitcast<u32>(precast2)<<13u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<16u))+bitcast<i32>((bitcast<u32>(lidx0)<<13u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+4096);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_8_512_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2576,18 +2318,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 512 */
   var gidx1 = i32(gindex.y); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 512 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<18u);
-  var precast5 = (bitcast<u32>(precast2)<<15u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<18u))+bitcast<i32>((bitcast<u32>(lidx0)<<15u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+24576);
   var val1 = data1_2097152[alu2];
@@ -2595,9 +2331,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+16383)];
   var val3 = data1_2097152[(alu3+24575)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+8192)] = val2;
   data0_2097152[(alu1+16384)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_16_512_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2606,26 +2342,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx0 = i32(lindex.x); /* 8 */
-  var gidx1 = i32(gindex.y); /* 16 */
-  var lidx1 = i32(lindex.y); /* 16 */
   var gidx0 = i32(gindex.x); /* 512 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<17u);
-  var precast5 = (bitcast<u32>(precast2)<<14u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var gidx1 = i32(gindex.y); /* 16 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<17u))+bitcast<i32>((bitcast<u32>(lidx0)<<14u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+8192);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_4_1024_8_16_2_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2634,18 +2364,12 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 1024 */
   var gidx1 = i32(gindex.y); /* 4 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 1024 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<19u);
-  var precast5 = (bitcast<u32>(precast2)<<16u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<19u))+bitcast<i32>((bitcast<u32>(lidx0)<<16u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var alu2 = (alu1+49152);
   var val1 = data1_2097152[alu2];
@@ -2653,9 +2377,9 @@ var<uniform> INFINITY : f32;
   var val2 = data1_2097152[(alu3+32767)];
   var val3 = data1_2097152[(alu3+49151)];
   data0_2097152[alu1] = val0;
-  data0_2097152[alu2] = val3;
   data0_2097152[(alu1+16384)] = val2;
   data0_2097152[(alu1+32768)] = val1;
+  data0_2097152[alu2] = val3;
 }`;
 
 const E_8_1024_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2664,26 +2388,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 1024 */
   var gidx1 = i32(gindex.y); /* 8 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 1024 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<18u);
-  var precast5 = (bitcast<u32>(precast2)<<15u);
-  var alu0 = (lidx1+bitcast<i32>(precast3)+bitcast<i32>(precast4)+bitcast<i32>(precast5));
+  var alu0 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+bitcast<i32>((bitcast<u32>(gidx1)<<18u))+bitcast<i32>((bitcast<u32>(lidx0)<<15u)));
   var val0 = data1_2097152[alu0];
   var alu1 = (alu0+16384);
   var val1 = data1_2097152[alu1];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu0] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[alu1] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu0] = alu5;
+  data0_2097152[alu1] = (alu4^-1);
 }`;
 
 const E_4_2048_8_16_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2692,26 +2410,20 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_2097152:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(8,16) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 2048 */
   var gidx1 = i32(gindex.y); /* 4 */
   var lidx0 = i32(lindex.x); /* 8 */
   var lidx1 = i32(lindex.y); /* 16 */
-  var gidx0 = i32(gindex.x); /* 2048 */
-  var precast0 = gidx0;
-  var precast1 = gidx1;
-  var precast2 = lidx0;
-  var precast3 = (bitcast<u32>(precast0)<<4u);
-  var precast4 = (bitcast<u32>(precast1)<<19u);
-  var precast5 = (bitcast<u32>(precast2)<<16u);
-  var alu0 = (bitcast<i32>(precast4)+bitcast<i32>(precast5));
-  var alu1 = (lidx1+bitcast<i32>(precast3)+alu0);
+  var alu0 = (bitcast<i32>((bitcast<u32>(gidx1)<<19u))+bitcast<i32>((bitcast<u32>(lidx0)<<16u)));
+  var alu1 = (lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<4u))+alu0);
   var val0 = data1_2097152[alu1];
   var val1 = data1_2097152[(((gidx0*-16)-lidx1)+alu0+65535)];
   var alu2 = (val0^-1);
   var alu3 = (val1^-1);
-  var alu4 = select(val0,val1,(val0<val1));
-  data0_2097152[alu1] = alu4;
-  var alu6 = select(alu2,alu3,(alu2<alu3));
-  data0_2097152[(alu1+32768)] = (alu6^-1);
+  var alu4 = select(alu2,alu3,(alu2<alu3));
+  var alu5 = select(val0,val1,(val0<val1));
+  data0_2097152[alu1] = alu5;
+  data0_2097152[(alu1+32768)] = (alu4^-1);
 }`;
 
 const E_5_32_2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
@@ -2720,21 +2432,11 @@ var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_320:array<i32>;
 @group(0) @binding(2)var<storage,read_write>data1_2097152:array<i32>;
 @compute @workgroup_size(32,2) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var lidx1 = i32(lindex.y); /* 2 */
   var gidx0 = i32(gindex.x); /* 5 */
   var lidx0 = i32(lindex.x); /* 32 */
-  var precast0 = lidx0;
-  var precast1 = (bitcast<u32>(precast0)<<16u);
-  var precast2 = (gidx0>>2u);
-  var precast3 = (bitcast<u32>(precast2)<<3u);
-  var precast4 = (gidx0&1);
-  var precast5 = (bitcast<u32>(precast4)<<1u);
-  var precast6 = ((gidx0>>1u)&1);
-  var precast7 = (bitcast<u32>(precast6)<<2u);
-  var val0 = data1_2097152[(lidx1+bitcast<i32>(precast5)+bitcast<i32>(precast7)+bitcast<i32>(precast3)+bitcast<i32>(precast1))];
-  var precast8 = gidx0;
-  var precast9 = (bitcast<u32>(precast8)<<1u);
-  data0_320[(lidx1+bitcast<i32>(precast9)+(lidx0*10))] = (val0&65535);
+  var lidx1 = i32(lindex.y); /* 2 */
+  var val0 = data1_2097152[(lidx1+bitcast<i32>((bitcast<u32>((gidx0&1))<<1u))+bitcast<i32>((bitcast<u32>(((gidx0>>1u)&1))<<2u))+bitcast<i32>((bitcast<u32>((gidx0>>2u))<<3u))+bitcast<i32>((bitcast<u32>(lidx0)<<16u)))];
+  data0_320[(lidx1+bitcast<i32>((bitcast<u32>(gidx0)<<1u))+(lidx0*10))] = (val0&65535);
 }`;
 
 const setupNet = async (device, safetensor) => {
