@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chromaprint tinygrad WebGPU</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 24px;
+        }
+
+        #drop-area {
+            border: 2px dashed #555;
+            border-radius: 8px;
+            padding: 60px 20px;
+            text-align: center;
+            background: #242424;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        #drop-area.drag-over {
+            border-color: #888;
+            background: #2a2a2a;
+        }
+
+        #drop-text {
+            font-size: 16px;
+            color: #999;
+        }
+
+        #processing {
+            display: none;
+        }
+
+        #filename {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        #progress-container {
+            margin-bottom: 10px;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 24px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: #4a4a4a;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        #progress-text {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        #results {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+        }
+
+        .result-label {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+
+        .result-content {
+            background: #242424;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 150px;
+            overflow: auto;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        button {
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #4a4a4a;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background: #3a3a3a;
+        }
+
+        button:active {
+            background: #2a2a2a;
+        }
+
+        #error {
+            display: none;
+            color: #ff6b6b;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #error a {
+            color: #88ccff;
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #444;
+            border-top-color: #888;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        /* image */
+        #fingerprint-image {
+            margin-top: 20px;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            background: #242424;
+            padding: 12px;
+            text-align: center;
+        }
+
+        #fingerprint-canvas {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+        }
+        /* image */
+    </style>
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-text">Loading model...</div>
+    </div>
+
+    <div class="container">
+        <h1>Audio Fingerprinting</h1>
+
+        <h2 id="error"></h2>
+
+        <div id="drop-area">
+            <div id="drop-text">Drop an audio file here</div>
+        </div>
+
+        <div id="processing">
+            <div id="filename"></div>
+            <div id="progress-container">
+                <div id="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+                <div id="progress-text">Initializing...</div>
+            </div>
+        </div>
+
+        <div id="results">
+            <div class="result-section">
+                <div class="result-label">Base64 Encoded (Compressed)</div>
+                <div id="base64-output" class="result-content"></div>
+                <div class="button-group">
+                    <button onclick="copyToClipboard('base64')">Copy</button>
+                    <button onclick="downloadFile('base64')">Download</button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-label">Compressed Binary</div>
+                <div class="button-group">
+                    <button onclick="downloadFile('compressed')">Download</button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-label">Raw Fingerprint (uint32 array)</div>
+                <div class="button-group">
+                    <button onclick="downloadFile('raw')">Download</button>
+                </div>
+            </div>
+            <div class="result-section">
+                <div class="result-label">Fingerprint Visualization</div>
+                <div id="fingerprint-image">
+                    <canvas id="fingerprint-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const {default: stft} = await import("./stft.js");
+        const {default: chrf} = await import("./chrf.js");
+        const {default: fingerprinter} = await import("./fingerprinter.js");
+
+        import {
+            SAMPLE_RATE,
+            tensorStore,
+            initDb,
+            getDevice,
+            fetchMonoFloat32Array,
+            fetchMonoFloat32ArrayFile,
+            getProgressDlForPart,
+            u8ToBase64UrlSafe,
+            compute_fingerprint,
+            compress_fingerprint
+        } from "./chromaprint.js";
+
+        // Global state
+        let currentFingerprint = null;
+        let currentCompressed = null;
+        let currentBase64 = null;
+        let currentFilename = null;
+        let currentCancel = null;
+
+        // DOM elements
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const errorDiv = document.getElementById('error');
+        const dropArea = document.getElementById('drop-area');
+        const processing = document.getElementById('processing');
+        const results = document.getElementById('results');
+        const filenameDiv = document.getElementById('filename');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const base64Output = document.getElementById('base64-output');
+
+        // Initialize WebGPU
+        const device = await getDevice(navigator.gpu);
+        if (!device) {
+            errorDiv.innerHTML = 'Error: WebGPU is not supported in this browser. See <a href="https://developer.chrome.com/docs/web-platform/webgpu/troubleshooting-tips">more</a>.'
+            errorDiv.style.display = 'block';
+            loadingOverlay.style.display = 'none';
+            throw new Error('No WebGPU device');
+        }
+
+        const db = await initDb(indexedDB);
+
+        // Load model parts
+        // const BASE_URL = 'http://localhost:8000';
+        const BASE_URL = '';
+
+        const getPart = async (key) => {
+            const full_url = `${BASE_URL}/${key}.safetensors`;
+            const cached = await tensorStore(db).get(key);
+            const download = await getProgressDlForPart(full_url, () => {}, cached?.lastModified);
+
+            if (download === null && cached) {
+                console.log(`Cache hit: ${key}`);
+                return cached.content;
+            }
+
+            console.log(`Cache refresh: ${key}`);
+            await tensorStore(db).put(key, download.buffer, download.lastModified);
+            return download.buffer;
+        };
+
+        const nets = {};
+        nets.stft = await stft.setupNet(device, new Uint8Array(await getPart("stft")));
+        nets.chrf = await chrf.setupNet(device, new Uint8Array(await getPart("chrf")));
+        nets.fingerprinter = await fingerprinter.setupNet(device, new Uint8Array(await getPart("fingerprinter")));
+
+        loadingOverlay.style.display = 'none';
+
+        // Progress callback
+        function updateProgress(stage, percent) {
+            progressFill.style.width = percent + '%';
+            progressText.textContent = `${stage} (${Math.round(percent)}%)`;
+        }
+
+        // Process audio file
+        async function processFile(file) {
+            currentFilename = file.name;
+            filenameDiv.textContent = file.name;
+
+            dropArea.style.display = 'none';
+            processing.style.display = 'block';
+            results.style.display = 'none';
+
+            updateProgress('Starting', 0);
+
+            if (currentCancel) currentCancel.cancelled = true;
+            currentCancel = { cancelled: false };
+
+            try {
+                updateProgress('Computing fingerprint', 10);
+                currentFingerprint = await compute_fingerprint(
+                    nets,
+                    async () => await fetchMonoFloat32ArrayFile(file, SAMPLE_RATE, OfflineAudioContext),
+                    currentCancel
+                );
+
+                updateProgress('Compressing', 90);
+                currentCompressed = compress_fingerprint(currentFingerprint);
+
+                updateProgress('Encoding', 95);
+                currentBase64 = u8ToBase64UrlSafe(currentCompressed);
+
+                // viz
+                // Draw fingerprint visualization
+                const canvas = document.getElementById('fingerprint-canvas');
+                const ctx = canvas.getContext('2d');
+                const width = currentFingerprint.length; // uint32 count
+                const height = 32;
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const imgData = ctx.createImageData(width, height);
+                const data = imgData.data;
+                const view = new DataView(currentFingerprint.buffer);
+
+                for (let col = 0; col < width; col++) {
+                    const value = view.getUint32(col * 4, true);
+                    for (let row = 0; row < 32; row++) {
+                        const bit = (value >> row) & 1;
+                        const idx = (row * width + col) * 4;
+                        const color = bit ? 255 : 0;
+                        data[idx] = color;
+                        data[idx + 1] = color;
+                        data[idx + 2] = color;
+                        data[idx + 3] = 255;
+                    }
+                }
+
+                ctx.putImageData(imgData, 0, 0);
+                // viz
+
+                updateProgress('Complete', 100);
+
+                base64Output.textContent = currentBase64;
+                results.style.display = 'block';
+
+            } catch (error) {
+                console.error('Processing error:', error);
+                errorDiv.textContent = 'Error processing file: ' + error.message;
+                errorDiv.style.display = 'block';
+                dropArea.style.display = 'block';
+                processing.style.display = 'none';
+            }
+        }
+
+        // Drag and drop handling
+        let dragCounter = 0;
+
+        document.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            dragCounter++;
+            dropArea.classList.add('drag-over');
+        });
+
+        document.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dragCounter--;
+            if (dragCounter === 0) {
+                dropArea.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragCounter = 0;
+            dropArea.classList.remove('drag-over');
+
+            if (e.dataTransfer.items) {
+                const item = e.dataTransfer.items[0];
+                if (item.kind === 'file') {
+                    const file = item.getAsFile();
+                    processFile(file);
+                }
+            } else if (e.dataTransfer.files.length > 0) {
+                processFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        dropArea.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'audio/*,video/*';
+            input.onchange = (e) => {
+                if (e.target.files.length > 0) {
+                    processFile(e.target.files[0]);
+                }
+            };
+            input.click();
+        });
+
+        // Copy to clipboard
+        window.copyToClipboard = function(type) {
+            let text = '';
+            if (type === 'base64') text = currentBase64;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const button = event.target;
+                const original = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => { button.textContent = original; }, 1000);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        };
+
+        // Download file
+        window.downloadFile = function(type) {
+            let blob, filename;
+
+            if (type === 'base64') {
+                blob = new Blob([currentBase64], { type: 'text/plain' });
+                filename = currentFilename + '.fingerprint.txt';
+            } else if (type === 'compressed') {
+                blob = new Blob([currentCompressed], { type: 'application/octet-stream' });
+                filename = currentFilename + '.fingerprint.bin';
+            } else if (type === 'raw') {
+                blob = new Blob([currentFingerprint], { type: 'application/octet-stream' });
+                filename = currentFilename + '.fingerprint.raw';
+            }
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+    </script>
+</body>
+</html>
