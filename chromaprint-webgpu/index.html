@@ -326,6 +326,10 @@
         nets.chrf = await chrf.setupNet(device, new Uint8Array(await getPart("chrf")));
         nets.fingerprinter = await fingerprinter.setupNet(device, new Uint8Array(await getPart("fingerprinter")));
 
+        const model_metadata = await fetch('./model_metadata.json', {cache: 'no-cache'}).then(x => x.json());
+        nets.model_metadata = model_metadata;
+        // console.log(model_metadata);
+
         loadingOverlay.style.display = 'none';
 
         // Progress callback

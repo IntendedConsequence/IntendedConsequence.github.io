@@ -52,7 +52,7 @@ const addComputePass = (device, commandEncoder, pipeline, layout, infinityUnifor
   passEncoder.end();
 };
 
-const E_649_64_4_16_4n4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const E_649_64_4_16_4n3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_10633216:array<f32>;
@@ -103,15 +103,16 @@ var<uniform> INFINITY : f32;
   data0_10633216[alu6] = (val3+alu23);
 }`;
 
-const r_649_4_4_1024_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const r_649_8_4_4_1024_4 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
-@group(0) @binding(1)var<storage,read_write>data0_10384:array<f32>;
-@group(0) @binding(2)var<storage,read_write>data1_8191:array<f32>;
+@group(0) @binding(1)var<storage,read_write>data0_83072:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1_46411:array<f32>;
 @group(0) @binding(3)var<storage,read_write>data2_10633216:array<f32>;
-@compute @workgroup_size(1) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+@compute @workgroup_size(8) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,16>;
   var gidx0 = i32(gindex.x); /* 649 */
+  var lidx0 = i32(lindex.x); /* 8 */
   var cast0 = bitcast<u32>(gidx0);
   acc0[0] = 0.0f;
   acc0[1] = 0.0f;
@@ -131,84 +132,85 @@ var<uniform> INFINITY : f32;
   acc0[15] = 0.0f;
   for (var Ridx0 = 0; Ridx0 < 1024; Ridx0++) {
     var cast1 = bitcast<i32>((bitcast<u32>(Ridx0)<<2u));
-    var val0 = data1_8191[cast1];
-    var alu16 = (bitcast<i32>((cast0<<14u))+cast1);
-    var val1 = data2_10633216[alu16];
-    var val2 = data1_8191[(cast1+1)];
-    var val3 = data2_10633216[(alu16+1)];
-    var val4 = data1_8191[(cast1+2)];
-    var val5 = data2_10633216[(alu16+2)];
-    var val6 = data1_8191[(cast1+3)];
-    var val7 = data2_10633216[(alu16+3)];
-    var val8 = data2_10633216[(alu16+4096)];
-    var val9 = data2_10633216[(alu16+4097)];
-    var val10 = data2_10633216[(alu16+4098)];
-    var val11 = data2_10633216[(alu16+4099)];
-    var val12 = data2_10633216[(alu16+8192)];
-    var val13 = data2_10633216[(alu16+8193)];
-    var val14 = data2_10633216[(alu16+8194)];
-    var val15 = data2_10633216[(alu16+8195)];
-    var val16 = data2_10633216[(alu16+12288)];
-    var val17 = data2_10633216[(alu16+12289)];
-    var val18 = data2_10633216[(alu16+12290)];
-    var val19 = data2_10633216[(alu16+12291)];
-    var val20 = data1_8191[(cast1+1365)];
-    var val21 = data1_8191[(cast1+1366)];
-    var val22 = data1_8191[(cast1+1367)];
-    var val23 = data1_8191[(cast1+1368)];
-    var val24 = data1_8191[(cast1+2730)];
-    var val25 = data1_8191[(cast1+2731)];
-    var val26 = data1_8191[(cast1+2732)];
-    var val27 = data1_8191[(cast1+2733)];
-    var val28 = data1_8191[(cast1+4095)];
-    var val29 = data1_8191[(cast1+4096)];
-    var val30 = data1_8191[(cast1+4097)];
-    var val31 = data1_8191[(cast1+4098)];
-    acc0[0] = (acc0[0]+(val0*val1)+(val2*val3)+(val4*val5)+(val6*val7));
-    acc0[1] = (acc0[1]+(val0*val8)+(val2*val9)+(val4*val10)+(val6*val11));
-    acc0[2] = (acc0[2]+(val0*val12)+(val2*val13)+(val4*val14)+(val6*val15));
-    acc0[3] = (acc0[3]+(val0*val16)+(val2*val17)+(val4*val18)+(val6*val19));
-    acc0[4] = (acc0[4]+(val20*val1)+(val21*val3)+(val22*val5)+(val23*val7));
+    var alu16 = ((lidx0*5460)+cast1);
+    var val0 = data1_46411[(alu16+2)];
+    var val1 = data1_46411[alu16];
+    var alu17 = (bitcast<i32>((cast0<<14u))+cast1);
+    var val2 = data2_10633216[alu17];
+    var val3 = data1_46411[(alu16+1)];
+    var val4 = data2_10633216[(alu17+1)];
+    var val5 = data2_10633216[(alu17+2)];
+    var val6 = data1_46411[(alu16+3)];
+    var val7 = data2_10633216[(alu17+3)];
+    var val8 = data2_10633216[(alu17+4096)];
+    var val9 = data2_10633216[(alu17+4097)];
+    var val10 = data2_10633216[(alu17+4098)];
+    var val11 = data2_10633216[(alu17+4099)];
+    var val12 = data2_10633216[(alu17+8192)];
+    var val13 = data2_10633216[(alu17+8193)];
+    var val14 = data2_10633216[(alu17+8194)];
+    var val15 = data2_10633216[(alu17+8195)];
+    var val16 = data2_10633216[(alu17+12288)];
+    var val17 = data2_10633216[(alu17+12289)];
+    var val18 = data2_10633216[(alu17+12290)];
+    var val19 = data2_10633216[(alu17+12291)];
+    var val20 = data1_46411[(alu16+1365)];
+    var val21 = data1_46411[(alu16+1366)];
+    var val22 = data1_46411[(alu16+1367)];
+    var val23 = data1_46411[(alu16+1368)];
+    var val24 = data1_46411[(alu16+2730)];
+    var val25 = data1_46411[(alu16+2731)];
+    var val26 = data1_46411[(alu16+2732)];
+    var val27 = data1_46411[(alu16+2733)];
+    var val28 = data1_46411[(alu16+4095)];
+    var val29 = data1_46411[(alu16+4096)];
+    var val30 = data1_46411[(alu16+4097)];
+    var val31 = data1_46411[(alu16+4098)];
+    acc0[0] = (acc0[0]+(val1*val2)+(val3*val4)+(val0*val5)+(val6*val7));
+    acc0[1] = (acc0[1]+(val1*val8)+(val3*val9)+(val0*val10)+(val6*val11));
+    acc0[2] = (acc0[2]+(val1*val12)+(val3*val13)+(val0*val14)+(val6*val15));
+    acc0[3] = (acc0[3]+(val1*val16)+(val3*val17)+(val0*val18)+(val6*val19));
+    acc0[4] = (acc0[4]+(val20*val2)+(val21*val4)+(val22*val5)+(val23*val7));
     acc0[5] = (acc0[5]+(val20*val8)+(val21*val9)+(val22*val10)+(val23*val11));
     acc0[6] = (acc0[6]+(val20*val12)+(val21*val13)+(val22*val14)+(val23*val15));
     acc0[7] = (acc0[7]+(val20*val16)+(val21*val17)+(val22*val18)+(val23*val19));
-    acc0[8] = (acc0[8]+(val24*val1)+(val25*val3)+(val26*val5)+(val27*val7));
+    acc0[8] = (acc0[8]+(val24*val2)+(val25*val4)+(val26*val5)+(val27*val7));
     acc0[9] = (acc0[9]+(val24*val8)+(val25*val9)+(val26*val10)+(val27*val11));
     acc0[10] = (acc0[10]+(val24*val12)+(val25*val13)+(val26*val14)+(val27*val15));
     acc0[11] = (acc0[11]+(val24*val16)+(val25*val17)+(val26*val18)+(val27*val19));
-    acc0[12] = (acc0[12]+(val28*val1)+(val29*val3)+(val30*val5)+(val31*val7));
+    acc0[12] = (acc0[12]+(val28*val2)+(val29*val4)+(val30*val5)+(val31*val7));
     acc0[13] = (acc0[13]+(val28*val8)+(val29*val9)+(val30*val10)+(val31*val11));
     acc0[14] = (acc0[14]+(val28*val12)+(val29*val13)+(val30*val14)+(val31*val15));
     acc0[15] = (acc0[15]+(val28*val16)+(val29*val17)+(val30*val18)+(val31*val19));
   }
-  var cast2 = bitcast<i32>((cast0<<4u));
-  data0_10384[cast2] = acc0[0];
-  data0_10384[(cast2+1)] = acc0[4];
-  data0_10384[(cast2+2)] = acc0[8];
-  data0_10384[(cast2+3)] = acc0[12];
-  data0_10384[(cast2+4)] = acc0[1];
-  data0_10384[(cast2+5)] = acc0[5];
-  data0_10384[(cast2+6)] = acc0[9];
-  data0_10384[(cast2+7)] = acc0[13];
-  data0_10384[(cast2+8)] = acc0[2];
-  data0_10384[(cast2+9)] = acc0[6];
-  data0_10384[(cast2+10)] = acc0[10];
-  data0_10384[(cast2+11)] = acc0[14];
-  data0_10384[(cast2+12)] = acc0[3];
-  data0_10384[(cast2+13)] = acc0[7];
-  data0_10384[(cast2+14)] = acc0[11];
-  data0_10384[(cast2+15)] = acc0[15];
+  var alu35 = (bitcast<i32>((cast0<<7u))+bitcast<i32>((bitcast<u32>(lidx0)<<2u)));
+  data0_83072[alu35] = acc0[0];
+  data0_83072[(alu35+1)] = acc0[4];
+  data0_83072[(alu35+2)] = acc0[8];
+  data0_83072[(alu35+3)] = acc0[12];
+  data0_83072[(alu35+32)] = acc0[1];
+  data0_83072[(alu35+33)] = acc0[5];
+  data0_83072[(alu35+34)] = acc0[9];
+  data0_83072[(alu35+35)] = acc0[13];
+  data0_83072[(alu35+64)] = acc0[2];
+  data0_83072[(alu35+65)] = acc0[6];
+  data0_83072[(alu35+66)] = acc0[10];
+  data0_83072[(alu35+67)] = acc0[14];
+  data0_83072[(alu35+96)] = acc0[3];
+  data0_83072[(alu35+97)] = acc0[7];
+  data0_83072[(alu35+98)] = acc0[11];
+  data0_83072[(alu35+99)] = acc0[15];
 }`;
 
-const r_4_3_4_1298 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const r_32_3_4_1298 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
-@group(0) @binding(1)var<storage,read_write>data0_48:array<f32>;
-@group(0) @binding(2)var<storage,read_write>data1_10384:array<f32>;
+@group(0) @binding(1)var<storage,read_write>data0_384:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1_83072:array<f32>;
 @group(0) @binding(3)var<storage,read_write>data2_15576:array<f32>;
-@compute @workgroup_size(4,3) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+@compute @workgroup_size(32,3) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
   var acc0: array<f32,4>;
-  var lidx0 = i32(lindex.x); /* 4 */
+  var lidx0 = i32(lindex.x); /* 32 */
   var lidx1 = i32(lindex.y); /* 3 */
   var cast0 = bitcast<i32>((bitcast<u32>(lidx1)<<2u));
   acc0[0] = 0.0f;
@@ -216,9 +218,9 @@ var<uniform> INFINITY : f32;
   acc0[2] = 0.0f;
   acc0[3] = 0.0f;
   for (var Ridx0 = 0; Ridx0 < 1298; Ridx0++) {
-    var alu4 = (lidx0+bitcast<i32>((bitcast<u32>(Ridx0)<<2u)));
-    var val0 = data1_10384[alu4];
-    var val1 = data1_10384[(alu4+5192)];
+    var alu4 = (lidx0+bitcast<i32>((bitcast<u32>(Ridx0)<<5u)));
+    var val0 = data1_83072[alu4];
+    var val1 = data1_83072[(alu4+41536)];
     var alu5 = (cast0+(Ridx0*12));
     var val2 = data2_15576[alu5];
     var val3 = data2_15576[(alu5+1)];
@@ -231,10 +233,10 @@ var<uniform> INFINITY : f32;
     acc0[3] = (acc0[3]+(alu6*val5));
   }
   var alu12 = ((lidx0*12)+cast0);
-  data0_48[(alu12+1)] = acc0[1];
-  data0_48[(alu12+2)] = acc0[2];
-  data0_48[(alu12+3)] = acc0[3];
-  data0_48[alu12] = acc0[0];
+  data0_384[(alu12+1)] = acc0[1];
+  data0_384[(alu12+2)] = acc0[2];
+  data0_384[(alu12+3)] = acc0[3];
+  data0_384[alu12] = acc0[0];
 }`;
 
 const setupNet = async (device, safetensor) => {
@@ -244,9 +246,9 @@ const setupNet = async (device, safetensor) => {
     const layouts=[device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]})]
 
     const buf_0 = createWeightBuf(device, 42532864, getTensorBuffer(safetensor, metadata['stft.stft_basis_buffers']));
-    const buf_1 = createEmptyBuf(device, 41536);;
-    const input0 = createEmptyBuf(device, 32764);;
-    const output0 = createEmptyBuf(device, 192);;
+    const buf_1 = createEmptyBuf(device, 332288);;
+    const input0 = createEmptyBuf(device, 185644);;
+    const output0 = createEmptyBuf(device, 1536);;
     const buf_2 = createWeightBuf(device, 62304, getTensorBuffer(safetensor, metadata['chroma.notes_project']));
     const is_zero = createUniformBuf(device, 4);;
 
@@ -255,7 +257,7 @@ const setupNet = async (device, safetensor) => {
 
     const gpuReadBuffer0 = device.createBuffer({size:output0.size, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
 
-    const kernels = [E_649_64_4_16_4n4, r_649_4_4_1024_4, r_4_3_4_1298];
+    const kernels = [E_649_64_4_16_4n3, r_649_8_4_4_1024_4, r_32_3_4_1298];
     const pipelines = await Promise.all(kernels.map(async (name, i) => {
       return await device.createComputePipelineAsync({
           layout: device.createPipelineLayout({

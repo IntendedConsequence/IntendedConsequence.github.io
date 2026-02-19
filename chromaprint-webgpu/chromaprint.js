@@ -4,15 +4,16 @@
 const SAMPLE_RATE = 11025;
 const FRAME_SIZE = 4096;
 const STRIDE = Math.floor(FRAME_SIZE / 3);
-const BS = 4;
+// const BS = 4;
+// const STFT_BATCH_SIZE = BS;
 const BS2 = 5;
-const BATCHED_ADVANCE = STRIDE * BS;
-const BATCHED_WINDOW = FRAME_SIZE + STRIDE * (BS - 1);
+// const BATCHED_ADVANCE = STRIDE * STFT_BATCH_SIZE;
+// const BATCHED_WINDOW = FRAME_SIZE + STRIDE * (STFT_BATCH_SIZE - 1);
 // const BINS_COUNT = 1298;
 const BINS_COUNT = 12;
 const NUM_BANDS = 12;
 const CHROMA_WINDOW_LEN = 16;
-const STFT_SPEC_CHUNK_LENGTH = BINS_COUNT * BS;
+// const STFT_SPEC_CHUNK_LENGTH = BINS_COUNT * STFT_BATCH_SIZE;
 
 // #endregion constants
 
@@ -171,10 +172,13 @@ async function compute_fingerprint(nets, audioFetcher, cancelToken) {
     // const samples_buffer = fs.readFileSync("samples_ref.f32", {flags: "rb"});
     // const samples = new Float32Array(samples_buffer.buffer);
 
-    const stft_chroma_offsets = compute_window_offsets(4, FRAME_SIZE, STRIDE, samples.length);
+
+    const STFT_BATCH_SIZE = nets.model_metadata.stft_batch_size;
+    const BATCHED_ADVANCE = STRIDE * STFT_BATCH_SIZE;
+    const stft_chroma_offsets = compute_window_offsets(STFT_BATCH_SIZE, FRAME_SIZE, STRIDE, samples.length);
 
     const iters = Math.ceil(samples.length / BATCHED_ADVANCE);
-    const totalFrames = iters * BS;
+    const totalFrames = iters * STFT_BATCH_SIZE;
     const totalFrames_unpadded = Math.ceil((samples.length - FRAME_SIZE) / STRIDE) + 1;
     const specs_full = new Float32Array(totalFrames * BINS_COUNT);
 
@@ -182,34 +186,48 @@ async function compute_fingerprint(nets, audioFetcher, cancelToken) {
     let frame = 0;
     let is_zero = 0;
     console.log(samples.length);
+    console.log(`before stft ${performance.now() - before}`);
+    before = performance.now();
     for (let i = 0; i < samples.length; i += stft_chroma_offsets.batched_advance) {
         console.log(`specs_full.length: ${specs_full.length}, offset: ${BINS_COUNT * frame}, i: ${i}, frame: ${frame}`)
         let chunk = padded_subarray(samples, i, stft_chroma_offsets.batched_window);
         let [stft_spec] = await nets.stft(chunk, is_zero);
         specs_full.set(stft_spec, BINS_COUNT * frame);
 
-        frame += BS;
+        frame += STFT_BATCH_SIZE;
         is_zero = 1;
     }
+    console.log(`stft ${performance.now() - before}`);
+    before = performance.now();
     // fs.writeFileSync("chroma_full.f32", specs_full.subarray(0, totalFrames_unpadded * BINS_COUNT));
 
-    const chroma_normed_offsets = compute_window_offsets(1, 5*NUM_BANDS, NUM_BANDS, stft_chroma_offsets.total_frames_if_bs_1 * BINS_COUNT);
+    const CHRF_BATCH_SIZE = nets.model_metadata.chrf_batch_size;
+    const chroma_normed_offsets = compute_window_offsets(CHRF_BATCH_SIZE, 5*NUM_BANDS, NUM_BANDS, stft_chroma_offsets.total_frames_if_bs_1 * BINS_COUNT);
     console.log(chroma_normed_offsets);
 
     const chroma_normed_full = new Float32Array(chroma_normed_offsets.total_frames * NUM_BANDS);
+    let chroma_frame = 0;
     for (let i = 0; i < stft_chroma_offsets.total_frames_if_bs_1 * BINS_COUNT; i += chroma_normed_offsets.batched_advance) {
         let chroma_chunk = padded_subarray(specs_full, i, chroma_normed_offsets.batched_window);
         let [chroma_normed] = await nets.chrf(chroma_chunk);
-        chroma_normed_full.set(chroma_normed, i);
+        // console.log(chroma_normed);
+        // chroma_normed_full.set(chroma_normed, i);
+        chroma_normed_full.set(chroma_normed, NUM_BANDS * chroma_frame);
+        chroma_frame += CHRF_BATCH_SIZE;
     }
+    console.log(`chrf ${performance.now() - before}`);
+    before = performance.now();
+
     // fs.writeFileSync("chroma_normed.f32", chroma_normed_full.subarray(0, chroma_normed_offsets.total_frames_if_bs_1 * NUM_BANDS));
 
-    const fingerprint_offsets = compute_window_offsets(1, NUM_BANDS*CHROMA_WINDOW_LEN, NUM_BANDS, chroma_normed_offsets.total_frames_if_bs_1 * NUM_BANDS);
+    const FP_BATCH_SIZE = nets.model_metadata.fp_batch_size;
+    const fingerprint_offsets = compute_window_offsets(FP_BATCH_SIZE, NUM_BANDS*CHROMA_WINDOW_LEN, NUM_BANDS, chroma_normed_offsets.total_frames_if_bs_1 * NUM_BANDS);
     console.log(fingerprint_offsets);
 
     // let chroma_normed_full_t = transpose(chroma_normed_full, chroma_normed_full.length / 12, 12);
     let chroma_normed_full_t = chroma_normed_full
     let fingerprint_full = new Uint32Array(fingerprint_offsets.total_frames);
+    let fp_frame = 0;
     for (let i = 0; i < chroma_normed_offsets.total_frames_if_bs_1 * NUM_BANDS; i+= fingerprint_offsets.batched_advance) {
         let chroma_normed_chunk = padded_subarray(chroma_normed_full_t, i, fingerprint_offsets.batched_window);
         // chroma_normed_chunk = transpose(chroma_normed_chunk, 12, 16);
@@ -219,9 +237,13 @@ async function compute_fingerprint(nets, audioFetcher, cancelToken) {
             // console.log(chroma_normed_chunk);
         }
         // console.log(dec2bin(fp_row[0]));
-        fingerprint_full.set(fp_row, i / fingerprint_offsets.batched_advance);
+        fingerprint_full.set(fp_row, fp_frame);
+        fp_frame += FP_BATCH_SIZE;
     }
     let fp = fingerprint_full.subarray(0, fingerprint_offsets.total_frames_if_bs_1);
+    console.log(`fp ${performance.now() - before}`);
+    before = performance.now();
+
     // fs.writeFileSync("fingerprint.bin", fp);
 
     // let file_array = compress_fingerprint(fp);

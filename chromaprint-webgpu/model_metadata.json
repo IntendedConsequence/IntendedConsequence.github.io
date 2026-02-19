@@ -1,0 +1,1 @@
+{"stft_batch_size": 32, "chrf_batch_size": 32, "fp_batch_size": 32, "tinygrad_revision": "9ad3c865a"}
