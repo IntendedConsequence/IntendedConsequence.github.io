@@ -1,5 +1,5 @@
 ---
-title: My Post
+title: Chromaprint WebGPU
 date: 2026-03-07
 ---
 
