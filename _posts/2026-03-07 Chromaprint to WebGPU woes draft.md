@@ -1,6 +1,6 @@
 ---
-created: 2026-03-07T23:03
-modified: 2026-03-07T23:03
+title: My Post
+date: 2026-03-07
 ---
 
 # Running Chromaprint in the Browser with WebGPU
